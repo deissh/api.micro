@@ -1,0 +1,165 @@
+basePath: /
+definitions:
+  handlers.CreateResponse:
+    properties:
+      user:
+        type: string
+      v:
+        type: string
+    type: object
+  handlers.Health:
+    properties:
+      alive:
+        type: boolean
+    type: object
+  handlers.HealthResponse:
+    properties:
+      Health:
+        $ref: '#/definitions/handlers.Health'
+        type: object
+      v:
+        description: API version
+        type: string
+    type: object
+  handlers.Ping:
+    properties:
+      id:
+        type: string
+      service:
+        type: string
+      time:
+        type: string
+    type: object
+  handlers.PingResponse:
+    properties:
+      ping:
+        $ref: '#/definitions/handlers.Ping'
+        type: object
+      v:
+        description: API version
+        type: string
+    type: object
+  handlers.ResponseData:
+    properties:
+      data:
+        type: string
+      status:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: Account methods
+  license: {}
+  title: Service Account API
+  version: "1.0"
+paths:
+  /_/health:
+    get:
+      consumes:
+      - application/json
+      operationId: get-service-health
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.HealthResponse'
+            type: object
+      summary: Show health service
+  /_/ping:
+    get:
+      consumes:
+      - application/json
+      operationId: ping-service
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.PingResponse'
+            type: object
+      summary: Ping service
+  /account.create:
+    get:
+      consumes:
+      - application/json
+      description: Register new account
+      operationId: create-account
+      parameters:
+      - description: service version
+        in: query
+        name: v
+        type: string
+      - description: user firstname
+        in: query
+        name: firstname
+        required: true
+        type: string
+      - description: user lastname
+        in: query
+        name: lastname
+        required: true
+        type: string
+      - description: user nickname
+        in: query
+        name: nickname
+        required: true
+        type: string
+      - description: user email
+        in: query
+        name: email
+        required: true
+        type: string
+      - description: user password
+        in: query
+        name: password
+        required: true
+        type: string
+      - description: user sex
+        in: query
+        name: sex
+        type: integer
+      - description: user bdate
+        in: query
+        name: bdate
+        type: string
+      - description: user picture
+        in: query
+        name: picture
+        type: string
+      - description: user desc
+        in: query
+        name: desc
+        type: string
+      - description: user status
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.CreateResponse'
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.ResponseData'
+            type: object
+      summary: Create new account
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+  BasicAuth:
+    type: basic
+swagger: "2.0"

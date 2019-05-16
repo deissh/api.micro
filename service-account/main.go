@@ -38,14 +38,14 @@ func main() {
 
 	g := r.Group("/")
 	{
-		g.GET("/account.create", handlers.CreateUser)
+		g.GET("/account.create", handlers.AccountCreate)
 		g.GET("/account.activate")
 		g.GET("/account.restore")
 		g.GET("/account.getProfileInfo")
 		g.GET("/account.setProfileInfo")
 
-		g.GET("/_/health", handlers.HealthCheckHandler)
-		g.GET("/_/ping", handlers.PingHandler)
+		g.GET("/_/health", handlers.HealthCheck)
+		g.GET("/_/ping", handlers.PingCheck)
 		g.GET("/_/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
 

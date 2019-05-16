@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// CreateRequest request query params
 type CreateRequest struct {
 	FirstName string `form:"firstname" binding:"required"`
 	LastName  string `form:"lastname" binding:"required"`
@@ -21,6 +22,7 @@ type CreateRequest struct {
 	Password  string `form:"password" binding:"required"`
 }
 
+// CreateResponse response structure
 type CreateResponse struct {
 	Version string      `json:"v"`
 	User    models.User `json:"user"`
@@ -46,7 +48,7 @@ type CreateResponse struct {
 // @Success 200 {object} handlers.CreateResponse
 // @Failure 400 {object} handlers.ResponseData
 // @Router /account.create [Get]
-func (h Handler) CreateUser(c *gin.Context) {
+func (h Handler) AccountCreate(c *gin.Context) {
 
 	var r CreateRequest
 

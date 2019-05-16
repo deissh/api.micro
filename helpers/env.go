@@ -5,6 +5,7 @@ import (
 	"os"
 )
 
+// GetEnv returns env value or return fallback value
 func GetEnv(key, fallback string) string {
 	if value, ok := os.LookupEnv(key); ok {
 		return value
@@ -12,6 +13,7 @@ func GetEnv(key, fallback string) string {
 	return fallback
 }
 
+// GetEnvWithPanic returns env value or Panic
 func GetEnvWithPanic(key string) string {
 	if value, ok := os.LookupEnv(key); ok {
 		return value
