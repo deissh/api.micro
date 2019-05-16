@@ -59,7 +59,7 @@ func (h Handler) RefreshHandler(c *gin.Context) {
 	h.db.Delete(&token)
 
 	var user models.User
-	h.db.First(&user, token.UserId)
+	h.db.First(&user, token.UserID)
 
 	jwttoken := jwt.New(jwt.SigningMethodHS256)
 
@@ -93,7 +93,7 @@ func (h Handler) RefreshHandler(c *gin.Context) {
 	newToken := models.Token{
 		AccessToken:  t,
 		RefreshToken: refresh,
-		UserId:       1,
+		UserID:       user.ID,
 		Permissions:  token.Permissions,
 	}
 

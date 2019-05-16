@@ -13,11 +13,17 @@ type CheckRequest struct {
 	AccessToken string `form:"access_token" binding:"required"`
 }
 
+type shortToken struct {
+	UserID      uint     `json:"user_id"`
+	Role        string   `json:"role"`
+	Permissions []string `json:"permissions"`
+}
+
 // CheckResponse default response
 type CheckResponse struct {
 	// API version
-	Version string       `json:"v"`
-	Token   models.Token `json:"token"`
+	Version string     `json:"v"`
+	Token   shortToken `json:"token"`
 }
 
 // TokenCheck godoc
@@ -57,6 +63,10 @@ func (h Handler) TokenCheck(c *gin.Context) {
 
 	c.JSON(http.StatusOK, CheckResponse{
 		Version: "1",
-		Token:   token,
+		Token: shortToken{
+			UserID:      token.UserID,
+			Role:        token.UserRole,
+			Permissions: token.Permissions,
+		},
 	})
 }

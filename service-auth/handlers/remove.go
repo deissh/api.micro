@@ -58,7 +58,7 @@ func (h Handler) RemoveHandler(c *gin.Context) {
 
 	if r.All == true {
 		h.db.Where(&models.Token{
-			UserId: token.UserId,
+			UserID: token.UserID,
 		}).Delete(models.Token{})
 	}
 

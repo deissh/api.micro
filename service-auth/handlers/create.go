@@ -98,7 +98,7 @@ func (h Handler) CreateHandler(c *gin.Context) {
 	token := models.Token{
 		AccessToken:  t,
 		RefreshToken: refresh,
-		UserId:       1,
+		UserID:       1,
 		UserRole:     user.Role,
 		Permissions:  strings.Split(r.Scope, ","),
 	}
