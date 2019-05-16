@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"github.com/deissh/api.micro/helpers"
 	"github.com/deissh/api.micro/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -9,7 +10,9 @@ import (
 type RemoveRequest struct {
 	// API version
 	Version string `json:"v" query:"v"`
-	Id      string `form:"id" binding:"required"`
+	Id      string `form:"news_id" binding:"required"`
+
+	AccessToken string `form:"access_token" binding:"required"`
 }
 
 type RemoveResponse struct {
@@ -28,15 +31,27 @@ func (h Handler) RemoveNews(c *gin.Context) {
 		return
 	}
 
-	var news models.News
-	if err := h.db.First(&news, r.Id).Error; err != nil {
+	_, err := helpers.TokenVerify(
+		r.AccessToken,
+		true,
+		[]string{"newsmaker", "admin", "superadmin"},
+		[]string{"news"},
+	)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, ResponseData{
+			Status: http.StatusBadRequest,
+			Data:   "Unauthorized",
+		})
+		return
+	}
+
+	if err := h.db.Delete(&models.News{}, r.Id).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
 			Data:   "News not founded",
 		})
 		return
 	}
-	h.db.Delete(&news)
 
 	c.JSON(http.StatusOK, RemoveResponse{
 		Version: "1",

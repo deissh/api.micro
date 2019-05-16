@@ -13,7 +13,7 @@ type Token struct {
 	Permissions []string `json:"permissions"`
 }
 
-// TokenRequired check token and return info about token (role, user_id and etc)
+// TokenVerify check token and return info about token (role, user_id and etc)
 func TokenVerify(accessToken string, required bool, roles []string, scopes []string) (Token, error) {
 	req := gentleman.New().URL(GetEnv("SERVICE_AUTH", "http://service-auth:8080")).Request()
 	req.Path("/token.check?access_token=" + accessToken)
@@ -58,12 +58,12 @@ func ContainsString(s []string, v string) bool {
 	return false
 }
 
-// ContainsString returns true if a strings is present in a iteratee.
+// ContainsStrings returns true if a strings is present in a iteratee.
 func ContainsStrings(s []string, v []string) bool {
 	count := 0
 	for _, v1 := range s {
 		if ContainsString(v, v1) {
-			count += 1
+			count++
 		}
 	}
 	return count == len(v)
