@@ -28,8 +28,8 @@ type Badges struct {
 	Icon string `gorm:"not null"`
 }
 
+// return user with private settings
 func (u *User) View() User {
-	// return user with private settings
 	return User{
 		FirstName: u.FirstName,
 		LastName:  u.LastName,
@@ -45,6 +45,7 @@ func (u *User) View() User {
 	}
 }
 
+// crypt and set password to current user
 func (u *User) SetPassword(password string) error {
 	if len(password) == 0 {
 		return errors.New("password should not be empty")

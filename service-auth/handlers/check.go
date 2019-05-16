@@ -6,12 +6,14 @@ import (
 	"net/http"
 )
 
+// CheckRequest request params
 type CheckRequest struct {
 	// API version
 	Version     string `form:"v"`
 	AccessToken string `form:"access_token" binding:"required"`
 }
 
+// CheckResponse default response
 type CheckResponse struct {
 	// API version
 	Version string       `json:"v"`
@@ -30,7 +32,7 @@ type CheckResponse struct {
 // @Failure 400 {object} handlers.ResponseData
 // @Failure 500 {object} handlers.ResponseData
 // @Router /token.check [Get]
-func (h Handler) CheckHandler(c *gin.Context) {
+func (h Handler) TokenCheck(c *gin.Context) {
 	var r CheckRequest
 	if err := c.Bind(&r); err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
