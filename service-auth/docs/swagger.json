@@ -56,6 +56,56 @@
                 }
             }
         },
+        "/token.check": {
+            "get": {
+                "description": "Check access_token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Deactivate old token and create new",
+                "operationId": "refresh-token",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "service version",
+                        "name": "v",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "access_token",
+                        "name": "access_token",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/handlers.CheckResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/handlers.ResponseData"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/handlers.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
         "/token.create": {
             "get": {
                 "description": "Generate new access_token and refresh_token",
@@ -78,19 +128,22 @@
                         "type": "string",
                         "description": "user email",
                         "name": "email",
-                        "in": "query"
+                        "in": "query",
+                        "required": true
                     },
                     {
                         "type": "string",
                         "description": "user password",
                         "name": "password",
-                        "in": "query"
+                        "in": "query",
+                        "required": true
                     },
                     {
-                        "type": "[]string",
+                        "type": "string",
                         "description": "permissions, to check on authorization and request if necessary (Example: email,notif)",
                         "name": "scope",
-                        "in": "query"
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -118,7 +171,7 @@
                 }
             }
         },
-        "/token.refresg": {
+        "/token.refresh": {
             "get": {
                 "description": "Generate new access_token and refresh_token",
                 "consumes": [
@@ -219,6 +272,18 @@
         }
     },
     "definitions": {
+        "handlers.CheckResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                },
+                "v": {
+                    "description": "API version",
+                    "type": "string"
+                }
+            }
+        },
         "handlers.CreateResponse": {
             "type": "object",
             "properties": {

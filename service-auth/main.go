@@ -41,7 +41,7 @@ func main() {
 		g.GET("/token.create", handlers.CreateHandler)
 		g.GET("/token.refresh", handlers.RefreshHandler)
 		g.GET("/token.remove", handlers.RemoveHandler)
-		g.GET("/token.check")
+		g.GET("/token.check", handlers.CheckHandler)
 
 		g.GET("/_/health", handlers.HealthCheckHandler)
 		g.GET("/_/ping", handlers.PingHandler)

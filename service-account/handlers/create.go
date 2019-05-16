@@ -33,17 +33,18 @@ type CreateResponse struct {
 // @Accept  json
 // @Produce  json
 // @Param v query string false "service version"
-// @Param firstname query string false "user firstname"
-// @Param lastname query string false "user lastname"
-// @Param sex query string false "user sex"
+// @Param firstname query string true "user firstname"
+// @Param lastname query string true "user lastname"
+// @Param nickname query string true "user nickname"
+// @Param email query string true "user email"
+// @Param password query string true "user password"
+// @Param sex query int false "user sex"
 // @Param bdate query string false "user bdate"
 // @Param picture query string false "user picture"
 // @Param desc query string false "user desc"
 // @Param status query string false "user status"
-// @Param password query string false "user password"
 // @Success 200 {object} handlers.CreateResponse
 // @Failure 400 {object} handlers.ResponseData
-// @Failure 500 {object} handlers.ResponseData
 // @Router /account.create [Get]
 func (h Handler) CreateUser(c *gin.Context) {
 
@@ -56,8 +57,9 @@ func (h Handler) CreateUser(c *gin.Context) {
 		})
 		return
 	}
-
-	if err := h.db.Where(&models.User{Nickname: r.Nickname, Email: r.Email}).Error; err == nil {
+	var user models.User
+	h.db.Where(&models.User{Nickname: r.Nickname}).Or(&models.User{Email: r.Email}).First(&user)
+	if user.Email == r.Email || user.Nickname == r.Nickname {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
 			Data:   "Nickname or Email already registered",
@@ -78,15 +80,16 @@ func (h Handler) CreateUser(c *gin.Context) {
 		Desc:      r.Desc,
 		Status:    r.Status,
 		Badges:    []models.Badges{},
+		Role:      "user",
 	}
 
-	h.db.Create(&us)
 	if err := us.SetPassword(r.Password); err != nil {
 		log.Error(err)
 	}
+	h.db.Create(&us)
 
 	c.JSON(http.StatusOK, CreateResponse{
 		Version: "1",
-		User:    us,
+		User:    us.View(),
 	})
 }

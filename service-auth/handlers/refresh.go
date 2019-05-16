@@ -32,7 +32,7 @@ type RefreshResponse struct {
 // @Success 200 {object} handlers.RefreshResponse
 // @Failure 400 {object} handlers.ResponseData
 // @Failure 500 {object} handlers.ResponseData
-// @Router /token.refresg [Get]
+// @Router /token.refresh [Get]
 func (h Handler) RefreshHandler(c *gin.Context) {
 	var r RefreshRequest
 	if err := c.Bind(&r); err != nil {

@@ -16,21 +16,20 @@ type CheckResponse struct {
 	// API version
 	Version string       `json:"v"`
 	Token   models.Token `json:"token"`
-	User    models.User  `json:"user"`
 }
 
-// TokenRefresh godoc
+// TokenCheck godoc
 // @Summary Deactivate old token and create new
-// @Description Generate new access_token and refresh_token
+// @Description Check access_token
 // @ID refresh-token
 // @Accept  json
 // @Produce  json
 // @Param v query string false "service version"
-// @Param refresh_token query string false "refresh_token"
-// @Success 200 {object} handlers.RefreshResponse
+// @Param access_token query string false "access_token"
+// @Success 200 {object} handlers.CheckResponse
 // @Failure 400 {object} handlers.ResponseData
 // @Failure 500 {object} handlers.ResponseData
-// @Router /token.refresg [Get]
+// @Router /token.check [Get]
 func (h Handler) CheckHandler(c *gin.Context) {
 	var r CheckRequest
 	if err := c.Bind(&r); err != nil {
@@ -54,12 +53,8 @@ func (h Handler) CheckHandler(c *gin.Context) {
 		return
 	}
 
-	var user models.User
-	h.db.First(&user, token.UserId)
-
 	c.JSON(http.StatusOK, CheckResponse{
 		Version: "1",
 		Token:   token,
-		User:    user,
 	})
 }

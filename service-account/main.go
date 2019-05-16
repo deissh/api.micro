@@ -38,7 +38,7 @@ func main() {
 
 	g := r.Group("/")
 	{
-		g.GET("/account.create")
+		g.GET("/account.create", handlers.CreateUser)
 		g.GET("/account.activate")
 		g.GET("/account.restore")
 		g.GET("/account.getProfileInfo")

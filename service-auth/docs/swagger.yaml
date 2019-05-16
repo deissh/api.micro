@@ -1,5 +1,13 @@
 basePath: /
 definitions:
+  handlers.CheckResponse:
+    properties:
+      token:
+        type: string
+      v:
+        description: API version
+        type: string
+    type: object
   handlers.CreateResponse:
     properties:
       token:
@@ -102,6 +110,40 @@ paths:
             $ref: '#/definitions/handlers.PingResponse'
             type: object
       summary: Ping service
+  /token.check:
+    get:
+      consumes:
+      - application/json
+      description: Check access_token
+      operationId: refresh-token
+      parameters:
+      - description: service version
+        in: query
+        name: v
+        type: string
+      - description: access_token
+        in: query
+        name: access_token
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.CheckResponse'
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.ResponseData'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.ResponseData'
+            type: object
+      summary: Deactivate old token and create new
   /token.create:
     get:
       consumes:
@@ -116,16 +158,19 @@ paths:
       - description: user email
         in: query
         name: email
+        required: true
         type: string
       - description: user password
         in: query
         name: password
+        required: true
         type: string
       - description: 'permissions, to check on authorization and request if necessary
           (Example: email,notif)'
         in: query
         name: scope
-        type: '[]string'
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -145,7 +190,7 @@ paths:
             $ref: '#/definitions/handlers.ResponseData'
             type: object
       summary: Create new token
-  /token.refresg:
+  /token.refresh:
     get:
       consumes:
       - application/json
