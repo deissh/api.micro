@@ -43,7 +43,6 @@ func main() {
 		g.GET("/users.getSubscriptions")
 		g.GET("/users.report")
 		g.GET("/users.search")
-		g.GET("/users.create", handlers.CreateUser)
 
 		g.GET("/_/health", handlers.HealthCheckHandler)
 		g.GET("/_/ping", handlers.PingHandler)

@@ -3,11 +3,13 @@ package handlers
 import (
 	"github.com/deissh/api.micro/models"
 	"github.com/gin-gonic/gin"
+	"github.com/labstack/gommon/log"
+	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"time"
 )
 
-type CreateRequestUser struct {
+type CreateRequest struct {
 	FirstName string `form:"firstname" binding:"required"`
 	LastName  string `form:"lastname" binding:"required"`
 	Nickname  string `form:"nickname" binding:"required"` // unique
@@ -17,9 +19,7 @@ type CreateRequestUser struct {
 	Picture   string `form:"picture"`
 	Desc      string `form:"desc"`
 	Status    string `form:"status"`
-	Badges    string `form:"badges"`
-	// todo: fix it
-	PasswordHash string `form:"phash" binding:"required"`
+	Password  string `form:"password" binding:"required"`
 }
 
 type CreateResponse struct {
@@ -29,7 +29,7 @@ type CreateResponse struct {
 
 func (h Handler) CreateUser(c *gin.Context) {
 
-	var r CreateRequestUser
+	var r CreateRequest
 
 	if err := c.Bind(&r); err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
@@ -49,6 +49,16 @@ func (h Handler) CreateUser(c *gin.Context) {
 
 	d, _ := time.Parse("2006-01-02", r.BDate)
 
+	hash, err := bcrypt.GenerateFromPassword([]byte(r.Password), bcrypt.MinCost)
+	if err != nil {
+		log.Error(err)
+		c.JSON(http.StatusBadRequest, ResponseData{
+			Status: http.StatusBadRequest,
+			Data:   "Bad password crypt",
+		})
+		return
+	}
+
 	us := models.User{
 		FirstName:    r.FirstName,
 		LastName:     r.LastName,
@@ -60,7 +70,7 @@ func (h Handler) CreateUser(c *gin.Context) {
 		Desc:         r.Desc,
 		Status:       r.Status,
 		Badges:       []models.Badges{},
-		PasswordHash: r.PasswordHash,
+		PasswordHash: string(hash),
 	}
 
 	h.db.Create(&us)
