@@ -28,7 +28,7 @@ type Badges struct {
 	Icon string `gorm:"not null"`
 }
 
-// return user with private settings
+// View return user with private settings
 func (u *User) View() User {
 	return User{
 		FirstName: u.FirstName,
@@ -45,7 +45,7 @@ func (u *User) View() User {
 	}
 }
 
-// crypt and set password to current user
+// SetPassword crypt and set password to current user
 func (u *User) SetPassword(password string) error {
 	if len(password) == 0 {
 		return errors.New("password should not be empty")
@@ -57,6 +57,7 @@ func (u *User) SetPassword(password string) error {
 	return nil
 }
 
+// CheckPassword compare current password hash and password string
 // Database will only save the hashed string, you should check it by util function.
 // 	if err := serModel.checkPassword("password0"); err != nil { password error }
 func (u *User) CheckPassword(password string) error {
