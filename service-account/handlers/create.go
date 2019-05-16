@@ -4,7 +4,6 @@ import (
 	"github.com/deissh/api.micro/models"
 	"github.com/gin-gonic/gin"
 	"github.com/labstack/gommon/log"
-	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"time"
 )
@@ -49,31 +48,23 @@ func (h Handler) CreateUser(c *gin.Context) {
 
 	d, _ := time.Parse("2006-01-02", r.BDate)
 
-	hash, err := bcrypt.GenerateFromPassword([]byte(r.Password), bcrypt.MinCost)
-	if err != nil {
-		log.Error(err)
-		c.JSON(http.StatusBadRequest, ResponseData{
-			Status: http.StatusBadRequest,
-			Data:   "Bad password crypt",
-		})
-		return
-	}
-
 	us := models.User{
-		FirstName:    r.FirstName,
-		LastName:     r.LastName,
-		Nickname:     r.Nickname,
-		Email:        r.Email,
-		Sex:          r.Sex,
-		BDate:        d,
-		Picture:      r.Picture,
-		Desc:         r.Desc,
-		Status:       r.Status,
-		Badges:       []models.Badges{},
-		PasswordHash: string(hash),
+		FirstName: r.FirstName,
+		LastName:  r.LastName,
+		Nickname:  r.Nickname,
+		Email:     r.Email,
+		Sex:       r.Sex,
+		BDate:     d,
+		Picture:   r.Picture,
+		Desc:      r.Desc,
+		Status:    r.Status,
+		Badges:    []models.Badges{},
 	}
 
 	h.db.Create(&us)
+	if err := us.SetPassword(r.Password); err != nil {
+		log.Error(err)
+	}
 
 	c.JSON(http.StatusOK, CreateResponse{
 		Version: "1",

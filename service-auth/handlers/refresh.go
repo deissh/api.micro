@@ -72,7 +72,7 @@ func (h Handler) RefreshHandler(c *gin.Context) {
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 	// Generate encoded token and send it as response.
-	t, err := jwttoken.SignedString([]byte("secret"))
+	t, err := jwttoken.SignedString([]byte(helpers.GetEnvWithPanic("JWT_SECRET")))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusInternalServerError,

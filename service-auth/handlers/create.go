@@ -70,13 +70,14 @@ func (h Handler) CreateHandler(c *gin.Context) {
 	// Set claims
 	claims := jwttoken.Claims.(jwt.MapClaims)
 	claims["user_id"] = user.ID
+	claims["email"] = user.Email
 	claims["role"] = user.Role
 	claims["permissions"] = r.Scope
 
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 	// Generate encoded token and send it as response.
-	t, err := jwttoken.SignedString([]byte("secret"))
+	t, err := jwttoken.SignedString([]byte(helpers.GetEnvWithPanic("JWT_SECRET")))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusInternalServerError,
