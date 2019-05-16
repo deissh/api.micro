@@ -42,6 +42,7 @@ func main() {
 		g.GET("/news.get", handlers.GetNews)
 		g.GET("/news.update", handlers.UpdateNews)
 		g.GET("/news.remove", handlers.RemoveNews)
+		g.GET("/news.search")
 
 		g.GET("/_/health", handlers.HealthCheckHandler)
 		g.GET("/_/ping", handlers.PingHandler)
