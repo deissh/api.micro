@@ -2,14 +2,14 @@ package main
 
 import (
 	"github.com/deissh/api.micro/helpers"
-	"github.com/deissh/api.micro/service-users/common"
-	service "github.com/deissh/api.micro/service-users/handlers"
+	"github.com/deissh/api.micro/service-news/common"
+	service "github.com/deissh/api.micro/service-news/handlers"
 	"github.com/gin-gonic/gin"
 	"github.com/labstack/gommon/log"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 
-	_ "github.com/deissh/api.micro/service-users/docs"
+	_ "github.com/deissh/api.micro/service-news/docs"
 )
 
 // @title Service Users API
@@ -38,12 +38,11 @@ func main() {
 
 	g := r.Group("/")
 	{
-		g.GET("/users.get", handlers.GetUser)
-		g.GET("/users.getFollowers")
-		g.GET("/users.getSubscriptions")
-		g.GET("/users.report")
-		g.GET("/users.search")
-		g.GET("/users.create", handlers.CreateUser)
+		g.GET("/news.create", handlers.CreateNews)
+		g.GET("/news.get", handlers.GetNews)
+		g.GET("/news.update", handlers.UpdateNews)
+		g.GET("/news.remove", handlers.RemoveNews)
+		g.GET("/news.search")
 
 		g.GET("/_/health", handlers.HealthCheckHandler)
 		g.GET("/_/ping", handlers.PingHandler)
