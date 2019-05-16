@@ -1,8 +1,18 @@
 {
+    "swagger": "2.0",
     "info": {
-        "contact": {},
-        "license": {}
+        "description": "Auth, create tokens, and refresh old",
+        "title": "Service Auth API",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {},
+        "version": "1.0"
     },
+    "host": "localhost:8080",
+    "basePath": "/",
     "paths": {
         "/_/health": {
             "get": {
@@ -213,8 +223,7 @@
             "type": "object",
             "properties": {
                 "token": {
-                    "type": "object",
-                    "$ref": "#/definitions/models.Token"
+                    "type": "string"
                 },
                 "v": {
                     "description": "API version",
@@ -274,8 +283,7 @@
             "type": "object",
             "properties": {
                 "token": {
-                    "type": "object",
-                    "$ref": "#/definitions/models.Token"
+                    "type": "string"
                 },
                 "v": {
                     "description": "API version",
@@ -305,23 +313,16 @@
                     "type": "integer"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         },
-        "models.Token": {
-            "type": "object",
-            "properties": {
-                "accessToken": {
-                    "type": "string"
-                },
-                "permissions": {
-                    "type": "string"
-                },
-                "refreshToken": {
-                    "type": "string"
-                },
-                "userId": {
-                    "type": "integer"
-                }
-            }
+        "BasicAuth": {
+            "type": "basic"
         }
     }
 }

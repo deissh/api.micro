@@ -9,5 +9,7 @@ readonly -a arr=($(ls -d service-*/ | xargs -n 1 basename))
 
 for i in "${arr[@]}"
 do
-  $GOPATH/bin/swag init --output ${i}/docs
+  pushd ${i}
+  ${GOPATH}/bin/swag init
+  popd
 done
