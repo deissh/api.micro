@@ -11,8 +11,10 @@ require (
 	github.com/labstack/gommon v0.2.8
 	github.com/lib/pq v1.1.0
 	github.com/mattn/go-colorable v0.1.1 // indirect
+	github.com/nbio/st v0.0.0-20140626010706-e9e8d9816f32 // indirect
 	github.com/swaggo/gin-swagger v1.1.0
 	github.com/swaggo/swag v1.5.0
 	github.com/valyala/fasttemplate v1.0.1 // indirect
 	golang.org/x/crypto v0.0.0-20190426145343-a29dc8fdc734
+	gopkg.in/h2non/gentleman.v2 v2.0.3
 )

@@ -6,12 +6,8 @@ services:
     restart: on-failure
     depends_on:
       - postgres
-    environment:
-      GIN_MODE: "release"
-      DB_HOST: "postgres"
-      DB_NAME: "microapi"
-      DB_USER: "toor"
-      DB_PSW: "XJp3(adK}WnJ{Qtk"
+    env_file:
+      - .env
     deploy:
       replicas: 2
       update_config:
@@ -27,12 +23,8 @@ services:
     restart: on-failure
     depends_on:
       - postgres
-    environment:
-      GIN_MODE: "release"
-      DB_HOST: "postgres"
-      DB_NAME: "microapi"
-      DB_USER: "toor"
-      DB_PSW: "XJp3(adK}WnJ{Qtk"
+    env_file:
+      - .env
     deploy:
       replicas: 2
       update_config:
@@ -48,12 +40,8 @@ services:
     restart: on-failure
     depends_on:
       - postgres
-    environment:
-      GIN_MODE: "release"
-      DB_HOST: "postgres"
-      DB_NAME: "microapi"
-      DB_USER: "toor"
-      DB_PSW: "XJp3(adK}WnJ{Qtk"
+    env_file:
+      - .env
     deploy:
       replicas: 2
       update_config:
@@ -69,12 +57,8 @@ services:
     restart: on-failure
     depends_on:
       - postgres
-    environment:
-      GIN_MODE: "release"
-      DB_HOST: "postgres"
-      DB_NAME: "microapi"
-      DB_USER: "toor"
-      DB_PSW: "XJp3(adK}WnJ{Qtk"
+    env_file:
+      - .env
     deploy:
       replicas: 2
       update_config:
@@ -90,12 +74,8 @@ services:
     restart: on-failure
     depends_on:
       - postgres
-    environment:
-      GIN_MODE: "release"
-      DB_HOST: "postgres"
-      DB_NAME: "microapi"
-      DB_USER: "toor"
-      DB_PSW: "XJp3(adK}WnJ{Qtk"
+    env_file:
+      - .env
     deploy:
       replicas: 2
       update_config:
@@ -111,12 +91,8 @@ services:
     restart: on-failure
     depends_on:
       - postgres
-    environment:
-      GIN_MODE: "release"
-      DB_HOST: "postgres"
-      DB_NAME: "microapi"
-      DB_USER: "toor"
-      DB_PSW: "XJp3(adK}WnJ{Qtk"
+    env_file:
+      - .env
     deploy:
       replicas: 2
       update_config:
@@ -132,10 +108,8 @@ services:
     restart: on-failure
     volumes:
       - /var/lib/postgresql/micro-data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: XJp3(adK}WnJ{Qtk
-      POSTGRES_USER: toor
-      POSTGRES_DB: microapi
+    env_file:
+      - .env
     deploy:
       replicas: 1
       restart_policy:

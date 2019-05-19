@@ -1,19 +1,29 @@
 package handlers
 
 import (
+	"github.com/deissh/api.micro/helpers"
 	"github.com/deissh/api.micro/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
+// CreateNewsR request params
 type CreateNewsR struct {
 	Title      string `form:"title" binding:"required"`
 	Annotation string `form:"annotation" binding:"required"`
 	Body       string `form:"body" binding:"required"`
-	Author_id  string `form:"author_id"`
 	Preview    string `form:"preview" binding:"required"`
 	Background string `form:"background"`
 	Types      string `form:"types"`
+
+	AccessToken string `form:"access_token" binding:"required"`
+}
+
+// CreateResponse return struct in response
+type CreateResponse struct {
+	// API version
+	Version string      `json:"v"`
+	News    models.News `json:"news"`
 }
 
 func (h Handler) CreateNews(c *gin.Context) {
@@ -26,27 +36,26 @@ func (h Handler) CreateNews(c *gin.Context) {
 		return
 	}
 
-	type CreateResponse struct {
-		// API version
-		Version string      `json:"v"`
-		News    models.News `json:"news"`
+	token, err := helpers.TokenVerify(
+		r.AccessToken,
+		true,
+		[]string{"newsmaker", "admin", "superadmin"},
+		[]string{"news"},
+	)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, ResponseData{
+			Status: http.StatusBadRequest,
+			Data:   "Unauthorized",
+		})
+		return
 	}
 
 	var author models.User
 
-	if r.Author_id != "" {
-		err := h.db.First(&author, r.Author_id)
-		if err != nil {
-			c.JSON(http.StatusBadRequest, ResponseData{
-				Status: http.StatusBadRequest,
-				Data:   "Bad user nickname",
-			})
-			return
-		}
-	} else {
+	if err := h.db.First(&author, token.UserID).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
-			Data:   "Bad author id",
+			Data:   "Bad auth",
 		})
 		return
 	}

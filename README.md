@@ -13,6 +13,13 @@ on the Google Cloud Platform (GCP), with Istio and all associated telemetry
 components: Prometheus, Grafana, Zipkin, Jaeger, Service Graph, and Kiali.
 This README outlines deploying the Microservices/PostgreSQL/Redis stack locally to Docker Swarm.
 
+***WARNING***
+
+You need create `.env` file and replace `JWT_SECRET`
+```bash
+mv .env.example .env
+```
+
 ### Requirements
 
 - Docker

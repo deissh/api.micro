@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"github.com/deissh/api.micro/helpers"
 	"github.com/deissh/api.micro/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -13,10 +14,11 @@ type UpdateRequest struct {
 	Title      string `form:"title"`
 	Annotation string `form:"annotation"`
 	Body       string `form:"body"`
-	Author_id  string `form:"author_id"`
 	Preview    string `form:"preview"`
 	Background string `form:"background"`
 	Types      string `form:"types"`
+
+	AccessToken string `form:"access_token" binding:"required"`
 }
 
 type UpdateResponse struct {
@@ -42,6 +44,20 @@ func (h Handler) UpdateNews(c *gin.Context) {
 		return
 	}
 
+	token, err := helpers.TokenVerify(
+		r.AccessToken,
+		true,
+		[]string{"newsmaker", "admin", "superadmin"},
+		[]string{"news"},
+	)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, ResponseData{
+			Status: http.StatusBadRequest,
+			Data:   "Unauthorized",
+		})
+		return
+	}
+
 	var news models.News
 	if err := h.db.First(&news, r.Id).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
@@ -52,12 +68,10 @@ func (h Handler) UpdateNews(c *gin.Context) {
 	}
 
 	var author models.User
-
-	err := h.db.First(&author, r.Author_id)
-	if err != nil {
+	if err := h.db.First(&author, token.UserID).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
-			Data:   "Bad author",
+			Data:   "Bad auth",
 		})
 		return
 	}

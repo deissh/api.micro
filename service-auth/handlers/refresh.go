@@ -32,7 +32,7 @@ type RefreshResponse struct {
 // @Success 200 {object} handlers.RefreshResponse
 // @Failure 400 {object} handlers.ResponseData
 // @Failure 500 {object} handlers.ResponseData
-// @Router /token.refresg [Get]
+// @Router /token.refresh [Get]
 func (h Handler) RefreshHandler(c *gin.Context) {
 	var r RefreshRequest
 	if err := c.Bind(&r); err != nil {
@@ -59,7 +59,7 @@ func (h Handler) RefreshHandler(c *gin.Context) {
 	h.db.Delete(&token)
 
 	var user models.User
-	h.db.First(&user, token.UserId)
+	h.db.First(&user, token.UserID)
 
 	jwttoken := jwt.New(jwt.SigningMethodHS256)
 
@@ -72,7 +72,7 @@ func (h Handler) RefreshHandler(c *gin.Context) {
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 	// Generate encoded token and send it as response.
-	t, err := jwttoken.SignedString([]byte("secret"))
+	t, err := jwttoken.SignedString([]byte(helpers.GetEnvWithPanic("JWT_SECRET")))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusInternalServerError,
@@ -93,7 +93,7 @@ func (h Handler) RefreshHandler(c *gin.Context) {
 	newToken := models.Token{
 		AccessToken:  t,
 		RefreshToken: refresh,
-		UserId:       1,
+		UserID:       user.ID,
 		Permissions:  token.Permissions,
 	}
 

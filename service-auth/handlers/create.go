@@ -31,9 +31,9 @@ type CreateResponse struct {
 // @Accept  json
 // @Produce  json
 // @Param v query string false "service version"
-// @Param email query string false "user email"
-// @Param password query string false "user password"
-// @Param scope query []string false "permissions, to check on authorization and request if necessary (Example: email,notif)"
+// @Param email query string true "user email"
+// @Param password query string true "user password"
+// @Param scope query string true "permissions, to check on authorization and request if necessary (Example: email,notif)"
 // @Success 200 {object} handlers.CreateResponse
 // @Failure 400 {object} handlers.ResponseData
 // @Failure 500 {object} handlers.ResponseData
@@ -70,13 +70,14 @@ func (h Handler) CreateHandler(c *gin.Context) {
 	// Set claims
 	claims := jwttoken.Claims.(jwt.MapClaims)
 	claims["user_id"] = user.ID
+	claims["email"] = user.Email
 	claims["role"] = user.Role
 	claims["permissions"] = r.Scope
 
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 	// Generate encoded token and send it as response.
-	t, err := jwttoken.SignedString([]byte("secret"))
+	t, err := jwttoken.SignedString([]byte(helpers.GetEnvWithPanic("JWT_SECRET")))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusInternalServerError,
@@ -97,7 +98,8 @@ func (h Handler) CreateHandler(c *gin.Context) {
 	token := models.Token{
 		AccessToken:  t,
 		RefreshToken: refresh,
-		UserId:       1,
+		UserID:       1,
+		UserRole:     user.Role,
 		Permissions:  strings.Split(r.Scope, ","),
 	}
 

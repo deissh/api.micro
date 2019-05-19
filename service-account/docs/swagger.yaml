@@ -1,11 +1,10 @@
+basePath: /
 definitions:
   handlers.CreateResponse:
     properties:
-      token:
-        $ref: '#/definitions/models.Token'
-        type: object
+      user:
+        type: string
       v:
-        description: API version
         type: string
     type: object
   handlers.Health:
@@ -40,23 +39,6 @@ definitions:
         description: API version
         type: string
     type: object
-  handlers.RefreshResponse:
-    properties:
-      token:
-        $ref: '#/definitions/models.Token'
-        type: object
-      v:
-        description: API version
-        type: string
-    type: object
-  handlers.RemoveResponse:
-    properties:
-      status:
-        type: string
-      v:
-        description: API version
-        type: string
-    type: object
   handlers.ResponseData:
     properties:
       data:
@@ -64,20 +46,16 @@ definitions:
       status:
         type: integer
     type: object
-  models.Token:
-    properties:
-      accessToken:
-        type: string
-      permissions:
-        type: string
-      refreshToken:
-        type: string
-      userId:
-        type: integer
-    type: object
+host: localhost:8080
 info:
-  contact: {}
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: Account methods
   license: {}
+  title: Service Account API
+  version: "1.0"
 paths:
   /_/health:
     get:
@@ -107,30 +85,62 @@ paths:
             $ref: '#/definitions/handlers.PingResponse'
             type: object
       summary: Ping service
-  /token.create:
+  /account.create:
     get:
       consumes:
       - application/json
-      description: Generate new access_token and refresh_token
-      operationId: create-token
+      description: Register new account
+      operationId: create-account
       parameters:
       - description: service version
         in: query
         name: v
         type: string
+      - description: user firstname
+        in: query
+        name: firstname
+        required: true
+        type: string
+      - description: user lastname
+        in: query
+        name: lastname
+        required: true
+        type: string
+      - description: user nickname
+        in: query
+        name: nickname
+        required: true
+        type: string
       - description: user email
         in: query
         name: email
+        required: true
         type: string
       - description: user password
         in: query
         name: password
+        required: true
         type: string
-      - description: 'permissions, to check on authorization and request if necessary
-          (Example: email,notif)'
+      - description: user sex
         in: query
-        name: scope
-        type: '[]string'
+        name: sex
+        type: integer
+      - description: user bdate
+        in: query
+        name: bdate
+        type: string
+      - description: user picture
+        in: query
+        name: picture
+        type: string
+      - description: user desc
+        in: query
+        name: desc
+        type: string
+      - description: user status
+        in: query
+        name: status
+        type: string
       produces:
       - application/json
       responses:
@@ -144,76 +154,12 @@ paths:
           schema:
             $ref: '#/definitions/handlers.ResponseData'
             type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/handlers.ResponseData'
-            type: object
-      summary: Create new token
-  /token.refresg:
-    get:
-      consumes:
-      - application/json
-      description: Generate new access_token and refresh_token
-      operationId: refresh-token
-      parameters:
-      - description: service version
-        in: query
-        name: v
-        type: string
-      - description: refresh_token
-        in: query
-        name: refresh_token
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/handlers.RefreshResponse'
-            type: object
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/handlers.ResponseData'
-            type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/handlers.ResponseData'
-            type: object
-      summary: Deactivate old token and create new
-  /token.remove:
-    get:
-      consumes:
-      - application/json
-      description: Remove access_token or revome all tokens from this user
-      operationId: remove-token
-      parameters:
-      - description: service version
-        in: query
-        name: v
-        type: string
-      - description: user access_token
-        in: query
-        name: access_token
-        type: string
-      - description: remove all tokens
-        in: query
-        name: all
-        type: boolean
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/handlers.RemoveResponse'
-            type: object
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/handlers.ResponseData'
-            type: object
-      summary: Remove token or all
+      summary: Create new account
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+  BasicAuth:
+    type: basic
+swagger: "2.0"
