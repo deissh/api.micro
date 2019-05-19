@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// CreateNewsR request params
 type CreateNewsR struct {
 	Title      string `form:"title" binding:"required"`
 	Annotation string `form:"annotation" binding:"required"`
@@ -18,6 +19,7 @@ type CreateNewsR struct {
 	AccessToken string `form:"access_token" binding:"required"`
 }
 
+// CreateResponse return struct in response
 type CreateResponse struct {
 	// API version
 	Version string      `json:"v"`
