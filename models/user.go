@@ -2,13 +2,12 @@ package models
 
 import (
 	"errors"
-	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
 	"time"
 )
 
 type User struct {
-	gorm.Model
+	ID           uint      `gorm:"primary_key" json:"id"`
 	FirstName    string    `gorm:"not null" json:"first_name"`
 	LastName     string    `gorm:"not null" json:"last_name"`
 	Nickname     string    `gorm:"unique;not null;index:nickname" json:"nickname"`
@@ -20,7 +19,11 @@ type User struct {
 	Desc         string    `json:"desc"`
 	Status       string    `json:"status"`
 	Badges       []Badges  `json:"badges"`
-	PasswordHash string    `gorm:"not null"`
+	PasswordHash string    `gorm:"not null" json:"-"`
+
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
+	DeletedAt *time.Time `sql:"index" json:"-"`
 }
 
 type Badges struct {
