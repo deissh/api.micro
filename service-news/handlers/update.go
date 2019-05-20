@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// UpdateRequest request params
 type UpdateRequest struct {
 	// API version
 	Version    string `form:"v"`
@@ -21,6 +22,7 @@ type UpdateRequest struct {
 	AccessToken string `form:"access_token" binding:"required"`
 }
 
+// UpdateResponse response struct
 type UpdateResponse struct {
 	// API version
 	Version string      `json:"v"`
@@ -34,6 +36,23 @@ func checkNull(old string, new string) string {
 	return new
 }
 
+// UpdateNews godoc
+// @Summary update news
+// @Description Update news and return it
+// @ID update-news
+// @Accept  json
+// @Produce  json
+// @Param v query string false "service version"
+// @Param title query string false "title"
+// @Param annotation query string false "annotation"
+// @Param body query string false "body news"
+// @Param preview query string false "preview"
+// @Param background query string false "background"
+// @Param types query string false "news types"
+// @Param access_token query string true "user access_token"
+// @Success 200 {object} handlers.UpdateRequest
+// @Failure 400 {object} handlers.ResponseData
+// @Router /news.create [Get]
 func (h Handler) UpdateNews(c *gin.Context) {
 	var r UpdateRequest
 	if err := c.Bind(&r); err != nil {

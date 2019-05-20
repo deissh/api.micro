@@ -26,6 +26,23 @@ type CreateResponse struct {
 	News    models.News `json:"news"`
 }
 
+// CreateNews godoc
+// @Summary Create news
+// @Description Create news and return it
+// @ID create-news
+// @Accept  json
+// @Produce  json
+// @Param v query string false "service version"
+// @Param title query string true "title"
+// @Param annotation query string true "annotation"
+// @Param body query string true "body news"
+// @Param preview query string true "preview"
+// @Param background query string false "background"
+// @Param types query string false "news types"
+// @Param access_token query string true "user access_token"
+// @Success 200 {object} handlers.CreateResponse
+// @Failure 400 {object} handlers.ResponseData
+// @Router /news.create [Get]
 func (h Handler) CreateNews(c *gin.Context) {
 	var r CreateNewsR
 	if err := c.Bind(&r); err != nil {

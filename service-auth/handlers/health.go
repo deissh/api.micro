@@ -5,14 +5,15 @@ import (
 	"net/http"
 )
 
-type Health struct {
+type health struct {
 	Alive bool `json:"alive"`
 }
 
+// HealthResponse response struct
 type HealthResponse struct {
 	// API version
 	Version string `json:"v"`
-	Health  Health `json:"Health"`
+	Health  health `json:"Health"`
 }
 
 // HealthCheck godoc
@@ -25,7 +26,7 @@ type HealthResponse struct {
 func (h Handler) HealthCheckHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, HealthResponse{
 		Version: "1",
-		Health: Health{
+		Health: health{
 			Alive: true,
 		},
 	})

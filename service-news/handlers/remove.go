@@ -23,6 +23,17 @@ type RemoveResponse struct {
 	Status  string `json:"status"`
 }
 
+// RemoveNews godoc
+// @Summary Remove news by id
+// @Description Remove news by id
+// @ID remove-news
+// @Accept  json
+// @Produce  json
+// @Param v query string false "service version"
+// @Param news query string true "news id"
+// @Success 200 {object} handlers.RemoveResponse
+// @Failure 400 {object} handlers.ResponseData
+// @Router /news.remove [Get]
 func (h Handler) RemoveNews(c *gin.Context) {
 	var r RemoveRequest
 	if err := c.Bind(&r); err != nil {

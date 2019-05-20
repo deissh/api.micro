@@ -10,6 +10,7 @@ import (
 	"time"
 )
 
+// CreateRequest request params
 type CreateRequest struct {
 	// API version
 	Version  string `json:"v" query:"v"`
@@ -18,6 +19,7 @@ type CreateRequest struct {
 	Scope    string `form:"scope" binding:"required"`
 }
 
+// CreateResponse response struct
 type CreateResponse struct {
 	// API version
 	Version string       `json:"v"`

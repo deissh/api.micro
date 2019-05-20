@@ -7,16 +7,17 @@ import (
 	"time"
 )
 
-type Ping struct {
+type ping struct {
 	ID          string    `json:"id,omitempty"`
 	ServiceName string    `json:"service,omitempty"`
 	Time        time.Time `json:"time,omitempty"`
 }
 
+// PingResponse response value
 type PingResponse struct {
 	// API version
 	Version string `json:"v"`
-	Ping    Ping   `json:"ping"`
+	Ping    ping   `json:"ping"`
 }
 
 // PingCheck godoc
@@ -26,8 +27,8 @@ type PingResponse struct {
 // @Produce  json
 // @Success 200 {object} handlers.PingResponse
 // @Router /_/ping [get]
-func (h Handler) PingHandler(c *gin.Context) {
-	ping := Ping{
+func (h Handler) PingCheck(c *gin.Context) {
+	ping := ping{
 		ID:          uuid.New().String(),
 		ServiceName: "service-auth",
 		Time:        time.Now().Local(),
