@@ -9,12 +9,14 @@ import (
 	"time"
 )
 
+// RefreshRequest request params
 type RefreshRequest struct {
 	// API version
 	Version      string `form:"v"`
 	RefreshToken string `form:"refresh_token" binding:"required"`
 }
 
+// RefreshResponse response struct
 type RefreshResponse struct {
 	// API version
 	Version string       `json:"v"`

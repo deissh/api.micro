@@ -44,8 +44,8 @@ func main() {
 		g.GET("/users.report")
 		g.GET("/users.search")
 
-		g.GET("/_/health", handlers.HealthCheckHandler)
-		g.GET("/_/ping", handlers.PingHandler)
+		g.GET("/_/health", handlers.HealthCheck)
+		g.GET("/_/ping", handlers.PingCheck)
 		g.GET("/_/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
 

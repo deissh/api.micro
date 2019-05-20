@@ -6,6 +6,7 @@ import (
 	"net/http"
 )
 
+// RemoveRequest request params
 type RemoveRequest struct {
 	// API version
 	Version     string `json:"v" query:"v"`
@@ -13,6 +14,7 @@ type RemoveRequest struct {
 	All         bool   `form:"all"`
 }
 
+// RemoveResponse response struct
 type RemoveResponse struct {
 	// API version
 	Version string `json:"v"`
