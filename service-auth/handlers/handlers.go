@@ -4,7 +4,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-// Error default response type
+// ResponseData Error default response type
 type ResponseData struct {
 	Status int    `json:"status"`
 	Data   string `json:"data"`

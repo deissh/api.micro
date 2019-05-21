@@ -8,7 +8,7 @@ import (
 
 // GetRequest request params
 type GetRequest struct {
-	Id string `form:"news_id"`
+	ID string `form:"news_id"`
 }
 
 // GetResponse response struct
@@ -42,7 +42,7 @@ func (h Handler) GetNews(c *gin.Context) {
 	}
 
 	var news models.News
-	if err := h.db.First(&news, r.Id).Error; err != nil {
+	if err := h.db.First(&news, r.ID).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
 			Data:   "Bad title name",

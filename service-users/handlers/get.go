@@ -10,7 +10,7 @@ import (
 type GetRequest struct {
 	// API version
 	Version string `json:"v"`
-	Id      string `form:"user_id"`
+	ID      string `form:"user_id"`
 }
 
 // GetResponse return user
@@ -44,7 +44,7 @@ func (h Handler) GetUser(c *gin.Context) {
 		return
 	}
 
-	if err := h.db.First(&user, r.Id).Error; err != nil {
+	if err := h.db.First(&user, r.ID).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
 			Data:   "Bad nickname",

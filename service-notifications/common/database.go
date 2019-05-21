@@ -8,10 +8,12 @@ import (
 	"github.com/labstack/gommon/log"
 )
 
+// Database class
 type Database struct {
 	*gorm.DB
 }
 
+// DB contain current connection
 var DB *gorm.DB
 
 // Opening a database and save the reference to `Database` struct.

@@ -40,7 +40,7 @@ type CreateResponse struct {
 // @Failure 400 {object} handlers.ResponseData
 // @Failure 500 {object} handlers.ResponseData
 // @Router /token.create [Get]
-func (h Handler) CreateHandler(c *gin.Context) {
+func (h Handler) TokenCreate(c *gin.Context) {
 	var r CreateRequest
 	if err := c.Bind(&r); err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{

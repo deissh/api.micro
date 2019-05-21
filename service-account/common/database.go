@@ -8,6 +8,7 @@ import (
 	"github.com/labstack/gommon/log"
 )
 
+// Database class
 type Database struct {
 	*gorm.DB
 }

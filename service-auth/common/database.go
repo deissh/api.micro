@@ -8,6 +8,7 @@ import (
 	"github.com/labstack/gommon/log"
 )
 
+// Database class
 type Database struct {
 	*gorm.DB
 }
@@ -38,10 +39,10 @@ func Init() *gorm.DB {
 func Migrate() {
 	// create tables if not exist
 	// todo: add auto migration
-	DB.AutoMigrate(&models.Token{}, &models.User{})
+	DB.AutoMigrate(&models.User{})
 }
 
 // Using this function to get a connection, you can create your connection pool here.
-func GetDB() *gorm.DB {
-	return DB
-}
+//func GetDB() *gorm.DB {
+//	return DB
+//}
