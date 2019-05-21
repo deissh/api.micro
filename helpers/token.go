@@ -8,8 +8,8 @@ import (
 
 type tokenResponse struct {
 	// API version
-	Version string       `json:"v"`
-	Token   Token `json:"token"`
+	Version string `json:"v"`
+	Token   Token  `json:"token"`
 }
 
 // Token access_token information
@@ -23,7 +23,7 @@ type Token struct {
 func TokenVerify(accessToken string, required bool, roles []string, scopes []string) (Token, error) {
 	req := gentleman.New().URL(
 		GetEnv("SERVICE_AUTH", "http://service-auth:8080") +
-		"/token.check?access_token=" + accessToken,
+			"/token.check?access_token=" + accessToken,
 	).Request()
 	req.Method("GET")
 
@@ -41,7 +41,7 @@ func TokenVerify(accessToken string, required bool, roles []string, scopes []str
 	}
 
 	var tokenres tokenResponse
-	if err := res.JSON(tokenres); err != nil {
+	if err := res.JSON(&tokenres); err != nil {
 		log.Error(err)
 		return Token{}, err
 	}
@@ -52,7 +52,7 @@ func TokenVerify(accessToken string, required bool, roles []string, scopes []str
 		return Token{}, errors.New("user does not have the necessary roles")
 	}
 
-	if !ContainsStrings(scopes, token.Permissions) {
+	if !ContainsStrings(token.Permissions, scopes) {
 		return Token{}, errors.New("user does not have the necessary permissions(scopes)")
 	}
 
