@@ -62,7 +62,7 @@ func (h Handler) CreateNews(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, ResponseData{
 			Status: http.StatusBadRequest,
-			Data:   "Unauthorized",
+			Data:   err.Error(),
 		})
 		return
 	}

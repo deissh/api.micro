@@ -55,14 +55,202 @@
                     }
                 }
             }
+        },
+        "/news.create": {
+            "get": {
+                "description": "Create news and return it",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create news",
+                "operationId": "create-news",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "service version",
+                        "name": "v",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "title",
+                        "name": "title",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "annotation",
+                        "name": "annotation",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "body news",
+                        "name": "body",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "preview",
+                        "name": "preview",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "background",
+                        "name": "background",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "news types",
+                        "name": "types",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user access_token",
+                        "name": "access_token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/handlers.CreateResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/handlers.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/news.get": {
+            "get": {
+                "description": "Return info about news by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Return news by id",
+                "operationId": "get-news",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "service version",
+                        "name": "v",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "news id",
+                        "name": "news",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/handlers.GetResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/handlers.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/news.remove": {
+            "get": {
+                "description": "Remove news by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Remove news by id",
+                "operationId": "remove-news",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "service version",
+                        "name": "v",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "news id",
+                        "name": "news",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/handlers.RemoveResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/handlers.ResponseData"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
-        "handlers.Health": {
+        "handlers.CreateResponse": {
             "type": "object",
             "properties": {
-                "alive": {
-                    "type": "boolean"
+                "news": {
+                    "type": "string"
+                },
+                "v": {
+                    "description": "API version",
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.GetResponse": {
+            "type": "object",
+            "properties": {
+                "news": {
+                    "type": "string"
+                },
+                "v": {
+                    "description": "API version",
+                    "type": "string"
                 }
             }
         },
@@ -71,24 +259,10 @@
             "properties": {
                 "Health": {
                     "type": "object",
-                    "$ref": "#/definitions/handlers.Health"
+                    "$ref": "#/definitions/handlers.health"
                 },
                 "v": {
                     "description": "API version",
-                    "type": "string"
-                }
-            }
-        },
-        "handlers.Ping": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
-                },
-                "service": {
-                    "type": "string"
-                },
-                "time": {
                     "type": "string"
                 }
             }
@@ -98,10 +272,91 @@
             "properties": {
                 "ping": {
                     "type": "object",
-                    "$ref": "#/definitions/handlers.Ping"
+                    "$ref": "#/definitions/handlers.ping"
                 },
                 "v": {
                     "description": "API version",
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.RemoveResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string"
+                },
+                "v": {
+                    "description": "API version",
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.ResponseData": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handlers.UpdateRequest": {
+            "type": "object",
+            "required": [
+                "accessToken"
+            ],
+            "properties": {
+                "accessToken": {
+                    "type": "string"
+                },
+                "annotation": {
+                    "type": "string"
+                },
+                "background": {
+                    "type": "string"
+                },
+                "body": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "preview": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "types": {
+                    "type": "string"
+                },
+                "version": {
+                    "description": "API version",
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.health": {
+            "type": "object",
+            "properties": {
+                "alive": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "handlers.ping": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "service": {
+                    "type": "string"
+                },
+                "time": {
                     "type": "string"
                 }
             }

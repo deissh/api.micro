@@ -3,7 +3,8 @@ definitions:
   handlers.CheckResponse:
     properties:
       token:
-        type: string
+        $ref: '#/definitions/handlers.shortToken'
+        type: object
       v:
         description: API version
         type: string
@@ -16,33 +17,19 @@ definitions:
         description: API version
         type: string
     type: object
-  handlers.Health:
-    properties:
-      alive:
-        type: boolean
-    type: object
   handlers.HealthResponse:
     properties:
       Health:
-        $ref: '#/definitions/handlers.Health'
+        $ref: '#/definitions/handlers.health'
         type: object
       v:
         description: API version
         type: string
     type: object
-  handlers.Ping:
-    properties:
-      id:
-        type: string
-      service:
-        type: string
-      time:
-        type: string
-    type: object
   handlers.PingResponse:
     properties:
       ping:
-        $ref: '#/definitions/handlers.Ping'
+        $ref: '#/definitions/handlers.ping'
         type: object
       v:
         description: API version
@@ -69,6 +56,31 @@ definitions:
       data:
         type: string
       status:
+        type: integer
+    type: object
+  handlers.health:
+    properties:
+      alive:
+        type: boolean
+    type: object
+  handlers.ping:
+    properties:
+      id:
+        type: string
+      service:
+        type: string
+      time:
+        type: string
+    type: object
+  handlers.shortToken:
+    properties:
+      permissions:
+        items:
+          type: string
+        type: array
+      role:
+        type: string
+      user_id:
         type: integer
     type: object
 host: localhost:8080
