@@ -2,6 +2,7 @@ package models
 
 import "time"
 
+// News model
 type News struct {
 	ID         uint   `gorm:"primary_key" json:"id"`
 	Title      string `gorm:"not null" json:"title"`
@@ -17,6 +18,7 @@ type News struct {
 	DeletedAt *time.Time `sql:"index" json:"-"`
 }
 
+// View return view without some params
 func (n *News) View() News {
 	// return news with private settings
 	return News{

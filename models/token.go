@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// Token model
 type Token struct {
 	ID           uint           `gorm:"primary_key" json:"id"`
 	AccessToken  string         `gorm:"unique;not null" json:"access_token"`

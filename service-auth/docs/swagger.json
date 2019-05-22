@@ -276,7 +276,8 @@
             "type": "object",
             "properties": {
                 "token": {
-                    "type": "string"
+                    "type": "object",
+                    "$ref": "#/definitions/handlers.shortToken"
                 },
                 "v": {
                     "description": "API version",
@@ -296,37 +297,15 @@
                 }
             }
         },
-        "handlers.Health": {
-            "type": "object",
-            "properties": {
-                "alive": {
-                    "type": "boolean"
-                }
-            }
-        },
         "handlers.HealthResponse": {
             "type": "object",
             "properties": {
                 "Health": {
                     "type": "object",
-                    "$ref": "#/definitions/handlers.Health"
+                    "$ref": "#/definitions/handlers.health"
                 },
                 "v": {
                     "description": "API version",
-                    "type": "string"
-                }
-            }
-        },
-        "handlers.Ping": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
-                },
-                "service": {
-                    "type": "string"
-                },
-                "time": {
                     "type": "string"
                 }
             }
@@ -336,7 +315,7 @@
             "properties": {
                 "ping": {
                     "type": "object",
-                    "$ref": "#/definitions/handlers.Ping"
+                    "$ref": "#/definitions/handlers.ping"
                 },
                 "v": {
                     "description": "API version",
@@ -375,6 +354,45 @@
                     "type": "string"
                 },
                 "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handlers.health": {
+            "type": "object",
+            "properties": {
+                "alive": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "handlers.ping": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "service": {
+                    "type": "string"
+                },
+                "time": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.shortToken": {
+            "type": "object",
+            "properties": {
+                "permissions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "role": {
+                    "type": "string"
+                },
+                "user_id": {
                     "type": "integer"
                 }
             }

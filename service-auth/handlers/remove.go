@@ -33,7 +33,7 @@ type RemoveResponse struct {
 // @Success 200 {object} handlers.RemoveResponse
 // @Success 400 {object} handlers.ResponseData
 // @Router /token.remove [Get]
-func (h Handler) RemoveHandler(c *gin.Context) {
+func (h Handler) TokenRemove(c *gin.Context) {
 	var r RemoveRequest
 	if err := c.Bind(&r); err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{

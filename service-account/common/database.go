@@ -4,10 +4,10 @@ import (
 	"github.com/deissh/api.micro/helpers"
 	"github.com/deissh/api.micro/models"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/labstack/gommon/log"
 )
 
+// Database class
 type Database struct {
 	*gorm.DB
 }
@@ -15,7 +15,7 @@ type Database struct {
 // DB contain current connection
 var DB *gorm.DB
 
-// Opening a database and save the reference to `Database` struct.
+// Init Opening a database and save the reference to `Database` struct.
 func Init() *gorm.DB {
 	host := helpers.GetEnv("DB_HOST", "127.0.0.1")
 	user := helpers.GetEnv("DB_USER", "postgres")

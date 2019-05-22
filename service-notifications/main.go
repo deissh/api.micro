@@ -10,6 +10,8 @@ import (
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 
 	_ "github.com/deissh/api.micro/service-notifications/docs"
+
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // @title Service Notifications API

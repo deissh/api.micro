@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// User model
 type User struct {
 	ID           uint      `gorm:"primary_key" json:"id"`
 	FirstName    string    `gorm:"not null" json:"first_name"`
@@ -26,6 +27,7 @@ type User struct {
 	DeletedAt *time.Time `sql:"index" json:"-"`
 }
 
+// Badges struct
 type Badges struct {
 	Name string `gorm:"not null"`
 	Icon string `gorm:"not null"`

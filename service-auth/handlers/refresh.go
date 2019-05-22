@@ -35,7 +35,7 @@ type RefreshResponse struct {
 // @Failure 400 {object} handlers.ResponseData
 // @Failure 500 {object} handlers.ResponseData
 // @Router /token.refresh [Get]
-func (h Handler) RefreshHandler(c *gin.Context) {
+func (h Handler) TokenRefresh(c *gin.Context) {
 	var r RefreshRequest
 	if err := c.Bind(&r); err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{

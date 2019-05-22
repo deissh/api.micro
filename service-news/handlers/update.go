@@ -11,7 +11,7 @@ import (
 type UpdateRequest struct {
 	// API version
 	Version    string `form:"v"`
-	Id         string `form:"news_id"`
+	ID         string `form:"news_id"`
 	Title      string `form:"title"`
 	Annotation string `form:"annotation"`
 	Body       string `form:"body"`
@@ -78,7 +78,7 @@ func (h Handler) UpdateNews(c *gin.Context) {
 	}
 
 	var news models.News
-	if err := h.db.First(&news, r.Id).Error; err != nil {
+	if err := h.db.First(&news, r.ID).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
 			Data:   "News did not find",

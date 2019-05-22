@@ -10,6 +10,8 @@ import (
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 
 	_ "github.com/deissh/api.micro/service-messages/docs"
+
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // @title Service Messages API
@@ -59,8 +61,8 @@ func main() {
 		g.GET("/messages.removeChatUser")
 		g.GET("/messages.send")
 
-		g.GET("/_/health", handlers.HealthCheckHandler)
-		g.GET("/_/ping", handlers.PingHandler)
+		g.GET("/_/health", handlers.HealthCheck)
+		g.GET("/_/ping", handlers.PingCheck)
 		g.GET("/_/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
 

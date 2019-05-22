@@ -10,6 +10,8 @@ import (
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 
 	_ "github.com/deissh/api.micro/service-auth/docs"
+
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // @title Service Auth API
@@ -38,13 +40,13 @@ func main() {
 
 	g := r.Group("/")
 	{
-		g.GET("/token.create", handlers.CreateHandler)
-		g.GET("/token.refresh", handlers.RefreshHandler)
-		g.GET("/token.remove", handlers.RemoveHandler)
+		g.GET("/token.create", handlers.TokenCreate)
+		g.GET("/token.refresh", handlers.TokenRefresh)
+		g.GET("/token.remove", handlers.TokenRemove)
 		g.GET("/token.check", handlers.TokenCheck)
 
-		g.GET("/_/health", handlers.HealthCheckHandler)
-		g.GET("/_/ping", handlers.PingHandler)
+		g.GET("/_/health", handlers.HealthCheck)
+		g.GET("/_/ping", handlers.PingCheck)
 		g.GET("/_/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
 

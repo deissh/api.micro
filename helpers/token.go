@@ -6,6 +6,12 @@ import (
 	"gopkg.in/h2non/gentleman.v2"
 )
 
+type tokenResponse struct {
+	// API version
+	Version string `json:"v"`
+	Token   Token  `json:"token"`
+}
+
 // Token access_token information
 type Token struct {
 	UserID      int      `json:"user_id"`
@@ -15,8 +21,11 @@ type Token struct {
 
 // TokenVerify check token and return info about token (role, user_id and etc)
 func TokenVerify(accessToken string, required bool, roles []string, scopes []string) (Token, error) {
-	req := gentleman.New().URL(GetEnv("SERVICE_AUTH", "http://service-auth:8080")).Request()
-	req.Path("/token.check?access_token=" + accessToken)
+	req := gentleman.New().URL(
+		GetEnv("SERVICE_AUTH", "http://service-auth:8080") +
+			"/token.check?access_token=" + accessToken,
+	).Request()
+	req.Method("GET")
 
 	res, err := req.Send()
 	if err != nil {
@@ -28,20 +37,22 @@ func TokenVerify(accessToken string, required bool, roles []string, scopes []str
 		if !required {
 			return Token{}, nil
 		}
-		return Token{}, errors.New(res.RawResponse.Status)
+		return Token{}, errors.New("access_token not founded")
 	}
 
-	var token Token
-	if err := res.JSON(token); err != nil {
+	var tokenres tokenResponse
+	if err := res.JSON(&tokenres); err != nil {
 		log.Error(err)
 		return Token{}, err
 	}
+
+	token := tokenres.Token
 
 	if !ContainsString(roles, token.Role) {
 		return Token{}, errors.New("user does not have the necessary roles")
 	}
 
-	if !ContainsStrings(scopes, token.Permissions) {
+	if !ContainsStrings(token.Permissions, scopes) {
 		return Token{}, errors.New("user does not have the necessary permissions(scopes)")
 	}
 

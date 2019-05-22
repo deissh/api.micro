@@ -1,35 +1,50 @@
 basePath: /
 definitions:
-  handlers.Health:
+  handlers.GetResponse:
     properties:
-      alive:
-        type: boolean
+      user:
+        type: string
+      v:
+        description: API version
+        type: string
     type: object
   handlers.HealthResponse:
     properties:
       Health:
-        $ref: '#/definitions/handlers.Health'
+        $ref: '#/definitions/handlers.health'
         type: object
       v:
         description: API version
         type: string
     type: object
-  handlers.Ping:
+  handlers.PingResponse:
+    properties:
+      ping:
+        $ref: '#/definitions/handlers.ping'
+        type: object
+      v:
+        description: API version
+        type: string
+    type: object
+  handlers.ResponseData:
+    properties:
+      data:
+        type: string
+      status:
+        type: integer
+    type: object
+  handlers.health:
+    properties:
+      alive:
+        type: boolean
+    type: object
+  handlers.ping:
     properties:
       id:
         type: string
       service:
         type: string
       time:
-        type: string
-    type: object
-  handlers.PingResponse:
-    properties:
-      ping:
-        $ref: '#/definitions/handlers.Ping'
-        type: object
-      v:
-        description: API version
         type: string
     type: object
 host: localhost:8080
@@ -71,6 +86,36 @@ paths:
             $ref: '#/definitions/handlers.PingResponse'
             type: object
       summary: Ping service
+  /user.get:
+    get:
+      consumes:
+      - application/json
+      description: Return info about user by id
+      operationId: get-user
+      parameters:
+      - description: service version
+        in: query
+        name: v
+        type: string
+      - description: user id
+        in: query
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.GetResponse'
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.ResponseData'
+            type: object
+      summary: Return user by id
 securityDefinitions:
   ApiKeyAuth:
     in: header

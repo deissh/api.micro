@@ -27,7 +27,7 @@ type PingResponse struct {
 // @Produce  json
 // @Success 200 {object} handlers.PingResponse
 // @Router /_/ping [get]
-func (h Handler) PingHandler(c *gin.Context) {
+func (h Handler) PingCheck(c *gin.Context) {
 	ping := ping{
 		ID:          uuid.New().String(),
 		ServiceName: "service-auth",

@@ -23,7 +23,7 @@ type HealthResponse struct {
 // @Produce  json
 // @Success 200 {object} handlers.HealthResponse
 // @Router /_/health [get]
-func (h Handler) HealthCheckHandler(c *gin.Context) {
+func (h Handler) HealthCheck(c *gin.Context) {
 	c.JSON(http.StatusOK, HealthResponse{
 		Version: "1",
 		Health: health{
