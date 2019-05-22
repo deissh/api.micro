@@ -203,6 +203,139 @@ func TestTokenVerify(t *testing.T) {
 			},
 			wantErr: false,
 		},
+
+		{
+			name: "Verify invalid token but token not required",
+			args: args{
+				accessToken: "invalidtoken",
+				required:    false,
+				roles:       []string{"admin", "superadmin"},
+				scopes:      []string{"news", "notif"},
+			},
+			mock: mock{
+				json: tokenResponse{
+					Version: "1",
+					Token:   Token{},
+				},
+				// token not founded
+				status: http.StatusNotFound,
+			},
+			wantErr: false,
+		},
+		{
+			name: "Verify token but without roles but token not required",
+			args: args{
+				accessToken: "somesotekn",
+				required:    false,
+				roles:       []string{"admin", "superadmin"},
+				scopes:      []string{"news", "notif"},
+			},
+			mock: mock{
+				json: tokenResponse{
+					Version: "1",
+					Token: Token{
+						Role: "user",
+						Permissions: []string{
+							"news",
+							"notif",
+						},
+					},
+				},
+				status: http.StatusOK,
+			},
+			wantErr: true,
+		},
+		{
+			name: "Verify token but without permissions but token not required",
+			args: args{
+				accessToken: "somesotekn",
+				required:    false,
+				roles:       []string{"admin", "superadmin"},
+				scopes:      []string{"news", "notif"},
+			},
+			mock: mock{
+				json: tokenResponse{
+					Version: "1",
+					Token: Token{
+						Role: "admin",
+						Permissions: []string{
+							"notif",
+							"email",
+							"messages",
+						},
+					},
+				},
+				status: http.StatusOK,
+			},
+			wantErr: true,
+		},
+		{
+			name: "Verify token but token not required",
+			args: args{
+				accessToken: "somesotekn",
+				required:    false,
+				roles:       []string{"admin", "superadmin"},
+				scopes:      []string{"news", "notif"},
+			},
+			mock: mock{
+				json: tokenResponse{
+					Version: "1",
+					Token: Token{
+						Role: "admin",
+						Permissions: []string{
+							"notif",
+							"news",
+						},
+					},
+				},
+				status: http.StatusOK,
+			},
+			want: Token{
+				UserID: 0,
+				Role:   "admin",
+				Permissions: []string{
+					"notif",
+					"news",
+				},
+			},
+			wantErr: false,
+		},
+		{
+			name: "Verify token but token not required",
+			args: args{
+				accessToken: "somesotekn",
+				required:    false,
+				roles:       []string{"admin", "superadmin"},
+				scopes:      []string{"news", "notif"},
+			},
+			mock: mock{
+				json: tokenResponse{
+					Version: "1",
+					Token: Token{
+						UserID: 1,
+						Role:   "superadmin",
+						Permissions: []string{
+							"notif",
+							"news",
+							"messages",
+							"profile",
+						},
+					},
+				},
+				status: http.StatusOK,
+			},
+			want: Token{
+				UserID: 1,
+				Role:   "superadmin",
+				Permissions: []string{
+					"notif",
+					"news",
+					"messages",
+					"profile",
+				},
+			},
+			wantErr: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -225,7 +358,7 @@ func TestTokenVerify(t *testing.T) {
 			httpmock.RegisterResponder(
 				"GET",
 				fakeUrl,
-				httpmock.NewJsonResponderOrPanic(http.StatusOK, tt.mock.json),
+				httpmock.NewJsonResponderOrPanic(tt.mock.status, tt.mock.json),
 			)
 
 			got, err := TokenVerify(tt.args.accessToken, tt.args.required, tt.args.roles, tt.args.scopes)
