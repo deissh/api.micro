@@ -16,3 +16,6 @@
 *.db
 
 .env
+
+.build_k8s
+cover.out

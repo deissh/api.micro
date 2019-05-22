@@ -58,15 +58,15 @@
         },
         "/news.create": {
             "get": {
-                "description": "Create news and return it",
+                "description": "Update news and return it",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Create news",
-                "operationId": "create-news",
+                "summary": "update news",
+                "operationId": "update-news",
                 "parameters": [
                     {
                         "type": "string",
@@ -78,29 +78,25 @@
                         "type": "string",
                         "description": "title",
                         "name": "title",
-                        "in": "query",
-                        "required": true
+                        "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "annotation",
                         "name": "annotation",
-                        "in": "query",
-                        "required": true
+                        "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "body news",
                         "name": "body",
-                        "in": "query",
-                        "required": true
+                        "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "preview",
                         "name": "preview",
-                        "in": "query",
-                        "required": true
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -127,7 +123,7 @@
                         "description": "OK",
                         "schema": {
                             "type": "object",
-                            "$ref": "#/definitions/handlers.CreateResponse"
+                            "$ref": "#/definitions/handlers.UpdateRequest"
                         }
                     },
                     "400": {

@@ -130,8 +130,8 @@ paths:
     get:
       consumes:
       - application/json
-      description: Create news and return it
-      operationId: create-news
+      description: Update news and return it
+      operationId: update-news
       parameters:
       - description: service version
         in: query
@@ -140,22 +140,18 @@ paths:
       - description: title
         in: query
         name: title
-        required: true
         type: string
       - description: annotation
         in: query
         name: annotation
-        required: true
         type: string
       - description: body news
         in: query
         name: body
-        required: true
         type: string
       - description: preview
         in: query
         name: preview
-        required: true
         type: string
       - description: background
         in: query
@@ -176,14 +172,14 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handlers.CreateResponse'
+            $ref: '#/definitions/handlers.UpdateRequest'
             type: object
         "400":
           description: Bad Request
           schema:
             $ref: '#/definitions/handlers.ResponseData'
             type: object
-      summary: Create news
+      summary: update news
   /news.get:
     get:
       consumes:

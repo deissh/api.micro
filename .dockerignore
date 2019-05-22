@@ -16,3 +16,6 @@ venv
 *.sh
 stack.yaml
 resource
+
+.k8s
+.build_k8s
