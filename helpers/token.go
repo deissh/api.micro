@@ -22,12 +22,6 @@ type Token struct {
 
 // TokenVerify check token and return info about token (role, user_id and etc)
 func TokenVerify(accessToken string, required bool, roles []string, scopes []string) (Token, error) {
-	//req := gentleman.New().URL(
-	//	GetEnv("SERVICE_AUTH", "http://localhost:8080") +
-	//		"/token.check?access_token=" + accessToken,
-	//).Request()
-	//req.Method("GET")
-
 	var tokenres tokenResponse
 	resp, err := resty.R().
 		SetPathParams(map[string]string{

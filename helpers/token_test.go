@@ -339,25 +339,11 @@ func TestTokenVerify(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			// Flush pending mocks after test execution
-			//defer gock.Off()
-			//
-			//// GetEnv because may be set different values
-			//gock.New(GetEnv("SERVICE_AUTH", "http://localhost:8080")).
-			//	Get("/token.check?access_token=" + tt.args.accessToken).
-			//	Reply(tt.mock.status).
-			//	JSON(tt.mock.json)
-
-			//httpmock.RegisterResponder(
-			//	"GET",
-			//	?access_token=" + tt.args.accessToken,
-			//	httpmock.NewJsonResponderOrPanic(http.StatusOK, tt.mock.json),
-			//)
 			httpmock.ActivateNonDefault(resty.DefaultClient.GetClient())
-			fakeUrl := GetEnv("SERVICE_AUTH", "http://service-auth:8080") + "/token.check"
+			fakeURL := GetEnv("SERVICE_AUTH", "http://service-auth:8080") + "/token.check"
 			httpmock.RegisterResponder(
 				"GET",
-				fakeUrl,
+				fakeURL,
 				httpmock.NewJsonResponderOrPanic(tt.mock.status, tt.mock.json),
 			)
 
