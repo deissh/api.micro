@@ -17,8 +17,8 @@ func TestIfThen(t *testing.T) {
 	}{
 		{name: "if true return 1", args: args{condition: true, a: 1}, want: 1},
 		{name: "if true return 0", args: args{condition: true, a: 0}, want: 0},
-		{name: "if false return 1", args: args{condition: true, a: 1}, want: 1},
-		{name: "if false return 0", args: args{condition: true, a: 0}, want: 0},
+		{name: "if false return 1", args: args{condition: false, a: 1}, want: nil},
+		{name: "if false return 0", args: args{condition: false, a: 0}, want: nil},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

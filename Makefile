@@ -103,6 +103,10 @@ fmt-check:
 		exit 1; \
 	fi;
 
+.PHONY: test
+test:
+	$(GOTEST) ./...
+
 .PHONY: view-covered
 view-covered:
 	$(GOTEST) -coverprofile=cover.out ./...

@@ -3,7 +3,8 @@ package helpers
 import (
 	"errors"
 	"github.com/labstack/gommon/log"
-	"gopkg.in/h2non/gentleman.v2"
+	"gopkg.in/resty.v1"
+	"net/http"
 )
 
 type tokenResponse struct {
@@ -21,29 +22,24 @@ type Token struct {
 
 // TokenVerify check token and return info about token (role, user_id and etc)
 func TokenVerify(accessToken string, required bool, roles []string, scopes []string) (Token, error) {
-	req := gentleman.New().URL(
-		GetEnv("SERVICE_AUTH", "http://service-auth:8080") +
-			"/token.check?access_token=" + accessToken,
-	).Request()
-	req.Method("GET")
-
-	res, err := req.Send()
+	var tokenres tokenResponse
+	resp, err := resty.R().
+		SetPathParams(map[string]string{
+			"access_token": accessToken,
+		}).
+		SetResult(&tokenres).
+		Get(GetEnv("SERVICE_AUTH", "http://service-auth:8080") + "/token.check")
 	if err != nil {
 		log.Error(err)
 		return Token{}, err
 	}
-	if !res.Ok {
+
+	if resp.StatusCode() == http.StatusNotFound || resp.StatusCode() == http.StatusUnauthorized {
 		// auth is not required
 		if !required {
 			return Token{}, nil
 		}
 		return Token{}, errors.New("access_token not founded")
-	}
-
-	var tokenres tokenResponse
-	if err := res.JSON(&tokenres); err != nil {
-		log.Error(err)
-		return Token{}, err
 	}
 
 	token := tokenres.Token
