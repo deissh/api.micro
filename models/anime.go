@@ -61,7 +61,7 @@ type Anim struct {
 	DeletedAt *time.Time `sql:"index" json:"-"`
 }
 
-// View return view without some params
+// ViewShort return view without some params
 func (n *Anim) ViewShort() ShortAnim {
 	// return news with private settings
 	return ShortAnim{

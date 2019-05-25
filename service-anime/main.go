@@ -40,6 +40,7 @@ func main() {
 	}
 }
 
+// SetupRouter create Gin router and return one
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 
