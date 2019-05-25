@@ -3,11 +3,10 @@ package handlers
 import (
 	"github.com/deissh/api.micro/helpers"
 	"github.com/deissh/api.micro/models"
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"github.com/labstack/gommon/log"
 	"net/http"
 	"strings"
-	"time"
 )
 
 // CreateRequest request params
@@ -67,23 +66,12 @@ func (h Handler) TokenCreate(c *gin.Context) {
 		return
 	}
 
-	jwttoken := jwt.New(jwt.SigningMethodHS256)
-
-	// Set claims
-	claims := jwttoken.Claims.(jwt.MapClaims)
-	claims["user_id"] = user.ID
-	claims["email"] = user.Email
-	claims["role"] = user.Role
-	claims["permissions"] = r.Scope
-
-	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
-
-	// Generate encoded token and send it as response.
-	t, err := jwttoken.SignedString([]byte(helpers.GetEnvWithPanic("JWT_SECRET")))
+	access, err := helpers.GenerateRandomString(128)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, ResponseData{
+		log.Error("Access token generate error")
+		c.JSON(http.StatusInternalServerError, ResponseData{
 			Status: http.StatusInternalServerError,
-			Data:   "JWT signing error",
+			Data:   "Access token generate error",
 		})
 		return
 	}
@@ -98,9 +86,9 @@ func (h Handler) TokenCreate(c *gin.Context) {
 	}
 
 	token := models.Token{
-		AccessToken:  t,
+		AccessToken:  access,
 		RefreshToken: refresh,
-		UserID:       1,
+		UserID:       user.ID,
 		UserRole:     user.Role,
 		Permissions:  strings.Split(r.Scope, ","),
 	}
