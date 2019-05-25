@@ -26,7 +26,7 @@ RUN go mod download
 # Copy file(s)
 COPY . ./
 
-WORKDIR $GOPATH/src/github.com/deissh/api.micro/service-news
+WORKDIR $GOPATH/src/github.com/deissh/api.micro/service-anime
 
 # Build the binary - remove debug info and compile only for linux target
 RUN go build  -ldflags '-w -s' -a -installsuffix cgo -o /go/bin/service .
