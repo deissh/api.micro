@@ -6,7 +6,7 @@
 #=====================================
 
 readonly -a arr=($(ls -d service-*/ | xargs -n 1 basename))
-readonly tag=latest
+readonly tag=$(git describe --tags --always --dirty --match="v*" 2> /dev/null || cat $(CURDIR)/.version 2> /dev/null || echo v1.0.0)
 
 for i in "${arr[@]}"
 do
