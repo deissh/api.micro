@@ -40,9 +40,9 @@ func main() {
 
 	g := r.Group("/")
 	{
-		g.GET("/news.create", handlers.CreateNews)
+		g.POST("/news.create", handlers.CreateNews)
 		g.GET("/news.get", handlers.GetNews)
-		g.GET("/news.update", handlers.UpdateNews)
+		g.POST("/news.update", handlers.UpdateNews)
 		g.GET("/news.remove", handlers.RemoveNews)
 		g.GET("/news.search")
 

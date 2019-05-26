@@ -11,14 +11,10 @@ import (
 // UpdateRequest request params
 type UpdateRequest struct {
 	// API version
-	Version    string `form:"v"`
-	ID         string `form:"news_id"`
-	Title      string `form:"title"`
-	Annotation string `form:"annotation"`
-	Body       string `form:"body"`
-	Preview    string `form:"preview"`
-	Background string `form:"background"`
-	Types      string `form:"types"`
+	Version string `form:"v"`
+	ID      string `form:"news_id"`
+
+	News news `json:"news"`
 
 	AccessToken string `form:"access_token" binding:"required"`
 }
@@ -36,18 +32,13 @@ type UpdateResponse struct {
 // @ID update-news
 // @Accept  json
 // @Produce  json
-// @Param v query string false "service version"
-// @Param news_id query string true "news id"
-// @Param title query string false "title"
-// @Param annotation query string false "annotation"
-// @Param body query string false "body news"
-// @Param preview query string false "preview"
-// @Param background query string false "background"
-// @Param types query string false "news types"
+// @Param news_id query string false "news_id"
+// @Param news body handlers.news true "news body"
+// @Param v query query false "service version"
 // @Param access_token query string true "user access_token"
 // @Success 200 {object} handlers.UpdateRequest
 // @Failure 400 {object} handlers.ResponseData
-// @Router /news.create [Get]
+// @Router /news.create [Post]
 func (h Handler) UpdateNews(c *gin.Context) {
 	var r UpdateRequest
 	if err := c.Bind(&r); err != nil {
@@ -101,12 +92,12 @@ func (h Handler) UpdateNews(c *gin.Context) {
 
 	// merge two slices to r
 	newNews := models.News{
-		Title:      r.Title,
-		Annotation: r.Annotation,
-		Body:       r.Body,
-		Preview:    r.Preview,
-		Background: r.Background,
-		Types:      r.Types,
+		Title:      r.News.Title,
+		Annotation: r.News.Annotation,
+		Body:       r.News.Body,
+		Preview:    r.News.Preview,
+		Background: r.News.Background,
+		Types:      r.News.Types,
 	}
 
 	h.db.Create(&newNews)

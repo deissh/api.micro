@@ -35,6 +35,7 @@ type CreateResponse struct {
 // @Accept  json
 // @Produce  json
 // @Param v query string false "service version"
+// @Param news body handlers.UpdateRequest true "news body"
 // @Param firstname query string true "user firstname"
 // @Param lastname query string true "user lastname"
 // @Param nickname query string true "user nickname"

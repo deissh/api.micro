@@ -51,9 +51,9 @@ func SetupRouter() *gin.Engine {
 
 	g := r.Group("/")
 	{
-		g.GET("/anime.create")
+		g.POST("/anime.create", handlers.CreateAnime)
 		g.GET("/anime.get", handlers.GetAnime)
-		g.GET("/anime.update", handlers.UpdateAnime)
+		g.POST("/anime.update", handlers.UpdateAnime)
 		g.GET("/anime.remove", handlers.RemoveAnime)
 		g.GET("/anime.search")
 

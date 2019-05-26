@@ -25,12 +25,11 @@ type ShortAnim struct {
 // fields: http://docs.moonwalk.cc/
 type Anime struct {
 	// todo: set default values
-	ID uint `gorm:"primary_key" json:"id"`
-
+	ID               uint           `gorm:"primary_key" json:"id"`
 	TitleRu          string         `json:"title_ru"`
 	TitleEn          string         `json:"title_en"`
 	Year             int            `json:"year"`
-	Genres           pq.StringArray `json:"genres"`
+	Genres           pq.StringArray `gorm:"not null;type:varchar(64)[]" json:"genres"`
 	Poster           string         `json:"poster"`
 	Tagline          string         `json:"tagline"`
 	Description      string         `json:"description"`
@@ -47,18 +46,17 @@ type Anime struct {
 	EpisodesCount    int            `json:"episodes_count"`
 	Category         string         `json:"category"`
 	Age              int            `json:"age"`
-	Countries        pq.StringArray `json:"countries"`
-	Actors           pq.StringArray `json:"actors"`
-	Directors        pq.StringArray `json:"directors"`
-	Studios          pq.StringArray `json:"studios"`
+	Countries        pq.StringArray `gorm:"not null;type:varchar(64)[]" json:"countries"`
+	Actors           pq.StringArray `gorm:"not null;type:varchar(64)[]" json:"actors"`
+	Directors        pq.StringArray `gorm:"not null;type:varchar(64)[]" json:"directors"`
+	Studios          pq.StringArray `gorm:"not null;type:varchar(64)[]" json:"studios"`
 	KinopoiskRating  float64        `json:"kinopoisk_rating"`
 	KinopoiskVotes   int            `json:"kinopoisk_votes"`
 	ImdbRating       float64        `json:"imdb_rating"`
 	ImdbVotes        int            `json:"imdb_votes"`
-
-	CreatedAt time.Time  `json:"created_at"`
-	UpdatedAt time.Time  `json:"updated_at"`
-	DeletedAt *time.Time `sql:"index" json:"-"`
+	CreatedAt        time.Time      `json:"created_at"`
+	UpdatedAt        time.Time      `json:"updated_at"`
+	DeletedAt        *time.Time     `sql:"index" json:"-"`
 }
 
 // ViewShort return view without some params

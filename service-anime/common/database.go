@@ -36,9 +36,6 @@ func Init() *gorm.DB {
 
 // Migrate all needed tables
 func Migrate() {
-	// create tables if not exist
-	// todo: add auto migration
-	DB.AutoMigrate(&models.User{})
 	DB.AutoMigrate(&models.Anime{})
 }
 

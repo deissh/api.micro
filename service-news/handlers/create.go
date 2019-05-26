@@ -7,15 +7,20 @@ import (
 	"net/http"
 )
 
-// CreateNewsR request params
-type CreateNewsR struct {
-	Title      string `form:"title" binding:"required"`
-	Annotation string `form:"annotation" binding:"required"`
-	Body       string `form:"body" binding:"required"`
-	Preview    string `form:"preview" binding:"required"`
-	Background string `form:"background"`
-	Types      string `form:"types"`
+type news struct {
+	Title      string `json:"title" binding:"required"`
+	Annotation string `json:"annotation" binding:"required"`
+	Body       string `json:"body" binding:"required"`
+	Preview    string `json:"preview" binding:"required"`
+	Background string `json:"background"`
+	Types      string `json:"types"`
+}
 
+// CreateRequest request params
+type CreateRequest struct {
+	News news `json:"news"`
+
+	Version     string `form:"v"`
 	AccessToken string `form:"access_token" binding:"required"`
 }
 
@@ -32,19 +37,14 @@ type CreateResponse struct {
 // @ID create-news
 // @Accept  json
 // @Produce  json
+// @Param news body handlers.news true "news body"
 // @Param v query string false "service version"
-// @Param title query string true "title"
-// @Param annotation query string true "annotation"
-// @Param body query string true "body news"
-// @Param preview query string true "preview"
-// @Param background query string false "background"
-// @Param types query string false "news types"
 // @Param access_token query string true "user access_token"
 // @Success 200 {object} handlers.CreateResponse
 // @Failure 400 {object} handlers.ResponseData
-// @Router /news.create [Get]
+// @Router /news.create [Post]
 func (h Handler) CreateNews(c *gin.Context) {
-	var r CreateNewsR
+	var r CreateRequest
 	if err := c.Bind(&r); err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
@@ -78,13 +78,13 @@ func (h Handler) CreateNews(c *gin.Context) {
 	}
 
 	news := models.News{
-		Title:      r.Title,
-		Annotation: r.Annotation,
-		Body:       r.Body,
+		Title:      r.News.Title,
+		Annotation: r.News.Annotation,
+		Body:       r.News.Body,
 		Author:     author,
-		Preview:    r.Preview,
-		Background: r.Background,
-		Types:      r.Types,
+		Preview:    r.News.Preview,
+		Background: r.News.Background,
+		Types:      r.News.Types,
 	}
 
 	h.db.Create(&news)
