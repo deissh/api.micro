@@ -39,7 +39,7 @@ func Migrate() {
 	// create tables if not exist
 	// todo: add auto migration
 	DB.AutoMigrate(&models.User{})
-	DB.AutoMigrate(&models.Anim{})
+	DB.AutoMigrate(&models.Anime{})
 }
 
 // Using this function to get a connection, you can create your connection pool here.

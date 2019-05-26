@@ -21,9 +21,9 @@ type ShortAnim struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
-// Anim contain full data about anime
+// Anime contain full data about anime
 // fields: http://docs.moonwalk.cc/
-type Anim struct {
+type Anime struct {
 	// todo: set default values
 	ID uint `gorm:"primary_key" json:"id"`
 
@@ -62,7 +62,7 @@ type Anim struct {
 }
 
 // ViewShort return view without some params
-func (n *Anim) ViewShort() ShortAnim {
+func (n *Anime) ViewShort() ShortAnim {
 	// return news with private settings
 	return ShortAnim{
 		n.ID,

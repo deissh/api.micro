@@ -4,6 +4,7 @@ import (
 	"github.com/deissh/api.micro/helpers"
 	"github.com/deissh/api.micro/models"
 	"github.com/gin-gonic/gin"
+	"github.com/imdario/mergo"
 	"net/http"
 )
 
@@ -29,13 +30,6 @@ type UpdateResponse struct {
 	News    models.News `json:"news"`
 }
 
-func checkNull(old string, new string) string {
-	if new == "" {
-		new = old
-	}
-	return new
-}
-
 // UpdateNews godoc
 // @Summary update news
 // @Description Update news and return it
@@ -43,6 +37,7 @@ func checkNull(old string, new string) string {
 // @Accept  json
 // @Produce  json
 // @Param v query string false "service version"
+// @Param news_id query string true "news id"
 // @Param title query string false "title"
 // @Param annotation query string false "annotation"
 // @Param body query string false "body news"
@@ -95,14 +90,23 @@ func (h Handler) UpdateNews(c *gin.Context) {
 		return
 	}
 
+	// merge two struct
+	if err := mergo.Merge(&r, news); err != nil {
+		c.JSON(http.StatusBadRequest, ResponseData{
+			Status: http.StatusBadRequest,
+			Data:   "Params error",
+		})
+		return
+	}
+
+	// merge two slices to r
 	newNews := models.News{
-		Title:      checkNull(news.Title, r.Title),
-		Annotation: checkNull(news.Annotation, r.Annotation),
-		Body:       checkNull(news.Body, r.Body),
-		Author:     author,
-		Preview:    checkNull(news.Preview, r.Preview),
-		Background: checkNull(news.Background, r.Background),
-		Types:      checkNull(news.Types, r.Types),
+		Title:      r.Title,
+		Annotation: r.Annotation,
+		Body:       r.Body,
+		Preview:    r.Preview,
+		Background: r.Background,
+		Types:      r.Types,
 	}
 
 	h.db.Create(&newNews)

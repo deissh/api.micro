@@ -104,7 +104,7 @@ func TestAnim_ViewShort(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			n := &Anim{
+			n := &Anime{
 				ID:               tt.fields.ID,
 				TitleRu:          tt.fields.TitleRu,
 				TitleEn:          tt.fields.TitleEn,
@@ -138,7 +138,7 @@ func TestAnim_ViewShort(t *testing.T) {
 				UpdatedAt:        tt.fields.UpdatedAt,
 			}
 			if got := n.ViewShort(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Anim.ViewShort() = %v, want %v", got, tt.want)
+				t.Errorf("Anime.ViewShort() = %v, want %v", got, tt.want)
 			}
 		})
 	}

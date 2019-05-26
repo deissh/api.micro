@@ -52,9 +52,9 @@ func SetupRouter() *gin.Engine {
 	g := r.Group("/")
 	{
 		g.GET("/anime.create")
-		g.GET("/anime.get")
-		g.GET("/anime.update")
-		g.GET("/anime.remove")
+		g.GET("/anime.get", handlers.GetAnime)
+		g.GET("/anime.update", handlers.UpdateAnime)
+		g.GET("/anime.remove", handlers.RemoveAnime)
 		g.GET("/anime.search")
 
 		g.GET("/_/health", handlers.HealthCheck)

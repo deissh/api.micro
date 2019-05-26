@@ -11,7 +11,7 @@ import (
 type RemoveRequest struct {
 	// API version
 	Version string `json:"v" query:"v"`
-	ID      string `form:"news_id" binding:"required"`
+	ID      string `form:"anime_id" binding:"required"`
 
 	AccessToken string `form:"access_token" binding:"required"`
 }
@@ -23,18 +23,18 @@ type RemoveResponse struct {
 	Status  string `json:"status"`
 }
 
-// RemoveNews godoc
-// @Summary Remove news by id
-// @Description Remove news by id
-// @ID remove-news
+// RemoveAnime godoc
+// @Summary Remove anime by id
+// @Description Remove anime by id
+// @ID remove-anime
 // @Accept  json
 // @Produce  json
 // @Param v query string false "service version"
-// @Param news_id query string true "news id"
+// @Param anime_id query string true "anime id"
 // @Success 200 {object} handlers.RemoveResponse
 // @Failure 400 {object} handlers.ResponseData
-// @Router /news.remove [Get]
-func (h Handler) RemoveNews(c *gin.Context) {
+// @Router /anime.remove [Get]
+func (h Handler) RemoveAnime(c *gin.Context) {
 	var r RemoveRequest
 	if err := c.Bind(&r); err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
@@ -47,8 +47,8 @@ func (h Handler) RemoveNews(c *gin.Context) {
 	_, err := helpers.TokenVerify(
 		r.AccessToken,
 		true,
-		[]string{"newsmaker", "admin", "superadmin"},
-		[]string{"news"},
+		[]string{"moderator", "admin", "superadmin"},
+		[]string{"anime"},
 	)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, ResponseData{
@@ -58,10 +58,10 @@ func (h Handler) RemoveNews(c *gin.Context) {
 		return
 	}
 
-	if err := h.db.Delete(&models.News{}, r.ID).Error; err != nil {
+	if err := h.db.Delete(&models.Anime{}, r.ID).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
-			Data:   "News not founded",
+			Data:   "Anime not founded",
 		})
 		return
 	}
