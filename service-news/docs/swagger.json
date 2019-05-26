@@ -57,57 +57,31 @@
             }
         },
         "/news.create": {
-            "get": {
-                "description": "Update news and return it",
+            "post": {
+                "description": "Create news and return it",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "update news",
-                "operationId": "update-news",
+                "summary": "Create news",
+                "operationId": "create-news",
                 "parameters": [
+                    {
+                        "description": "news body",
+                        "name": "news",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/handlers.news"
+                        }
+                    },
                     {
                         "type": "string",
                         "description": "service version",
                         "name": "v",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "title",
-                        "name": "title",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "annotation",
-                        "name": "annotation",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "body news",
-                        "name": "body",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "preview",
-                        "name": "preview",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "background",
-                        "name": "background",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "news types",
-                        "name": "types",
                         "in": "query"
                     },
                     {
@@ -123,7 +97,7 @@
                         "description": "OK",
                         "schema": {
                             "type": "object",
-                            "$ref": "#/definitions/handlers.UpdateRequest"
+                            "$ref": "#/definitions/handlers.CreateResponse"
                         }
                     },
                     "400": {
@@ -201,7 +175,7 @@
                     {
                         "type": "string",
                         "description": "news id",
-                        "name": "news",
+                        "name": "news_id",
                         "in": "query",
                         "required": true
                     }
@@ -308,26 +282,12 @@
                 "accessToken": {
                     "type": "string"
                 },
-                "annotation": {
-                    "type": "string"
-                },
-                "background": {
-                    "type": "string"
-                },
-                "body": {
-                    "type": "string"
-                },
                 "id": {
                     "type": "string"
                 },
-                "preview": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "types": {
-                    "type": "string"
+                "news": {
+                    "type": "object",
+                    "$ref": "#/definitions/handlers.news"
                 },
                 "version": {
                     "description": "API version",
@@ -340,6 +300,35 @@
             "properties": {
                 "alive": {
                     "type": "boolean"
+                }
+            }
+        },
+        "handlers.news": {
+            "type": "object",
+            "required": [
+                "annotation",
+                "body",
+                "preview",
+                "title"
+            ],
+            "properties": {
+                "annotation": {
+                    "type": "string"
+                },
+                "background": {
+                    "type": "string"
+                },
+                "body": {
+                    "type": "string"
+                },
+                "preview": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "types": {
+                    "type": "string"
                 }
             }
         },

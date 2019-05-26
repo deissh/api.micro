@@ -3,10 +3,9 @@ package handlers
 import (
 	"github.com/deissh/api.micro/helpers"
 	"github.com/deissh/api.micro/models"
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"github.com/labstack/gommon/log"
 	"net/http"
-	"time"
 )
 
 // RefreshRequest request params
@@ -57,34 +56,20 @@ func (h Handler) TokenRefresh(c *gin.Context) {
 		})
 		return
 	}
-	// remove token old token
-	h.db.Delete(&token)
 
-	var user models.User
-	h.db.First(&user, token.UserID)
-
-	jwttoken := jwt.New(jwt.SigningMethodHS256)
-
-	// Set claims
-	claims := jwttoken.Claims.(jwt.MapClaims)
-	claims["user_id"] = user.ID
-	claims["role"] = user.Role
-	claims["permissions"] = token.Permissions
-
-	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
-
-	// Generate encoded token and send it as response.
-	t, err := jwttoken.SignedString([]byte(helpers.GetEnvWithPanic("JWT_SECRET")))
+	access, err := helpers.GenerateRandomString(128)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, ResponseData{
+		log.Error("Access token generate error")
+		c.JSON(http.StatusInternalServerError, ResponseData{
 			Status: http.StatusInternalServerError,
-			Data:   "JWT signing error",
+			Data:   "Access token generate error",
 		})
 		return
 	}
 
-	refresh, err := helpers.GenerateRandomString(128)
+	refresh, err := helpers.GenerateRandomString(254)
 	if err != nil {
+		log.Error("Refresh token generate error")
 		c.JSON(http.StatusInternalServerError, ResponseData{
 			Status: http.StatusInternalServerError,
 			Data:   "Refresh token generate error",
@@ -92,17 +77,14 @@ func (h Handler) TokenRefresh(c *gin.Context) {
 		return
 	}
 
-	newToken := models.Token{
-		AccessToken:  t,
-		RefreshToken: refresh,
-		UserID:       user.ID,
-		Permissions:  token.Permissions,
-	}
+	// update access_token and refresh
+	token.AccessToken = refresh
+	token.AccessToken = access
 
-	h.db.Create(&newToken)
+	h.db.Save(&token)
 
 	c.JSON(http.StatusOK, CreateResponse{
 		Version: "1",
-		Token:   newToken,
+		Token:   token,
 	})
 }

@@ -4,6 +4,7 @@ import (
 	"github.com/deissh/api.micro/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"time"
 )
 
 // CheckRequest request params
@@ -54,9 +55,17 @@ func (h Handler) TokenCheck(c *gin.Context) {
 			AccessToken: r.AccessToken,
 		},
 	).First(&token).Error; err != nil {
-		c.JSON(http.StatusBadRequest, ResponseData{
-			Status: http.StatusBadRequest,
+		c.JSON(http.StatusUnauthorized, ResponseData{
+			Status: http.StatusUnauthorized,
 			Data:   "Access token not founded",
+		})
+		return
+	}
+
+	if token.UpdatedAt.Add(time.Hour * 72).Before(time.Now()) {
+		c.JSON(http.StatusUnauthorized, ResponseData{
+			Status: http.StatusUnauthorized,
+			Data:   "Access token expired",
 		})
 		return
 	}

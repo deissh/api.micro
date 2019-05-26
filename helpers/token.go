@@ -24,11 +24,8 @@ type Token struct {
 func TokenVerify(accessToken string, required bool, roles []string, scopes []string) (Token, error) {
 	var tokenres tokenResponse
 	resp, err := resty.R().
-		SetPathParams(map[string]string{
-			"access_token": accessToken,
-		}).
 		SetResult(&tokenres).
-		Get(GetEnv("SERVICE_AUTH", "http://service-auth:8080") + "/token.check")
+		Get(GetEnv("SERVICE_AUTH", "http://service-auth:8080") + "/token.check?access_token=" + accessToken)
 	if err != nil {
 		log.Error(err)
 		return Token{}, err
@@ -43,7 +40,6 @@ func TokenVerify(accessToken string, required bool, roles []string, scopes []str
 	}
 
 	token := tokenres.Token
-
 	if !ContainsString(roles, token.Role) {
 		return Token{}, errors.New("user does not have the necessary roles")
 	}

@@ -4,22 +4,13 @@ import (
 	"github.com/deissh/api.micro/helpers"
 	"github.com/deissh/api.micro/models"
 	"github.com/gin-gonic/gin"
+	"github.com/imdario/mergo"
 	"net/http"
 )
 
 // UpdateRequest request params
 type UpdateRequest struct {
-	// API version
-	Version    string `form:"v"`
-	ID         string `form:"news_id"`
-	Title      string `form:"title"`
-	Annotation string `form:"annotation"`
-	Body       string `form:"body"`
-	Preview    string `form:"preview"`
-	Background string `form:"background"`
-	Types      string `form:"types"`
-
-	AccessToken string `form:"access_token" binding:"required"`
+	News news `json:"news"`
 }
 
 // UpdateResponse response struct
@@ -29,30 +20,19 @@ type UpdateResponse struct {
 	News    models.News `json:"news"`
 }
 
-func checkNull(old string, new string) string {
-	if new == "" {
-		new = old
-	}
-	return new
-}
-
 // UpdateNews godoc
 // @Summary update news
 // @Description Update news and return it
 // @ID update-news
 // @Accept  json
 // @Produce  json
-// @Param v query string false "service version"
-// @Param title query string false "title"
-// @Param annotation query string false "annotation"
-// @Param body query string false "body news"
-// @Param preview query string false "preview"
-// @Param background query string false "background"
-// @Param types query string false "news types"
+// @Param news_id query string false "news_id"
+// @Param news body handlers.news true "news body"
+// @Param v query query false "service version"
 // @Param access_token query string true "user access_token"
 // @Success 200 {object} handlers.UpdateRequest
 // @Failure 400 {object} handlers.ResponseData
-// @Router /news.create [Get]
+// @Router /news.create [Post]
 func (h Handler) UpdateNews(c *gin.Context) {
 	var r UpdateRequest
 	if err := c.Bind(&r); err != nil {
@@ -64,7 +44,7 @@ func (h Handler) UpdateNews(c *gin.Context) {
 	}
 
 	token, err := helpers.TokenVerify(
-		r.AccessToken,
+		c.DefaultQuery("access_token", ""),
 		true,
 		[]string{"newsmaker", "admin", "superadmin"},
 		[]string{"news"},
@@ -78,7 +58,7 @@ func (h Handler) UpdateNews(c *gin.Context) {
 	}
 
 	var news models.News
-	if err := h.db.First(&news, r.ID).Error; err != nil {
+	if err := h.db.First(&news, c.DefaultQuery("news_id", "")).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
 			Data:   "News did not find",
@@ -95,14 +75,23 @@ func (h Handler) UpdateNews(c *gin.Context) {
 		return
 	}
 
+	// merge two struct
+	if err := mergo.Merge(&r, news); err != nil {
+		c.JSON(http.StatusBadRequest, ResponseData{
+			Status: http.StatusBadRequest,
+			Data:   "Params error",
+		})
+		return
+	}
+
+	// merge two slices to r
 	newNews := models.News{
-		Title:      checkNull(news.Title, r.Title),
-		Annotation: checkNull(news.Annotation, r.Annotation),
-		Body:       checkNull(news.Body, r.Body),
-		Author:     author,
-		Preview:    checkNull(news.Preview, r.Preview),
-		Background: checkNull(news.Background, r.Background),
-		Types:      checkNull(news.Types, r.Types),
+		Title:      r.News.Title,
+		Annotation: r.News.Annotation,
+		Body:       r.News.Body,
+		Preview:    r.News.Preview,
+		Background: r.News.Background,
+		Types:      r.News.Types,
 	}
 
 	h.db.Create(&newNews)

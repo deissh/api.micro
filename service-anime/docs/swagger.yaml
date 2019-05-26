@@ -2,7 +2,7 @@ basePath: /
 definitions:
   handlers.CreateResponse:
     properties:
-      news:
+      anime:
         type: string
       v:
         description: API version
@@ -10,7 +10,7 @@ definitions:
     type: object
   handlers.GetResponse:
     properties:
-      news:
+      anime:
         type: string
       v:
         description: API version
@@ -53,41 +53,80 @@ definitions:
     properties:
       accessToken:
         type: string
-      id:
-        type: string
-      news:
-        $ref: '#/definitions/handlers.news'
+      anime:
+        $ref: '#/definitions/handlers.anime'
         type: object
-      version:
+      anime_id:
         description: API version
+        type: string
+      version:
         type: string
     required:
     - accessToken
+    type: object
+  handlers.anime:
+    properties:
+      actors:
+        type: string
+      age:
+        type: integer
+      category:
+        type: string
+      countries:
+        type: string
+      description:
+        type: string
+      directors:
+        type: string
+      episodes_count:
+        type: integer
+      genres:
+        type: string
+      iframe_url:
+        type: string
+      imdb_rating:
+        type: number
+      imdb_votes:
+        type: integer
+      kinopoisk_id:
+        type: integer
+      kinopoisk_rating:
+        type: number
+      kinopoisk_votes:
+        type: integer
+      poster:
+        type: string
+      seasons_count:
+        type: integer
+      studios:
+        type: string
+      tagline:
+        type: string
+      title_en:
+        type: string
+      title_ru:
+        type: string
+      token:
+        type: string
+      trailer_iframe_url:
+        type: string
+      trailer_token:
+        type: string
+      translator:
+        type: string
+      translator_id:
+        type: integer
+      type:
+        type: string
+      world_art_id:
+        type: integer
+      year:
+        type: integer
     type: object
   handlers.health:
     properties:
       alive:
         type: boolean
-    type: object
-  handlers.news:
-    properties:
-      annotation:
-        type: string
-      background:
-        type: string
-      body:
-        type: string
-      preview:
-        type: string
-      title:
-        type: string
-      types:
-        type: string
-    required:
-    - annotation
-    - body
-    - preview
-    - title
     type: object
   handlers.ping:
     properties:
@@ -104,9 +143,9 @@ info:
     email: support@swagger.io
     name: API Support
     url: http://www.swagger.io/support
-  description: Users methods
+  description: Anims methods
   license: {}
-  title: Service Users API
+  title: Service Anime API
   version: "1.0"
 paths:
   /_/health:
@@ -137,19 +176,19 @@ paths:
             $ref: '#/definitions/handlers.PingResponse'
             type: object
       summary: Ping service
-  /news.create:
+  /anime.create:
     post:
       consumes:
       - application/json
-      description: Create news and return it
-      operationId: create-news
+      description: Create anime and return it
+      operationId: create-anime
       parameters:
-      - description: news body
+      - description: anime body
         in: body
-        name: news
+        name: anime
         required: true
         schema:
-          $ref: '#/definitions/handlers.news'
+          $ref: '#/definitions/handlers.anime'
           type: object
       - description: service version
         in: query
@@ -173,21 +212,21 @@ paths:
           schema:
             $ref: '#/definitions/handlers.ResponseData'
             type: object
-      summary: Create news
-  /news.get:
+      summary: Create anime
+  /anime.get:
     get:
       consumes:
       - application/json
-      description: Return info about news by id
-      operationId: get-news
+      description: Return info about anime by id
+      operationId: get-anime
       parameters:
       - description: service version
         in: query
         name: v
         type: string
-      - description: news id
+      - description: anime id
         in: query
-        name: news
+        name: anime
         required: true
         type: string
       produces:
@@ -203,21 +242,21 @@ paths:
           schema:
             $ref: '#/definitions/handlers.ResponseData'
             type: object
-      summary: Return news by id
-  /news.remove:
+      summary: Return anime by id
+  /anime.remove:
     get:
       consumes:
       - application/json
-      description: Remove news by id
-      operationId: remove-news
+      description: Remove anime by id
+      operationId: remove-anime
       parameters:
       - description: service version
         in: query
         name: v
         type: string
-      - description: news id
+      - description: anime id
         in: query
-        name: news_id
+        name: anime_id
         required: true
         type: string
       produces:
@@ -233,7 +272,7 @@ paths:
           schema:
             $ref: '#/definitions/handlers.ResponseData'
             type: object
-      summary: Remove news by id
+      summary: Remove anime by id
 securityDefinitions:
   ApiKeyAuth:
     in: header

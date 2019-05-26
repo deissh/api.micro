@@ -340,7 +340,7 @@ func TestTokenVerify(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			httpmock.ActivateNonDefault(resty.DefaultClient.GetClient())
-			fakeURL := GetEnv("SERVICE_AUTH", "http://service-auth:8080") + "/token.check"
+			fakeURL := GetEnv("SERVICE_AUTH", "http://service-auth:8080") + "/token.check?access_token=" + tt.args.accessToken
 			httpmock.RegisterResponder(
 				"GET",
 				fakeURL,
