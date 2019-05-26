@@ -19,9 +19,6 @@ type news struct {
 // CreateRequest request params
 type CreateRequest struct {
 	News news `json:"news"`
-
-	Version     string `form:"v"`
-	AccessToken string `form:"access_token" binding:"required"`
 }
 
 // CreateResponse return struct in response
@@ -54,7 +51,7 @@ func (h Handler) CreateNews(c *gin.Context) {
 	}
 
 	token, err := helpers.TokenVerify(
-		r.AccessToken,
+		c.DefaultQuery("access_token", ""),
 		true,
 		[]string{"newsmaker", "admin", "superadmin"},
 		[]string{"news"},

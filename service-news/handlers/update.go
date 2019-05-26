@@ -10,13 +10,7 @@ import (
 
 // UpdateRequest request params
 type UpdateRequest struct {
-	// API version
-	Version string `form:"v"`
-	ID      string `form:"news_id"`
-
 	News news `json:"news"`
-
-	AccessToken string `form:"access_token" binding:"required"`
 }
 
 // UpdateResponse response struct
@@ -50,7 +44,7 @@ func (h Handler) UpdateNews(c *gin.Context) {
 	}
 
 	token, err := helpers.TokenVerify(
-		r.AccessToken,
+		c.DefaultQuery("access_token", ""),
 		true,
 		[]string{"newsmaker", "admin", "superadmin"},
 		[]string{"news"},
@@ -64,7 +58,7 @@ func (h Handler) UpdateNews(c *gin.Context) {
 	}
 
 	var news models.News
-	if err := h.db.First(&news, r.ID).Error; err != nil {
+	if err := h.db.First(&news, c.DefaultQuery("news_id", "")).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
 			Data:   "News did not find",

@@ -42,9 +42,6 @@ type anime struct {
 // CreateRequest request params
 type CreateRequest struct {
 	Anime anime `json:"anime"`
-
-	Version     string `form:"v"`
-	AccessToken string `form:"access_token" binding:"required"`
 }
 
 // CreateResponse return struct in response
@@ -71,13 +68,13 @@ func (h Handler) CreateAnime(c *gin.Context) {
 	if err := c.Bind(&r); err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
-			Data:   "Params error",
+			Data:   "Params error: " + err.Error(),
 		})
 		return
 	}
 
 	token, err := helpers.TokenVerify(
-		r.AccessToken,
+		c.DefaultQuery("access_token", ""),
 		true,
 		[]string{"moderator", "admin", "superadmin"},
 		[]string{"anime"},

@@ -11,13 +11,7 @@ import (
 
 // UpdateRequest request params
 type UpdateRequest struct {
-	// API version
-	ID string `json:"anime_id"`
-
 	Anime anime `json:"anime"`
-
-	Version     string `form:"v"`
-	AccessToken string `form:"access_token" binding:"required"`
 }
 
 // UpdateResponse response struct
@@ -51,7 +45,7 @@ func (h Handler) UpdateAnime(c *gin.Context) {
 	}
 
 	token, err := helpers.TokenVerify(
-		r.AccessToken,
+		c.DefaultQuery("access_token", ""),
 		true,
 		[]string{"animemaker", "admin", "superadmin"},
 		[]string{"anime"},
@@ -65,7 +59,7 @@ func (h Handler) UpdateAnime(c *gin.Context) {
 	}
 
 	var anime models.Anime
-	if err := h.db.First(&anime, r.ID).Error; err != nil {
+	if err := h.db.First(&anime, c.DefaultQuery("anime_id", "")).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
 			Data:   "Anime did not find",
