@@ -8,7 +8,7 @@
 
 Very simpled, without load balancer, istio and etc
 
-![](https://i.imgur.com/GGcMXMb.png)
+![](https://i.imgur.com/JTgeysx.png)
 
 ## Deployment
 
