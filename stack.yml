@@ -6,7 +6,7 @@ volumes:
 
 services:
   service-auth:
-    image: deissh/api-micro-service-auth:${SERVICE_AUTH_TAG:-latest}
+    image: deissh/api-micro-service-auth:${SERVICE_AUTH_TAG:-${SERVICES_TAG}}
     restart: on-failure
     depends_on:
       - postgres

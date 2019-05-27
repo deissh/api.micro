@@ -17,8 +17,8 @@ type UpdateRequest struct {
 // UpdateResponse response struct
 type UpdateResponse struct {
 	// API version
-	Version string       `json:"v"`
-	Anime   models.Anime `json:"anime"`
+	Version string               `json:"v"`
+	Anime   models.AnimeMoonWalk `json:"anime"`
 }
 
 // UpdateAnime godoc
@@ -58,11 +58,11 @@ func (h Handler) UpdateAnime(c *gin.Context) {
 		return
 	}
 
-	var anime models.Anime
+	var anime models.AnimeMoonWalk
 	if err := h.db.First(&anime, c.DefaultQuery("anime_id", "")).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
-			Data:   "Anime did not find",
+			Data:   "AnimeMoonWalk did not find",
 		})
 		return
 	}
@@ -85,8 +85,8 @@ func (h Handler) UpdateAnime(c *gin.Context) {
 		return
 	}
 
-	newAnime := models.Anime{
-		//Types:      checkNull(anime.Types, r.Anime.Types),
+	newAnime := models.AnimeMoonWalk{
+		//Types:      checkNull(anime.Types, r.AnimeMoonWalk.Types),
 
 		TitleRu:          r.Anime.TitleRu,
 		TitleEn:          r.Anime.TitleEn,

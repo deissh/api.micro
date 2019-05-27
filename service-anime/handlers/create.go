@@ -47,8 +47,8 @@ type CreateRequest struct {
 // CreateResponse return struct in response
 type CreateResponse struct {
 	// API version
-	Version string       `json:"v"`
-	Anime   models.Anime `json:"anime"`
+	Version string               `json:"v"`
+	Anime   models.AnimeMoonWalk `json:"anime"`
 }
 
 // CreateAnime godoc
@@ -97,7 +97,7 @@ func (h Handler) CreateAnime(c *gin.Context) {
 		return
 	}
 
-	anime := models.Anime{
+	anime := models.AnimeMoonWalk{
 		TitleRu:          r.Anime.TitleRu,
 		TitleEn:          r.Anime.TitleEn,
 		Year:             r.Anime.Year,

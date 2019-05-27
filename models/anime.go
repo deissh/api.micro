@@ -21,9 +21,9 @@ type ShortAnim struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
-// Anime contain full data about anime
+// AnimeMoonWalk contain full data about anime
 // fields: http://docs.moonwalk.cc/
-type Anime struct {
+type AnimeMoonWalk struct {
 	// todo: set default values
 	ID               uint           `gorm:"primary_key" json:"id"`
 	TitleRu          string         `json:"title_ru"`
@@ -59,8 +59,50 @@ type Anime struct {
 	DeletedAt        *time.Time     `sql:"index" json:"-"`
 }
 
+type Episode struct {
+	Name   string `json:"name"`
+	Player string `json:"player"`
+}
+
+type Translator struct {
+	ID       uint   `json:"id"`
+	Name     string `json:"name"`
+	Episodes []Episode
+}
+
+type Anime struct {
+	ID          uint           `gorm:"primary_key" json:"id"`
+	Title       string         `gorm:"not null;index:title" json:"title"`
+	TitleEn     string         `gorm:"not null;index:title_en" json:"title_en"`
+	TitleOr     string         `json:"title_or"`
+	Annotation  string         `json:"annotation"`
+	Description string         `json:"description"`
+	Posters     pq.StringArray `gorm:"not null;type:varchar(2048)[]" json:"posters"`
+	Type        string         `json:"type"`
+	Genres      pq.StringArray `gorm:"not null;type:varchar(64)[]" json:"genres"`
+	Status      string         `json:"status"`
+	Year        string         `json:"year"`
+	Rating      float32        `json:"rating"`
+	Votes       int            `json:"votes"`
+
+	EpisodesCount int          `gorm:"not null;default:0" json:"episodes_count"`
+	Episodes      []Translator `json:"episodes"`
+
+	WorldArtID  string `json:"world_art_id"`
+	KinopoiskID string `json:"kinopoisk_id"`
+
+	Countries pq.StringArray `gorm:"not null;type:varchar(64)[]" json:"countries"`
+	Actors    pq.StringArray `gorm:"not null;type:varchar(64)[]" json:"actors"`
+	Directors pq.StringArray `gorm:"not null;type:varchar(64)[]" json:"directors"`
+	Studios   pq.StringArray `gorm:"not null;type:varchar(64)[]" json:"studios"`
+
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
+	DeletedAt *time.Time `sql:"index" json:"-"`
+}
+
 // ViewShort return view without some params
-func (n *Anime) ViewShort() ShortAnim {
+func (n *AnimeMoonWalk) ViewShort() ShortAnim {
 	// return news with private settings
 	return ShortAnim{
 		n.ID,
