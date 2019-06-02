@@ -9,34 +9,23 @@ import (
 )
 
 type anime struct {
-	TitleRu          string  `json:"title_ru"`
-	TitleEn          string  `json:"title_en"`
-	Year             int     `json:"year"`
-	Genres           string  `json:"genres"`
-	Poster           string  `json:"poster"`
-	Tagline          string  `json:"tagline"`
-	Description      string  `json:"description"`
-	Token            string  `json:"token"`
-	Type             string  `json:"type"`
-	KinopoiskID      int     `json:"kinopoisk_id"`
-	WorldArtID       int     `json:"world_art_id"`
-	Translator       string  `json:"translator"`
-	TranslatorID     int     `json:"translator_id"`
-	IframeURL        string  `json:"iframe_url"`
-	TrailerToken     string  `json:"trailer_token"`
-	TrailerIframeURL string  `json:"trailer_iframe_url"`
-	SeasonsCount     int     `json:"seasons_count"`
-	EpisodesCount    int     `json:"episodes_count"`
-	Category         string  `json:"category"`
-	Age              int     `json:"age"`
-	Countries        string  `json:"countries"`
-	Actors           string  `json:"actors"`
-	Directors        string  `json:"directors"`
-	Studios          string  `json:"studios"`
-	KinopoiskRating  float64 `json:"kinopoisk_rating"`
-	KinopoiskVotes   int     `json:"kinopoisk_votes"`
-	ImdbRating       float64 `json:"imdb_rating"`
-	ImdbVotes        int     `json:"imdb_votes"`
+	Title       string              `json:"title"`
+	TitleEn     string              `json:"title_en"`
+	TitleOr     string              `json:"title_or"`
+	Annotation  string              `json:"annotation"`
+	Description string              `json:"description"`
+	Posters     string              `json:"posters"`
+	Type        string              `json:"type"`
+	Genres      string              `json:"genres"`
+	Status      string              `json:"status"`
+	Year        string              `json:"year"`
+	Translators []models.Translator `json:"translators"`
+	WorldArtID  string              `json:"world_art_id"`
+	KinopoiskID string              `json:"kinopoisk_id"`
+	Countries   string              `json:"countries"`
+	Actors      string              `json:"actors"`
+	Directors   string              `json:"directors"`
+	Studios     string              `json:"studios"`
 }
 
 // CreateRequest request params
@@ -47,8 +36,8 @@ type CreateRequest struct {
 // CreateResponse return struct in response
 type CreateResponse struct {
 	// API version
-	Version string               `json:"v"`
-	Anime   models.AnimeMoonWalk `json:"anime"`
+	Version string       `json:"v"`
+	Anime   models.Anime `json:"anime"`
 }
 
 // CreateAnime godoc
@@ -97,35 +86,24 @@ func (h Handler) CreateAnime(c *gin.Context) {
 		return
 	}
 
-	anime := models.AnimeMoonWalk{
-		TitleRu:          r.Anime.TitleRu,
-		TitleEn:          r.Anime.TitleEn,
-		Year:             r.Anime.Year,
-		Genres:           Strings.Split(r.Anime.Genres, ","),
-		Poster:           r.Anime.Poster,
-		Tagline:          r.Anime.Tagline,
-		Description:      r.Anime.Description,
-		Token:            r.Anime.Token,
-		Type:             r.Anime.Type,
-		KinopoiskID:      r.Anime.KinopoiskID,
-		WorldArtID:       r.Anime.WorldArtID,
-		Translator:       r.Anime.Translator,
-		TranslatorID:     r.Anime.TranslatorID,
-		IframeURL:        r.Anime.IframeURL,
-		TrailerToken:     r.Anime.TrailerToken,
-		TrailerIframeURL: r.Anime.TrailerIframeURL,
-		SeasonsCount:     r.Anime.SeasonsCount,
-		EpisodesCount:    r.Anime.EpisodesCount,
-		Category:         r.Anime.Category,
-		Age:              r.Anime.Age,
-		Countries:        Strings.Split(r.Anime.Countries, ","),
-		Actors:           Strings.Split(r.Anime.Actors, ","),
-		Directors:        Strings.Split(r.Anime.Directors, ","),
-		Studios:          Strings.Split(r.Anime.Studios, ","),
-		KinopoiskRating:  r.Anime.KinopoiskRating,
-		KinopoiskVotes:   r.Anime.KinopoiskVotes,
-		ImdbRating:       r.Anime.ImdbRating,
-		ImdbVotes:        r.Anime.ImdbVotes,
+	anime := models.Anime{
+		Title:       r.Anime.Title,
+		TitleEn:     r.Anime.TitleEn,
+		TitleOr:     r.Anime.TitleOr,
+		Year:        r.Anime.Year,
+		Genres:      Strings.Split(r.Anime.Genres, ","),
+		Posters:     Strings.Split(r.Anime.Posters, ","),
+		Annotation:  r.Anime.Annotation,
+		Description: r.Anime.Description,
+		Status:      r.Anime.Status,
+		Type:        r.Anime.Type,
+		KinopoiskID: r.Anime.KinopoiskID,
+		WorldArtID:  r.Anime.WorldArtID,
+		Translators: r.Anime.Translators,
+		Countries:   Strings.Split(r.Anime.Countries, ","),
+		Actors:      Strings.Split(r.Anime.Actors, ","),
+		Directors:   Strings.Split(r.Anime.Directors, ","),
+		Studios:     Strings.Split(r.Anime.Studios, ","),
 	}
 
 	h.db.Create(&anime)
