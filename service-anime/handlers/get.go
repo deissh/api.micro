@@ -14,8 +14,8 @@ type GetRequest struct {
 // GetResponse response struct
 type GetResponse struct {
 	// API version
-	Version string               `json:"v"`
-	Anime   models.AnimeMoonWalk `json:"anime"`
+	Version string       `json:"v"`
+	Anime   models.Anime `json:"anime"`
 }
 
 // GetAnime godoc
@@ -41,7 +41,7 @@ func (h Handler) GetAnime(c *gin.Context) {
 		return
 	}
 
-	var anime models.AnimeMoonWalk
+	var anime models.Anime
 	if err := h.db.First(&anime, r.ID).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,

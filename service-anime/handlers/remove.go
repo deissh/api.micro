@@ -58,7 +58,7 @@ func (h Handler) RemoveAnime(c *gin.Context) {
 		return
 	}
 
-	if err := h.db.Delete(&models.AnimeMoonWalk{}, r.ID).Error; err != nil {
+	if err := h.db.Delete(&models.Anime{}, r.ID).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
 			Data:   "AnimeMoonWalk not founded",

@@ -17,8 +17,8 @@ type UpdateRequest struct {
 // UpdateResponse response struct
 type UpdateResponse struct {
 	// API version
-	Version string               `json:"v"`
-	Anime   models.AnimeMoonWalk `json:"anime"`
+	Version string       `json:"v"`
+	Anime   models.Anime `json:"anime"`
 }
 
 // UpdateAnime godoc
@@ -58,7 +58,7 @@ func (h Handler) UpdateAnime(c *gin.Context) {
 		return
 	}
 
-	var anime models.AnimeMoonWalk
+	var anime models.Anime
 	if err := h.db.First(&anime, c.DefaultQuery("anime_id", "")).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
@@ -85,40 +85,35 @@ func (h Handler) UpdateAnime(c *gin.Context) {
 		return
 	}
 
-	newAnime := models.AnimeMoonWalk{
+	newAnime := models.Anime{
 		//Types:      checkNull(anime.Types, r.AnimeMoonWalk.Types),
 
-		TitleRu:          r.Anime.TitleRu,
-		TitleEn:          r.Anime.TitleEn,
-		Year:             r.Anime.Year,
-		Genres:           Strings.Split(r.Anime.Genres, ","),
-		Poster:           r.Anime.Poster,
-		Tagline:          r.Anime.Tagline,
-		Description:      r.Anime.Description,
-		Token:            r.Anime.Token,
-		Type:             r.Anime.Type,
-		KinopoiskID:      r.Anime.KinopoiskID,
-		WorldArtID:       r.Anime.WorldArtID,
-		Translator:       r.Anime.Translator,
-		TranslatorID:     r.Anime.TranslatorID,
-		IframeURL:        r.Anime.IframeURL,
-		TrailerToken:     r.Anime.TrailerToken,
-		TrailerIframeURL: r.Anime.TrailerIframeURL,
-		SeasonsCount:     r.Anime.SeasonsCount,
-		EpisodesCount:    r.Anime.EpisodesCount,
-		Category:         r.Anime.Category,
-		Age:              r.Anime.Age,
-		Countries:        Strings.Split(r.Anime.Countries, ","),
-		Actors:           Strings.Split(r.Anime.Actors, ","),
-		Directors:        Strings.Split(r.Anime.Directors, ","),
-		Studios:          Strings.Split(r.Anime.Studios, ","),
-		KinopoiskRating:  r.Anime.KinopoiskRating,
-		KinopoiskVotes:   r.Anime.KinopoiskVotes,
-		ImdbRating:       r.Anime.ImdbRating,
-		ImdbVotes:        r.Anime.ImdbVotes,
+		Title:       r.Anime.Title,
+		TitleEn:     r.Anime.TitleEn,
+		TitleOr:     r.Anime.TitleOr,
+		Year:        r.Anime.Year,
+		Genres:      Strings.Split(r.Anime.Genres, ","),
+		Posters:     Strings.Split(r.Anime.Posters, ","),
+		Annotation:  r.Anime.Annotation,
+		Description: r.Anime.Description,
+		Status:      r.Anime.Status,
+		Type:        r.Anime.Type,
+		KinopoiskID: r.Anime.KinopoiskID,
+		WorldArtID:  r.Anime.WorldArtID,
+		Translators: r.Anime.Translators,
+		Countries:   Strings.Split(r.Anime.Countries, ","),
+		Actors:      Strings.Split(r.Anime.Actors, ","),
+		Directors:   Strings.Split(r.Anime.Directors, ","),
+		Studios:     Strings.Split(r.Anime.Studios, ","),
 	}
 
-	h.db.Create(&newAnime)
+	if err := h.db.Create(&newAnime).Error; err != nil {
+		c.JSON(http.StatusBadRequest, ResponseData{
+			Status: http.StatusBadRequest,
+			Data:   "Params error",
+		})
+		return
+	}
 
 	c.JSON(http.StatusOK, UpdateResponse{
 		Version: "1",
