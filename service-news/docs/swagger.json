@@ -275,23 +275,10 @@
         },
         "handlers.UpdateRequest": {
             "type": "object",
-            "required": [
-                "accessToken"
-            ],
             "properties": {
-                "accessToken": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
                 "news": {
                     "type": "object",
                     "$ref": "#/definitions/handlers.news"
-                },
-                "version": {
-                    "description": "API version",
-                    "type": "string"
                 }
             }
         },

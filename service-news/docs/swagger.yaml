@@ -51,18 +51,9 @@ definitions:
     type: object
   handlers.UpdateRequest:
     properties:
-      accessToken:
-        type: string
-      id:
-        type: string
       news:
         $ref: '#/definitions/handlers.news'
         type: object
-      version:
-        description: API version
-        type: string
-    required:
-    - accessToken
     type: object
   handlers.health:
     properties:

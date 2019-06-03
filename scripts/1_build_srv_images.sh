@@ -10,7 +10,7 @@ readonly tag=$(git describe --tags --always --dirty --match="v*" 2> /dev/null ||
 
 for i in "${arr[@]}"
 do
-  docker build -t "deissh/api-micro-$i:$tag" -f ./${i}/Dockerfile .
+  time docker build -t "deissh/api-micro-$i:$tag" -f ./${i}/Dockerfile .
   echo "$i done."
 done
 

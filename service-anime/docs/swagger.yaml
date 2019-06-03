@@ -51,26 +51,15 @@ definitions:
     type: object
   handlers.UpdateRequest:
     properties:
-      accessToken:
-        type: string
       anime:
         $ref: '#/definitions/handlers.anime'
         type: object
-      anime_id:
-        description: API version
-        type: string
-      version:
-        type: string
-    required:
-    - accessToken
     type: object
   handlers.anime:
     properties:
       actors:
         type: string
-      age:
-        type: integer
-      category:
+      annotation:
         type: string
       countries:
         type: string
@@ -78,50 +67,30 @@ definitions:
         type: string
       directors:
         type: string
-      episodes_count:
-        type: integer
       genres:
         type: string
-      iframe_url:
-        type: string
-      imdb_rating:
-        type: number
-      imdb_votes:
-        type: integer
       kinopoisk_id:
-        type: integer
-      kinopoisk_rating:
-        type: number
-      kinopoisk_votes:
-        type: integer
-      poster:
         type: string
-      seasons_count:
-        type: integer
+      posters:
+        type: string
+      status:
+        type: string
       studios:
         type: string
-      tagline:
+      title:
         type: string
       title_en:
         type: string
-      title_ru:
+      title_or:
         type: string
-      token:
+      translators:
         type: string
-      trailer_iframe_url:
-        type: string
-      trailer_token:
-        type: string
-      translator:
-        type: string
-      translator_id:
-        type: integer
       type:
         type: string
       world_art_id:
-        type: integer
+        type: string
       year:
-        type: integer
+        type: string
     type: object
   handlers.health:
     properties:

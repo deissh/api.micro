@@ -12,7 +12,7 @@ ENV GO111MODULE=on
 ENV GOOS=linux
 
 # Git required for fetching the dependencies.
-RUN apk update && apk add --no-cache git ca-certificates tzdata
+RUN apk update && apk add --no-cache git
 
 # Installing
 WORKDIR $GOPATH/src/github.com/deissh/api.micro
