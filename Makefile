@@ -46,7 +46,7 @@ push: build
 	bash $(SCRIPTS_DIR)/2_push_images.sh
 
 .PHONY: delete-images
-delete-images:
+delete:
 	bash $(SCRIPTS_DIR)/7_delete_images.sh
 
 .PHONY: create-gke

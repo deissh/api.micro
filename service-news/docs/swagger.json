@@ -58,16 +58,22 @@
         },
         "/news.create": {
             "post": {
-                "description": "Create news and return it",
+                "description": "Update news and return it",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Create news",
-                "operationId": "create-news",
+                "summary": "update news",
+                "operationId": "update-news",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "news_id",
+                        "name": "news_id",
+                        "in": "query"
+                    },
                     {
                         "description": "news body",
                         "name": "news",
@@ -79,7 +85,7 @@
                         }
                     },
                     {
-                        "type": "string",
+                        "type": "query",
                         "description": "service version",
                         "name": "v",
                         "in": "query"
@@ -97,7 +103,7 @@
                         "description": "OK",
                         "schema": {
                             "type": "object",
-                            "$ref": "#/definitions/handlers.CreateResponse"
+                            "$ref": "#/definitions/handlers.UpdateRequest"
                         }
                     },
                     "400": {
