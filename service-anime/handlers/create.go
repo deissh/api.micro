@@ -9,16 +9,16 @@ import (
 )
 
 type anime struct {
-	Title       string              `json:"title"`
-	TitleEn     string              `json:"title_en"`
-	TitleOr     string              `json:"title_or"`
-	Annotation  string              `json:"annotation"`
-	Description string              `json:"description"`
-	Posters     string              `json:"posters"`
-	Type        string              `json:"type"`
-	Genres      string              `json:"genres"`
-	Status      string              `json:"status"`
-	Year        string              `json:"year"`
+	Title       string              `json:"title" binding:"required"`
+	TitleEn     string              `json:"title_en" binding:"required"`
+	TitleOr     string              `json:"title_or" binding:"required"`
+	Annotation  string              `json:"annotation" binding:"required"`
+	Description string              `json:"description" binding:"required"`
+	Posters     string              `json:"posters" binding:"required"`
+	Type        string              `json:"type" binding:"required"`
+	Genres      string              `json:"genres" binding:"required"`
+	Status      string              `json:"status" binding:"required"`
+	Year        string              `json:"year" binding:"required"`
 	Translators []models.Translator `json:"translators"`
 	WorldArtID  string              `json:"world_art_id"`
 	KinopoiskID string              `json:"kinopoisk_id"`
