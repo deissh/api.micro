@@ -10,16 +10,16 @@ import (
 
 // CreateRequest request query params
 type CreateRequest struct {
-	FirstName string `form:"firstname" binding:"required"`
-	LastName  string `form:"lastname" binding:"required"`
-	Nickname  string `form:"nickname" binding:"required"` // unique
-	Email     string `form:"email" binding:"required"`    // unique
-	Sex       int    `form:"sex"`                         // 1 – female; 2 – male.
-	BDate     string `form:"bdate"`
-	Picture   string `form:"picture"`
-	Desc      string `form:"desc"`
-	Status    string `form:"status"`
-	Password  string `form:"password" binding:"required"`
+	Hash      string `json:"password" binding:"required,min=6,max=20"`
+	FirstName string `json:"firstname"`
+	LastName  string `json:"lastname"`
+	Nickname  string `json:"nickname" binding:"required"` // unique
+	Email     string `json:"email" binding:"required"`    // unique
+	Sex       int    `json:"sex"`                         // 1 – female; 2 – male.
+	BDate     string `json:"bdate"`
+	Picture   string `json:"picture"`
+	Desc      string `json:"desc"`
+	Status    string `json:"status"`
 }
 
 // CreateResponse response structure
@@ -35,17 +35,16 @@ type CreateResponse struct {
 // @Accept  json
 // @Produce  json
 // @Param v query string false "service version"
-// @Param news body handlers.UpdateRequest true "news body"
-// @Param firstname query string true "user firstname"
-// @Param lastname query string true "user lastname"
-// @Param nickname query string true "user nickname"
-// @Param email query string true "user email"
-// @Param password query string true "user password"
-// @Param sex query int false "user sex"
-// @Param bdate query string false "user bdate"
-// @Param picture query string false "user picture"
-// @Param desc query string false "user desc"
-// @Param status query string false "user status"
+// @Param firstname body string true "user firstname"
+// @Param lastname body string true "user lastname"
+// @Param nickname body string true "user nickname"
+// @Param email body string true "user email"
+// @Param password body string true "user password"
+// @Param sex body int false "user sex"
+// @Param bdate body string false "user bdate"
+// @Param picture body string false "user picture"
+// @Param desc body string false "user desc"
+// @Param status body string false "user status"
 // @Success 200 {object} handlers.CreateResponse
 // @Failure 400 {object} handlers.ResponseData
 // @Router /account.create [Get]
@@ -56,7 +55,7 @@ func (h Handler) AccountCreate(c *gin.Context) {
 	if err := c.Bind(&r); err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
-			Data:   "Params error",
+			Data:   err.Error(),
 		})
 		return
 	}
@@ -86,7 +85,7 @@ func (h Handler) AccountCreate(c *gin.Context) {
 		Role:      "user",
 	}
 
-	if err := us.SetPassword(r.Password); err != nil {
+	if err := us.SetPassword(r.Hash); err != nil {
 		log.Error(err)
 	}
 	h.db.Create(&us)

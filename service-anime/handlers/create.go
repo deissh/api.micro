@@ -8,7 +8,7 @@ import (
 	Strings "strings"
 )
 
-type anime struct {
+type AnimeParams struct {
 	Title       string              `json:"title" binding:"required"`
 	TitleEn     string              `json:"title_en" binding:"required"`
 	TitleOr     string              `json:"title_or" binding:"required"`
@@ -30,7 +30,7 @@ type anime struct {
 
 // CreateRequest request params
 type CreateRequest struct {
-	Anime anime `json:"anime"`
+	Anime AnimeParams `json:"anime"`
 }
 
 // CreateResponse return struct in response
@@ -46,7 +46,7 @@ type CreateResponse struct {
 // @ID create-anime
 // @Accept  json
 // @Produce  json
-// @Param anime body handlers.anime true "anime body"
+// @Param anime body handlers.AnimeParams true "anime body"
 // @Param v query string false "service version"
 // @Param access_token query string true "user access_token"
 // @Success 200 {object} handlers.CreateResponse

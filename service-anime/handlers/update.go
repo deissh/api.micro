@@ -11,7 +11,7 @@ import (
 
 // UpdateRequest request params
 type UpdateRequest struct {
-	Anime anime `json:"anime"`
+	Anime AnimeParams `json:"anime"`
 }
 
 // UpdateResponse response struct
@@ -27,7 +27,7 @@ type UpdateResponse struct {
 // @ID update-anime
 // @Accept  json
 // @Produce  json
-// @Param anime body handlers.anime true "anime body"
+// @Param anime body handlers.AnimeParams true "anime body"
 // @Param anime_id query string true "anime_id"
 // @Param v body query false "service version"
 // @Param access_token query string true "user access_token"

@@ -75,7 +75,7 @@
                         "required": true,
                         "schema": {
                             "type": "object",
-                            "$ref": "#/definitions/handlers.anime"
+                            "$ref": "#/definitions/handlers.AnimeParams"
                         }
                     },
                     {
@@ -200,6 +200,74 @@
         }
     },
     "definitions": {
+        "handlers.AnimeParams": {
+            "type": "object",
+            "required": [
+                "annotation",
+                "description",
+                "genres",
+                "posters",
+                "status",
+                "title",
+                "title_en",
+                "title_or",
+                "type",
+                "year"
+            ],
+            "properties": {
+                "actors": {
+                    "type": "string"
+                },
+                "annotation": {
+                    "type": "string"
+                },
+                "countries": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "directors": {
+                    "type": "string"
+                },
+                "genres": {
+                    "type": "string"
+                },
+                "kinopoisk_id": {
+                    "type": "string"
+                },
+                "posters": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "studios": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "title_en": {
+                    "type": "string"
+                },
+                "title_or": {
+                    "type": "string"
+                },
+                "translators": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "world_art_id": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "string"
+                }
+            }
+        },
         "handlers.CreateResponse": {
             "type": "object",
             "properties": {
@@ -278,63 +346,7 @@
             "properties": {
                 "anime": {
                     "type": "object",
-                    "$ref": "#/definitions/handlers.anime"
-                }
-            }
-        },
-        "handlers.anime": {
-            "type": "object",
-            "properties": {
-                "actors": {
-                    "type": "string"
-                },
-                "annotation": {
-                    "type": "string"
-                },
-                "countries": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "directors": {
-                    "type": "string"
-                },
-                "genres": {
-                    "type": "string"
-                },
-                "kinopoisk_id": {
-                    "type": "string"
-                },
-                "posters": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "string"
-                },
-                "studios": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "title_en": {
-                    "type": "string"
-                },
-                "title_or": {
-                    "type": "string"
-                },
-                "translators": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
-                },
-                "world_art_id": {
-                    "type": "string"
-                },
-                "year": {
-                    "type": "string"
+                    "$ref": "#/definitions/handlers.AnimeParams"
                 }
             }
         },
