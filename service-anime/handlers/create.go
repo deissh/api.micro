@@ -70,7 +70,7 @@ func (h Handler) CreateAnime(c *gin.Context) {
 	)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, ResponseData{
-			Status: http.StatusBadRequest,
+			Status: http.StatusUnauthorized,
 			Data:   err.Error(),
 		})
 		return

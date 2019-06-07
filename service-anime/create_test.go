@@ -2,13 +2,14 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/deissh/api.micro/models"
 	"github.com/deissh/api.micro/service-anime/handlers"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
 )
 
-func TestCreateWithEmpty(t *testing.T) {
+func TestCreateRoute(t *testing.T) {
 	router := SetupRouter()
 
 	tests := []struct {
@@ -26,10 +27,15 @@ func TestCreateWithEmpty(t *testing.T) {
 			true,
 		},
 		{
-			"Create anime with empty params",
+			"Create anime with invalid params",
 			map[string]string{},
 			http.StatusBadRequest,
-			handlers.CreateResponse{},
+			handlers.CreateResponse{
+				Anime: models.Anime{
+					Title:   "test",
+					TitleEn: "",
+				},
+			},
 			true,
 		},
 	}
