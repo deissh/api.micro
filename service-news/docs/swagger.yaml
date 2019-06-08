@@ -51,18 +51,9 @@ definitions:
     type: object
   handlers.UpdateRequest:
     properties:
-      accessToken:
-        type: string
-      id:
-        type: string
       news:
         $ref: '#/definitions/handlers.news'
         type: object
-      version:
-        description: API version
-        type: string
-    required:
-    - accessToken
     type: object
   handlers.health:
     properties:
@@ -141,9 +132,13 @@ paths:
     post:
       consumes:
       - application/json
-      description: Create news and return it
-      operationId: create-news
+      description: Update news and return it
+      operationId: update-news
       parameters:
+      - description: news_id
+        in: query
+        name: news_id
+        type: string
       - description: news body
         in: body
         name: news
@@ -154,7 +149,7 @@ paths:
       - description: service version
         in: query
         name: v
-        type: string
+        type: query
       - description: user access_token
         in: query
         name: access_token
@@ -166,14 +161,14 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handlers.CreateResponse'
+            $ref: '#/definitions/handlers.UpdateRequest'
             type: object
         "400":
           description: Bad Request
           schema:
             $ref: '#/definitions/handlers.ResponseData'
             type: object
-      summary: Create news
+      summary: update news
   /news.get:
     get:
       consumes:

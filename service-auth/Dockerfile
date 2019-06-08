@@ -1,6 +1,7 @@
 FROM golang:1.12-alpine AS builder
 
 EXPOSE 8080
+LABEL autodelete="true"
 
 #disable crosscompiling
 ENV CGO_ENABLED=0
@@ -12,7 +13,7 @@ ENV GO111MODULE=on
 ENV GOOS=linux
 
 # Git required for fetching the dependencies.
-RUN apk update && apk add --no-cache git ca-certificates tzdata
+RUN apk add --no-cache git
 
 # Installing
 WORKDIR $GOPATH/src/github.com/deissh/api.micro
