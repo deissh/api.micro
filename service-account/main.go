@@ -44,7 +44,11 @@ func main() {
 		g.GET("/account.activate")
 		g.GET("/account.restore")
 		g.GET("/account.getProfileInfo")
-		g.GET("/account.setProfileInfo")
+		g.POST("/account.setProfileInfo")
+		g.GET("/account.passwordRestore")
+		g.POST("/account.passwordChange")
+		g.GET("/account.getSettings")
+		g.POST("/account.setSettings")
 
 		g.GET("/_/health", handlers.HealthCheck)
 		g.GET("/_/ping", handlers.PingCheck)
