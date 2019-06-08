@@ -16,11 +16,6 @@ type news struct {
 	Types      string `json:"types"`
 }
 
-// CreateRequest request params
-type CreateRequest struct {
-	News news `json:"news"`
-}
-
 // CreateResponse return struct in response
 type CreateResponse struct {
 	// API version
@@ -39,9 +34,9 @@ type CreateResponse struct {
 // @Param access_token query string true "user access_token"
 // @Success 200 {object} handlers.CreateResponse
 // @Failure 400 {object} handlers.ResponseData
-// @Router /news.create [Post]
+// @Router /create [Post]
 func (h Handler) CreateNews(c *gin.Context) {
-	var r CreateRequest
+	var r news
 	if err := c.Bind(&r); err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
@@ -75,13 +70,13 @@ func (h Handler) CreateNews(c *gin.Context) {
 	}
 
 	news := models.News{
-		Title:      r.News.Title,
-		Annotation: r.News.Annotation,
-		Body:       r.News.Body,
+		Title:      r.Title,
+		Annotation: r.Annotation,
+		Body:       r.Body,
 		Author:     author,
-		Preview:    r.News.Preview,
-		Background: r.News.Background,
-		Types:      r.News.Types,
+		Preview:    r.Preview,
+		Background: r.Background,
+		Types:      r.Types,
 	}
 
 	h.db.Create(&news)

@@ -28,11 +28,6 @@ type AnimeParams struct {
 	Studios     string              `json:"studios"`
 }
 
-// CreateRequest request params
-type CreateRequest struct {
-	Anime AnimeParams `json:"anime"`
-}
-
 // CreateResponse return struct in response
 type CreateResponse struct {
 	// API version
@@ -46,14 +41,13 @@ type CreateResponse struct {
 // @ID create-anime
 // @Accept  json
 // @Produce  json
-// @Param anime body handlers.AnimeParams true "anime body"
 // @Param v query string false "service version"
 // @Param access_token query string true "user access_token"
 // @Success 200 {object} handlers.CreateResponse
 // @Failure 400 {object} handlers.ResponseData
-// @Router /anime.create [Post]
+// @Router /create [Post]
 func (h Handler) CreateAnime(c *gin.Context) {
-	var r CreateRequest
+	var r AnimeParams
 	if err := c.Bind(&r); err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
@@ -87,23 +81,23 @@ func (h Handler) CreateAnime(c *gin.Context) {
 	}
 
 	anime := models.Anime{
-		Title:       r.Anime.Title,
-		TitleEn:     r.Anime.TitleEn,
-		TitleOr:     r.Anime.TitleOr,
-		Year:        r.Anime.Year,
-		Genres:      Strings.Split(r.Anime.Genres, ","),
-		Posters:     Strings.Split(r.Anime.Posters, ","),
-		Annotation:  r.Anime.Annotation,
-		Description: r.Anime.Description,
-		Status:      r.Anime.Status,
-		Type:        r.Anime.Type,
-		KinopoiskID: r.Anime.KinopoiskID,
-		WorldArtID:  r.Anime.WorldArtID,
-		Translators: r.Anime.Translators,
-		Countries:   Strings.Split(r.Anime.Countries, ","),
-		Actors:      Strings.Split(r.Anime.Actors, ","),
-		Directors:   Strings.Split(r.Anime.Directors, ","),
-		Studios:     Strings.Split(r.Anime.Studios, ","),
+		Title:       r.Title,
+		TitleEn:     r.TitleEn,
+		TitleOr:     r.TitleOr,
+		Year:        r.Year,
+		Genres:      Strings.Split(r.Genres, ","),
+		Posters:     Strings.Split(r.Posters, ","),
+		Annotation:  r.Annotation,
+		Description: r.Description,
+		Status:      r.Status,
+		Type:        r.Type,
+		KinopoiskID: r.KinopoiskID,
+		WorldArtID:  r.WorldArtID,
+		Translators: r.Translators,
+		Countries:   Strings.Split(r.Countries, ","),
+		Actors:      Strings.Split(r.Actors, ","),
+		Directors:   Strings.Split(r.Directors, ","),
+		Studios:     Strings.Split(r.Studios, ","),
 	}
 
 	h.db.Create(&anime)

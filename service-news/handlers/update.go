@@ -8,11 +8,6 @@ import (
 	"net/http"
 )
 
-// UpdateRequest request params
-type UpdateRequest struct {
-	News news `json:"news"`
-}
-
 // UpdateResponse response struct
 type UpdateResponse struct {
 	// API version
@@ -34,7 +29,7 @@ type UpdateResponse struct {
 // @Failure 400 {object} handlers.ResponseData
 // @Router /news.create [Post]
 func (h Handler) UpdateNews(c *gin.Context) {
-	var r UpdateRequest
+	var r models.News
 	if err := c.Bind(&r); err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
@@ -86,12 +81,13 @@ func (h Handler) UpdateNews(c *gin.Context) {
 
 	// merge two slices to r
 	newNews := models.News{
-		Title:      r.News.Title,
-		Annotation: r.News.Annotation,
-		Body:       r.News.Body,
-		Preview:    r.News.Preview,
-		Background: r.News.Background,
-		Types:      r.News.Types,
+		Title:      r.Title,
+		Annotation: r.Annotation,
+		Body:       r.Body,
+		Preview:    r.Preview,
+		Background: r.Background,
+		Types:      r.Types,
+		Author:     author,
 	}
 
 	h.db.Create(&newNews)
