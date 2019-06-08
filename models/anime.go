@@ -78,6 +78,7 @@ func (a *Anime) ViewShort() AnimeShort {
 	}
 }
 
+// GetEpisodesByTranslator return episodes by translator id
 func (a *Anime) GetEpisodesByTranslator(id uint) ([]string, error) {
 	for _, tr := range a.Translators {
 		if id == tr.ID {
@@ -88,11 +89,13 @@ func (a *Anime) GetEpisodesByTranslator(id uint) ([]string, error) {
 	return nil, errors.New("not founded")
 }
 
+// AddVote add new vote to this anime
 func (a *Anime) AddVote(value float32) {
-	a.Votes += 1
+	a.Votes++
 	a.Rating = (a.Rating + value) / 2
 }
 
+// AddTranslator add new translators
 func (a *Anime) AddTranslator(tr Translator) error {
 	if len(tr.Episodes) == 0 {
 		return errors.New("empty episodes")

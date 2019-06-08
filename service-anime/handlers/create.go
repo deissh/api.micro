@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// AnimeParams contain necessary params
 type AnimeParams struct {
 	Title       string              `json:"title" binding:"required"`
 	TitleEn     string              `json:"title_en" binding:"required"`
