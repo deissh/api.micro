@@ -10,6 +10,7 @@ import (
 type Translator struct {
 	ID       uint   `json:"id"`
 	Name     string `json:"name"`
+	Token    string `json:"moonwalk_token"`
 	Episodes pq.StringArray
 }
 

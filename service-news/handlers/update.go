@@ -79,21 +79,11 @@ func (h Handler) UpdateNews(c *gin.Context) {
 		return
 	}
 
-	// merge two slices to r
-	newNews := models.News{
-		Title:      r.Title,
-		Annotation: r.Annotation,
-		Body:       r.Body,
-		Preview:    r.Preview,
-		Background: r.Background,
-		Types:      r.Types,
-		Author:     author,
-	}
-
-	h.db.Create(&newNews)
+	r.Author = author
+	h.db.Model(&news).Update(r)
 
 	c.JSON(http.StatusOK, UpdateResponse{
 		Version: "1",
-		News:    newNews,
+		News:    news,
 	})
 }

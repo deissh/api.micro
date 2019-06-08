@@ -6,13 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/imdario/mergo"
 	"net/http"
-	Strings "strings"
 )
-
-// UpdateRequest request params
-type UpdateRequest struct {
-	Anime AnimeParams `json:"anime"`
-}
 
 // UpdateResponse response struct
 type UpdateResponse struct {
@@ -33,9 +27,9 @@ type UpdateResponse struct {
 // @Param access_token query string true "user access_token"
 // @Success 200 {object} handlers.UpdateRequest
 // @Failure 400 {object} handlers.ResponseData
-// @Router /anime.create [Post]
+// @Router /create [Post]
 func (h Handler) UpdateAnime(c *gin.Context) {
-	var r UpdateRequest
+	var r models.Anime
 	if err := c.Bind(&r); err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
@@ -44,7 +38,7 @@ func (h Handler) UpdateAnime(c *gin.Context) {
 		return
 	}
 
-	token, err := helpers.TokenVerify(
+	_, err := helpers.TokenVerify(
 		c.DefaultQuery("access_token", ""),
 		true,
 		[]string{"animemaker", "admin", "superadmin"},
@@ -62,16 +56,7 @@ func (h Handler) UpdateAnime(c *gin.Context) {
 	if err := h.db.First(&anime, c.DefaultQuery("anime_id", "")).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
-			Data:   "AnimeMoonWalk did not find",
-		})
-		return
-	}
-
-	var author models.User
-	if err := h.db.First(&author, token.UserID).Error; err != nil {
-		c.JSON(http.StatusBadRequest, ResponseData{
-			Status: http.StatusBadRequest,
-			Data:   "Bad auth",
+			Data:   "News does not exist",
 		})
 		return
 	}
@@ -85,38 +70,10 @@ func (h Handler) UpdateAnime(c *gin.Context) {
 		return
 	}
 
-	newAnime := models.Anime{
-		//Types:      checkNull(anime.Types, r.AnimeMoonWalk.Types),
-
-		Title:       r.Anime.Title,
-		TitleEn:     r.Anime.TitleEn,
-		TitleOr:     r.Anime.TitleOr,
-		Year:        r.Anime.Year,
-		Genres:      Strings.Split(r.Anime.Genres, ","),
-		Posters:     Strings.Split(r.Anime.Posters, ","),
-		Annotation:  r.Anime.Annotation,
-		Description: r.Anime.Description,
-		Status:      r.Anime.Status,
-		Type:        r.Anime.Type,
-		KinopoiskID: r.Anime.KinopoiskID,
-		WorldArtID:  r.Anime.WorldArtID,
-		Translators: r.Anime.Translators,
-		Countries:   Strings.Split(r.Anime.Countries, ","),
-		Actors:      Strings.Split(r.Anime.Actors, ","),
-		Directors:   Strings.Split(r.Anime.Directors, ","),
-		Studios:     Strings.Split(r.Anime.Studios, ","),
-	}
-
-	if err := h.db.Create(&newAnime).Error; err != nil {
-		c.JSON(http.StatusBadRequest, ResponseData{
-			Status: http.StatusBadRequest,
-			Data:   "Params error",
-		})
-		return
-	}
+	h.db.Model(&anime).Update(r)
 
 	c.JSON(http.StatusOK, UpdateResponse{
 		Version: "1",
-		Anime:   newAnime,
+		Anime:   anime,
 	})
 }

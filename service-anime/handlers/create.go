@@ -5,7 +5,6 @@ import (
 	"github.com/deissh/api.micro/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	Strings "strings"
 )
 
 type AnimeParams struct {
@@ -14,25 +13,25 @@ type AnimeParams struct {
 	TitleOr     string              `json:"title_or" binding:"required"`
 	Annotation  string              `json:"annotation" binding:"required"`
 	Description string              `json:"description" binding:"required"`
-	Posters     string              `json:"posters" binding:"required"`
+	Posters     []string            `json:"posters" binding:"required"`
 	Type        string              `json:"type" binding:"required"`
-	Genres      string              `json:"genres" binding:"required"`
+	Genres      []string            `json:"genres" binding:"required"`
 	Status      string              `json:"status" binding:"required"`
 	Year        string              `json:"year" binding:"required"`
 	Translators []models.Translator `json:"translators"`
 	WorldArtID  string              `json:"world_art_id"`
 	KinopoiskID string              `json:"kinopoisk_id"`
-	Countries   string              `json:"countries"`
-	Actors      string              `json:"actors"`
-	Directors   string              `json:"directors"`
-	Studios     string              `json:"studios"`
+	Countries   []string            `json:"countries"`
+	Actors      []string            `json:"actors"`
+	Directors   []string            `json:"directors"`
+	Studios     []string            `json:"studios"`
 }
 
 // CreateResponse return struct in response
 type CreateResponse struct {
 	// API version
-	Version string       `json:"v"`
-	Anime   models.Anime `json:"anime"`
+	Version string            `json:"v"`
+	Anime   models.AnimeShort `json:"anime"`
 }
 
 // CreateAnime godoc
@@ -85,8 +84,8 @@ func (h Handler) CreateAnime(c *gin.Context) {
 		TitleEn:     r.TitleEn,
 		TitleOr:     r.TitleOr,
 		Year:        r.Year,
-		Genres:      Strings.Split(r.Genres, ","),
-		Posters:     Strings.Split(r.Posters, ","),
+		Genres:      r.Genres,
+		Posters:     r.Posters,
 		Annotation:  r.Annotation,
 		Description: r.Description,
 		Status:      r.Status,
@@ -94,16 +93,16 @@ func (h Handler) CreateAnime(c *gin.Context) {
 		KinopoiskID: r.KinopoiskID,
 		WorldArtID:  r.WorldArtID,
 		Translators: r.Translators,
-		Countries:   Strings.Split(r.Countries, ","),
-		Actors:      Strings.Split(r.Actors, ","),
-		Directors:   Strings.Split(r.Directors, ","),
-		Studios:     Strings.Split(r.Studios, ","),
+		Countries:   r.Countries,
+		Actors:      r.Actors,
+		Directors:   r.Directors,
+		Studios:     r.Studios,
 	}
 
 	h.db.Create(&anime)
 
 	c.JSON(http.StatusOK, CreateResponse{
 		Version: "1",
-		Anime:   anime,
+		Anime:   anime.ViewShort(),
 	})
 }
