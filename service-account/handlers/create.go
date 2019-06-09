@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"github.com/deissh/api.micro/helpers"
 	"github.com/deissh/api.micro/models"
 	"github.com/gin-gonic/gin"
 	"github.com/labstack/gommon/log"
@@ -89,6 +90,25 @@ func (h Handler) AccountCreate(c *gin.Context) {
 		log.Error(err)
 	}
 	h.db.Create(&us)
+
+	// sending activation email
+	activateToken, err := helpers.GenerateRandomString(128)
+	if err != nil {
+		log.Error(err)
+	}
+	h.db.Create(&models.ActivateTokens{
+		Token: activateToken,
+		Email: us.Email,
+	})
+	_ = helpers.SendEmail(
+		helpers.CREATE_ACCOUNT,
+		us.Email,
+		map[string]string{
+			"activate_url": "https://anibe.ru/account/activate?token=" + activateToken,
+			"first_name":   us.FirstName,
+			"last_name":    us.LastName,
+		},
+	)
 
 	c.JSON(http.StatusOK, CreateResponse{
 		Version: "1",

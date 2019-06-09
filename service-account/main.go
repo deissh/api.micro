@@ -49,6 +49,8 @@ func main() {
 		g.POST("/account.passwordChange")
 		g.GET("/account.getSettings")
 		g.POST("/account.setSettings")
+		g.GET("/account.getPushSettings")
+		g.POST("/account.setPushSettings")
 
 		g.GET("/_/health", handlers.HealthCheck)
 		g.GET("/_/ping", handlers.PingCheck)
