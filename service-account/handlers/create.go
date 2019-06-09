@@ -92,7 +92,7 @@ func (h Handler) AccountCreate(c *gin.Context) {
 	h.db.Create(&us)
 
 	// sending activation email
-	activateToken, err := helpers.GenerateRandomString(128)
+	activateToken, err := helpers.GenerateRandomString(32)
 	if err != nil {
 		log.Error(err)
 	}

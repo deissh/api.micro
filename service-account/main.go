@@ -41,7 +41,7 @@ func main() {
 	g := r.Group("/")
 	{
 		g.POST("/account.create", handlers.AccountCreate)
-		g.GET("/account.activate")
+		g.GET("/account.activate", handlers.Activate)
 		g.GET("/account.restore")
 		g.GET("/account.getProfileInfo")
 		g.POST("/account.setProfileInfo")
