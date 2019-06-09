@@ -10,8 +10,9 @@ import (
 // CreateAccountTemplate contain SendGrid template id
 const CreateAccountTemplate = "d-8dcb61a96c1142fab385d1f2e8e0dbc3"
 
-// ActivateAccountTemplate contain SendGrid template id
-//const ActivateAccountTemplate = "d-3b2da2e5cd324497bd23cf8cac87464b"
+// ActivatedAccountTemplate contain SendGrid template id
+const ActivatedAccountTemplate = "d-3b2da2e5cd324497bd23cf8cac87464b"
+
 //PasswordRestoreTemplate contain SendGrid template id
 //const PasswordRestoreTemplate = "d-07c3179af9794a099dd7811b133da955"
 

@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"github.com/deissh/api.micro/helpers"
 	"github.com/deissh/api.micro/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -38,7 +39,20 @@ func (h Handler) Activate(c *gin.Context) {
 	}
 	h.db.Delete(&token)
 	h.db.LogMode(true)
-	h.db.Exec("UPDATE \"users\" SET \"activated\" = true WHERE \"email\" = ?", token.Email)
+	var us models.User
+	h.db.Exec("UPDATE \"users\" SET \"activated\" = true WHERE \"email\" = ?", token.Email).First(&us)
 
-	c.JSON(http.StatusOK, gin.H{})
+	_ = helpers.SendEmail(
+		helpers.ActivatedAccountTemplate,
+		token.Email,
+		map[string]string{
+			"first_name": us.FirstName,
+			"last_name":  us.LastName,
+		},
+	)
+
+	c.JSON(http.StatusOK, ResponseData{
+		Status: http.StatusOK,
+		Data:   "activated",
+	})
 }
