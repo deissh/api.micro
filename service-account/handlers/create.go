@@ -101,7 +101,7 @@ func (h Handler) AccountCreate(c *gin.Context) {
 		Email: us.Email,
 	})
 	_ = helpers.SendEmail(
-		helpers.CREATE_ACCOUNT,
+		helpers.CreateAccountTemplate,
 		us.Email,
 		map[string]string{
 			"activate_url": "https://anibe.ru/account/activate?token=" + activateToken,

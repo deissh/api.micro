@@ -7,11 +7,13 @@ import (
 	"net/http"
 )
 
-// CREATE_ACCOUNT contain SendGrid template id
-const CREATE_ACCOUNT = "d-8dcb61a96c1142fab385d1f2e8e0dbc3"
+// CreateAccountTemplate contain SendGrid template id
+const CreateAccountTemplate = "d-8dcb61a96c1142fab385d1f2e8e0dbc3"
 
-//const ACTIVATED_ACCOUNT = "d-3b2da2e5cd324497bd23cf8cac87464b"
-//const PASSWORD_RESTORE = "d-07c3179af9794a099dd7811b133da955"
+// ActivateAccountTemplate contain SendGrid template id
+//const ActivateAccountTemplate = "d-3b2da2e5cd324497bd23cf8cac87464b"
+//PasswordRestoreTemplate contain SendGrid template id
+//const PasswordRestoreTemplate = "d-07c3179af9794a099dd7811b133da955"
 
 type sendGridReq struct {
 	From             map[string]string `json:"from"`
@@ -21,7 +23,7 @@ type sendGridReq struct {
 		} `json:"to"`
 		DynamicTemplateData map[string]string `json:"dynamic_template_data"`
 	} `json:"personalizations"`
-	TemplateId string `json:"template_id"`
+	TemplateID string `json:"template_id"`
 }
 
 // SendEmail send email activation
@@ -47,7 +49,7 @@ func SendEmail(template string, email string, params map[string]string) error {
 					DynamicTemplateData: params,
 				},
 			},
-			TemplateId: template,
+			TemplateID: template,
 		}).
 		Post("https://api.sendgrid.com/v3/mail/send")
 	if err != nil {
