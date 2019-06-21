@@ -17,6 +17,17 @@ type ActivateTokens struct {
 	DeletedAt *time.Time `sql:"index" json:"-"`
 }
 
+// PasswordRestoreTokens contain password restore tokens
+type PasswordRestoreTokens struct {
+	ID        uint       `gorm:"primary_key" json:"-"`
+	Activated bool       `gorm:"not null;default:false" json:"-"`
+	Token     string     `json:"-"`
+	Email     string     `json:"-"`
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
+	DeletedAt *time.Time `sql:"index" json:"-"`
+}
+
 // User model
 type User struct {
 	ID           uint      `gorm:"primary_key" json:"id"`

@@ -75,69 +75,99 @@
                         "in": "query"
                     },
                     {
-                        "type": "string",
                         "description": "user firstname",
                         "name": "firstname",
-                        "in": "query",
-                        "required": true
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/string"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "user lastname",
                         "name": "lastname",
-                        "in": "query",
-                        "required": true
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/string"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "user nickname",
                         "name": "nickname",
-                        "in": "query",
-                        "required": true
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/string"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "user email",
                         "name": "email",
-                        "in": "query",
-                        "required": true
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/string"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "user password",
                         "name": "password",
-                        "in": "query",
-                        "required": true
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/string"
+                        }
                     },
                     {
-                        "type": "integer",
                         "description": "user sex",
                         "name": "sex",
-                        "in": "query"
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/int"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "user bdate",
                         "name": "bdate",
-                        "in": "query"
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/string"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "user picture",
                         "name": "picture",
-                        "in": "query"
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/string"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "user desc",
                         "name": "desc",
-                        "in": "query"
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/string"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "user status",
                         "name": "status",
-                        "in": "query"
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/string"
+                        }
                     }
                 ],
                 "responses": {

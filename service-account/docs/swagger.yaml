@@ -97,50 +97,70 @@ paths:
         name: v
         type: string
       - description: user firstname
-        in: query
+        in: body
         name: firstname
         required: true
-        type: string
+        schema:
+          $ref: '#/definitions/string'
+          type: object
       - description: user lastname
-        in: query
+        in: body
         name: lastname
         required: true
-        type: string
+        schema:
+          $ref: '#/definitions/string'
+          type: object
       - description: user nickname
-        in: query
+        in: body
         name: nickname
         required: true
-        type: string
+        schema:
+          $ref: '#/definitions/string'
+          type: object
       - description: user email
-        in: query
+        in: body
         name: email
         required: true
-        type: string
+        schema:
+          $ref: '#/definitions/string'
+          type: object
       - description: user password
-        in: query
+        in: body
         name: password
         required: true
-        type: string
+        schema:
+          $ref: '#/definitions/string'
+          type: object
       - description: user sex
-        in: query
+        in: body
         name: sex
-        type: integer
+        schema:
+          $ref: '#/definitions/int'
+          type: object
       - description: user bdate
-        in: query
+        in: body
         name: bdate
-        type: string
+        schema:
+          $ref: '#/definitions/string'
+          type: object
       - description: user picture
-        in: query
+        in: body
         name: picture
-        type: string
+        schema:
+          $ref: '#/definitions/string'
+          type: object
       - description: user desc
-        in: query
+        in: body
         name: desc
-        type: string
+        schema:
+          $ref: '#/definitions/string'
+          type: object
       - description: user status
-        in: query
+        in: body
         name: status
-        type: string
+        schema:
+          $ref: '#/definitions/string'
+          type: object
       produces:
       - application/json
       responses:
