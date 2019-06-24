@@ -15,7 +15,7 @@ type PasswordChangeRequest struct {
 	Password string `json:"password"  binding:"required"`
 }
 
-// TokenCheck godoc
+// PasswordChange godoc
 func (h Handler) PasswordChange(c *gin.Context) {
 	var r PasswordChangeRequest
 	if err := c.Bind(&r); err != nil {
@@ -49,6 +49,6 @@ func (h Handler) PasswordChange(c *gin.Context) {
 
 	c.JSON(http.StatusOK, ResponseData{
 		Status: http.StatusOK,
-		Data:   "activated",
+		Data:   "changed",
 	})
 }
