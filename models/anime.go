@@ -49,6 +49,7 @@ type Anime struct {
 type AnimeShort struct {
 	ID         uint           `gorm:"primary_key" json:"id"`
 	Title      string         `gorm:"not null;index:title" json:"title"`
+	TitleEn    string         `gorm:"not null;index:title_en" json:"title_en"`
 	Annotation string         `json:"annotation"`
 	Posters    pq.StringArray `gorm:"not null;type:varchar(2048)[]" json:"posters"`
 	Type       string         `json:"type"`
@@ -66,6 +67,7 @@ func (a *Anime) ViewShort() AnimeShort {
 	return AnimeShort{
 		a.ID,
 		a.Title,
+		a.TitleEn,
 		a.Annotation,
 		a.Posters,
 		a.Type,

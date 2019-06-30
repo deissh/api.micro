@@ -36,16 +36,6 @@ type CreateResponse struct {
 }
 
 // CreateAnime godoc
-// @Summary Create anime
-// @Description Create anime and return it
-// @ID create-anime
-// @Accept  json
-// @Produce  json
-// @Param v query string false "service version"
-// @Param access_token query string true "user access_token"
-// @Success 200 {object} handlers.CreateResponse
-// @Failure 400 {object} handlers.ResponseData
-// @Router /create [Post]
 func (h Handler) CreateAnime(c *gin.Context) {
 	var r AnimeParams
 	if err := c.Bind(&r); err != nil {

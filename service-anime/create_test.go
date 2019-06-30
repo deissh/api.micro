@@ -31,9 +31,8 @@ func TestCreateRoute(t *testing.T) {
 			map[string]string{},
 			http.StatusBadRequest,
 			handlers.CreateResponse{
-				Anime: models.Anime{
-					Title:   "test",
-					TitleEn: "",
+				Anime: models.AnimeShort{
+					Title: "test",
 				},
 			},
 			true,
@@ -57,7 +56,6 @@ func TestCreateRoute(t *testing.T) {
 			assert.Equal(t, tt.result.Version, response.Version)
 			assert.Equal(t, tt.result.Anime.Title, response.Anime.Title)
 			assert.Equal(t, tt.result.Anime.TitleEn, response.Anime.TitleEn)
-			assert.Equal(t, tt.result.Anime.TitleOr, response.Anime.TitleOr)
 		})
 	}
 }

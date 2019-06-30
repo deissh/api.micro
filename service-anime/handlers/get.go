@@ -19,16 +19,6 @@ type GetResponse struct {
 }
 
 // GetAnime godoc
-// @Summary Return anime by id
-// @Description Return info about anime by id
-// @ID get-anime
-// @Accept  json
-// @Produce  json
-// @Param v query string false "service version"
-// @Param anime query string true "anime id"
-// @Success 200 {object} handlers.GetResponse
-// @Failure 400 {object} handlers.ResponseData
-// @Router /anime.get [Get]
 func (h Handler) GetAnime(c *gin.Context) {
 
 	var r GetRequest
