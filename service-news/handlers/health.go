@@ -17,12 +17,6 @@ type HealthResponse struct {
 }
 
 // HealthCheck godoc
-// @Summary Show health service
-// @ID get-service-health
-// @Accept  json
-// @Produce  json
-// @Success 200 {object} handlers.HealthResponse
-// @Router /_/health [get]
 func (h Handler) HealthCheck(c *gin.Context) {
 	c.JSON(http.StatusOK, HealthResponse{
 		Version: "1",

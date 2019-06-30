@@ -21,16 +21,10 @@ type PingResponse struct {
 }
 
 // PingCheck godoc
-// @Summary Ping service
-// @ID ping-service
-// @Accept  json
-// @Produce  json
-// @Success 200 {object} handlers.PingResponse
-// @Router /_/ping [get]
 func (h Handler) PingCheck(c *gin.Context) {
 	ping := ping{
 		ID:          uuid.New().String(),
-		ServiceName: "service-auth",
+		ServiceName: "service-friends",
 		Time:        time.Now().Local(),
 	}
 

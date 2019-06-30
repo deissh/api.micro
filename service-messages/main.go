@@ -6,30 +6,10 @@ import (
 	service "github.com/deissh/api.micro/service-messages/handlers"
 	"github.com/gin-gonic/gin"
 	"github.com/labstack/gommon/log"
-	ginSwagger "github.com/swaggo/gin-swagger"
-	"github.com/swaggo/gin-swagger/swaggerFiles"
-
-	_ "github.com/deissh/api.micro/service-messages/docs"
 
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
-// @title Service Messages API
-// @version 1.0
-// @description Messages methods
-
-// @contact.name API Support
-// @contact.url http://www.swagger.io/support
-// @contact.email support@swagger.io
-
-// @host localhost:8080
-// @BasePath /
-
-// @securityDefinitions.basic BasicAuth
-
-// @securityDefinitions.apikey ApiKeyAuth
-// @in header
-// @name Authorization
 func main() {
 	r := gin.Default()
 
@@ -61,9 +41,7 @@ func main() {
 		g.GET("/messages.removeChatUser")
 		g.GET("/messages.send")
 
-		g.GET("/_/health", handlers.HealthCheck)
 		g.GET("/_/ping", handlers.PingCheck)
-		g.GET("/_/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
 
 	r.Use(gin.Recovery())

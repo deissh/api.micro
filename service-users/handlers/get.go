@@ -21,16 +21,6 @@ type GetResponse struct {
 }
 
 // GetUser godoc
-// @Summary Return user by id
-// @Description Return info about user by id
-// @ID get-user
-// @Accept  json
-// @Produce  json
-// @Param v query string false "service version"
-// @Param user_id query string true "user id"
-// @Success 200 {object} handlers.GetResponse
-// @Failure 400 {object} handlers.ResponseData
-// @Router /user.get [Get]
 func (h Handler) GetUser(c *gin.Context) {
 
 	var r GetRequest

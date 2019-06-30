@@ -19,16 +19,6 @@ type GetResponse struct {
 }
 
 // GetNews godoc
-// @Summary Return news by id
-// @Description Return info about news by id
-// @ID get-news
-// @Accept  json
-// @Produce  json
-// @Param v query string false "service version"
-// @Param news query string true "news id"
-// @Success 200 {object} handlers.GetResponse
-// @Failure 400 {object} handlers.ResponseData
-// @Router /news.get [Get]
 func (h Handler) GetNews(c *gin.Context) {
 
 	var r GetRequest
