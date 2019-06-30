@@ -22,7 +22,7 @@ func main() {
 		g.POST("/account.create", handlers.AccountCreate)
 		g.GET("/account.activate", handlers.Activate)
 		g.GET("/account.getProfileInfo", handlers.GetProfile)
-		g.POST("/account.setProfileInfo")
+		g.POST("/account.setProfileInfo", handlers.UpdateProfile)
 		g.POST("/account.passwordRestore", handlers.PasswordRestore)
 		g.POST("/account.passwordChange", handlers.PasswordChange)
 		g.GET("/account.getSettings")
