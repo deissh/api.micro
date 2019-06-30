@@ -23,17 +23,6 @@ type RefreshResponse struct {
 }
 
 // TokenRefresh godoc
-// @Summary Deactivate old token and create new
-// @Description Generate new access_token and refresh_token
-// @ID refresh-token
-// @Accept  json
-// @Produce  json
-// @Param v query string false "service version"
-// @Param refresh_token query string false "refresh_token"
-// @Success 200 {object} handlers.RefreshResponse
-// @Failure 400 {object} handlers.ResponseData
-// @Failure 500 {object} handlers.ResponseData
-// @Router /token.refresh [Get]
 func (h Handler) TokenRefresh(c *gin.Context) {
 	var r RefreshRequest
 	if err := c.Bind(&r); err != nil {

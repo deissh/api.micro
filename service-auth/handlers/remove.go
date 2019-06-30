@@ -22,17 +22,6 @@ type RemoveResponse struct {
 }
 
 // TokenRemove godoc
-// @Summary Remove token or all
-// @Description Remove access_token or revome all tokens from this user
-// @ID remove-token
-// @Accept  json
-// @Produce  json
-// @Param v query string false "service version"
-// @Param access_token query string false "user access_token"
-// @Param all query bool false "remove all tokens"
-// @Success 200 {object} handlers.RemoveResponse
-// @Success 400 {object} handlers.ResponseData
-// @Router /token.remove [Get]
 func (h Handler) TokenRemove(c *gin.Context) {
 	var r RemoveRequest
 	if err := c.Bind(&r); err != nil {

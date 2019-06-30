@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/deissh/api.micro/helpers"
 	"github.com/deissh/api.micro/service-anime/common"
-	_ "github.com/deissh/api.micro/service-anime/docs"
 	service "github.com/deissh/api.micro/service-anime/handlers"
 	"github.com/gin-gonic/gin"
 	"github.com/labstack/gommon/log"

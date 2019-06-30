@@ -28,17 +28,6 @@ type CheckResponse struct {
 }
 
 // TokenCheck godoc
-// @Summary Deactivate old token and create new
-// @Description Check access_token
-// @ID refresh-token
-// @Accept  json
-// @Produce  json
-// @Param v query string false "service version"
-// @Param access_token query string false "access_token"
-// @Success 200 {object} handlers.CheckResponse
-// @Failure 400 {object} handlers.ResponseData
-// @Failure 500 {object} handlers.ResponseData
-// @Router /token.check [Get]
 func (h Handler) TokenCheck(c *gin.Context) {
 	var r CheckRequest
 	if err := c.Bind(&r); err != nil {
