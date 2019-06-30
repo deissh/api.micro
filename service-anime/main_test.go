@@ -6,7 +6,6 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	_ "github.com/deissh/api.micro/service-anime/docs"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
