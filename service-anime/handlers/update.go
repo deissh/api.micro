@@ -16,18 +16,6 @@ type UpdateResponse struct {
 }
 
 // UpdateAnime godoc
-// @Summary update anime
-// @Description Update anime and return it
-// @ID update-anime
-// @Accept  json
-// @Produce  json
-// @Param anime body handlers.AnimeParams true "anime body"
-// @Param anime_id query string true "anime_id"
-// @Param v body query false "service version"
-// @Param access_token query string true "user access_token"
-// @Success 200 {object} handlers.UpdateRequest
-// @Failure 400 {object} handlers.ResponseData
-// @Router /create [Post]
 func (h Handler) UpdateAnime(c *gin.Context) {
 	var r models.Anime
 	if err := c.Bind(&r); err != nil {

@@ -30,25 +30,6 @@ type CreateResponse struct {
 }
 
 // AccountCreate godoc
-// @Summary Create new account
-// @Description Register new account
-// @ID create-account
-// @Accept  json
-// @Produce  json
-// @Param v query string false "service version"
-// @Param firstname body string true "user firstname"
-// @Param lastname body string true "user lastname"
-// @Param nickname body string true "user nickname"
-// @Param email body string true "user email"
-// @Param password body string true "user password"
-// @Param sex body int false "user sex"
-// @Param bdate body string false "user bdate"
-// @Param picture body string false "user picture"
-// @Param desc body string false "user desc"
-// @Param status body string false "user status"
-// @Success 200 {object} handlers.CreateResponse
-// @Failure 400 {object} handlers.ResponseData
-// @Router /account.create [Get]
 func (h Handler) AccountCreate(c *gin.Context) {
 
 	var r CreateRequest

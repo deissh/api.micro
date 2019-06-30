@@ -16,18 +16,6 @@ type UpdateResponse struct {
 }
 
 // UpdateNews godoc
-// @Summary update news
-// @Description Update news and return it
-// @ID update-news
-// @Accept  json
-// @Produce  json
-// @Param news_id query string false "news_id"
-// @Param news body handlers.news true "news body"
-// @Param v query query false "service version"
-// @Param access_token query string true "user access_token"
-// @Success 200 {object} handlers.UpdateRequest
-// @Failure 400 {object} handlers.ResponseData
-// @Router /news.create [Post]
 func (h Handler) UpdateNews(c *gin.Context) {
 	var r models.News
 	if err := c.Bind(&r); err != nil {

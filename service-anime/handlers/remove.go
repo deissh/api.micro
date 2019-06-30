@@ -24,16 +24,6 @@ type RemoveResponse struct {
 }
 
 // RemoveAnime godoc
-// @Summary Remove anime by id
-// @Description Remove anime by id
-// @ID remove-anime
-// @Accept  json
-// @Produce  json
-// @Param v query string false "service version"
-// @Param anime_id query string true "anime id"
-// @Success 200 {object} handlers.RemoveResponse
-// @Failure 400 {object} handlers.ResponseData
-// @Router /anime.remove [Get]
 func (h Handler) RemoveAnime(c *gin.Context) {
 	var r RemoveRequest
 	if err := c.Bind(&r); err != nil {

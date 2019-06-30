@@ -26,19 +26,6 @@ type CreateResponse struct {
 }
 
 // TokenCreate godoc
-// @Summary Create new token
-// @Description Generate new access_token and refresh_token
-// @ID create-token
-// @Accept  json
-// @Produce  json
-// @Param v query string false "service version"
-// @Param email query string true "user email"
-// @Param password query string true "user password"
-// @Param scope query string true "permissions, to check on authorization and request if necessary (Example: email,notif)"
-// @Success 200 {object} handlers.CreateResponse
-// @Failure 400 {object} handlers.ResponseData
-// @Failure 500 {object} handlers.ResponseData
-// @Router /token.create [Get]
 func (h Handler) TokenCreate(c *gin.Context) {
 	var r CreateRequest
 	if err := c.Bind(&r); err != nil {
