@@ -14,7 +14,7 @@ type GetResponse struct {
 	User    models.User `json:"user"`
 }
 
-// GetUser godoc
+// GetProfile godoc
 func (h Handler) GetProfile(c *gin.Context) {
 	var user models.User
 

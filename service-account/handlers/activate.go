@@ -7,14 +7,14 @@ import (
 	"net/http"
 )
 
-// CheckRequest request params
+// ActivateRequest request params
 type ActivateRequest struct {
 	// API version
 	Version string `form:"v"`
 	Token   string `form:"token" binding:"required"`
 }
 
-// TokenCheck godoc
+// Activate godoc
 func (h Handler) Activate(c *gin.Context) {
 	var r ActivateRequest
 	if err := c.Bind(&r); err != nil {

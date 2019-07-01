@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-// CheckRequest request params
+// PasswordChangeRequest request params
 type PasswordChangeRequest struct {
 	// API version
 	Version  string `form:"v"`

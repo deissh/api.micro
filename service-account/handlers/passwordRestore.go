@@ -8,10 +8,12 @@ import (
 	"net/http"
 )
 
+// PasswordRestoreRequest godoc
 type PasswordRestoreRequest struct {
 	Email string `json:"email" binding:"required"`
 }
 
+// PasswordRestore godoc
 func (h Handler) PasswordRestore(c *gin.Context) {
 	var r PasswordRestoreRequest
 	if err := c.Bind(&r); err != nil {
