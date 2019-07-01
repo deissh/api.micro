@@ -8,10 +8,10 @@ import (
 
 // Translator contain id, name and episodes for this translator
 type Translator struct {
-	ID       uint   `json:"id"`
-	Name     string `json:"name"`
-	Token    string `json:"moonwalk_token"`
-	Episodes pq.StringArray
+	ID       uint           `json:"id"`
+	Name     string         `json:"name"`
+	Token    string         `json:"moonwalk_token"`
+	Episodes pq.StringArray `json:"episodes"`
 }
 
 // Anime main struct contain all props

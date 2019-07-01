@@ -37,7 +37,7 @@ func (h Handler) TokenCreate(c *gin.Context) {
 	}
 
 	var user models.User
-	if err := h.db.Where(&models.User{Email: r.Email}).First(&user).Error; err != nil {
+	if err := h.db.Where(&models.User{Email: r.Email, Activated: true}).First(&user).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
 			Data:   "Bad password or email",

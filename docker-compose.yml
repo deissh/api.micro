@@ -129,16 +129,12 @@ services:
 # ==================
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.1.1
     restart: on-failure
     environment:
+      - discovery.type=single-node
       - cluster.name=docker-cluster
-      - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
     volumes:
       - esdata01:/usr/share/elasticsearch/data
     deploy:
@@ -149,20 +145,6 @@ services:
         max_attempts: 3
       placement:
         constraints: [node.role == worker]
-
-  kibana:
-    image: docker.elastic.co/kibana/kibana:6.3.2
-    restart: on-failure
-    ports:
-      - "5601:5601"
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
-        delay: 10s
-        max_attempts: 3
-      placement:
-        constraints: [node.role == manager]
 
   postgres:
     image: postgres

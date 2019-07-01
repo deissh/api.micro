@@ -39,6 +39,8 @@ func Migrate() {
 	// create tables if not exist
 	// todo: add auto migration
 	DB.AutoMigrate(&models.User{})
+	DB.AutoMigrate(&models.ActivateTokens{})
+	DB.AutoMigrate(&models.PasswordRestoreTokens{})
 }
 
 // Using this function to get a connection, you can create your connection pool here.

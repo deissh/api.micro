@@ -38,8 +38,8 @@ docs:
 	bash $(SCRIPTS_DIR)/0_create_docs.sh
 
 .PHONY: build
-build: docs
-	bash $(SCRIPTS_DIR)/1_build_srv_images.sh
+build: install docs
+	bash $(SCRIPTS_DIR)/1_build_services.sh
 
 .PHONY: push-docker
 push: build

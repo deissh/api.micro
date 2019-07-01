@@ -20,10 +20,15 @@ func main() {
 	g := r.Group("/")
 	{
 		g.POST("/account.create", handlers.AccountCreate)
-		g.GET("/account.activate")
-		g.GET("/account.restore")
-		g.GET("/account.getProfileInfo")
-		g.GET("/account.setProfileInfo")
+		g.GET("/account.activate", handlers.Activate)
+		g.GET("/account.getProfileInfo", handlers.GetProfile)
+		g.POST("/account.setProfileInfo", handlers.UpdateProfile)
+		g.POST("/account.passwordRestore", handlers.PasswordRestore)
+		g.POST("/account.passwordChange", handlers.PasswordChange)
+		g.GET("/account.getSettings")
+		g.POST("/account.setSettings")
+		g.GET("/account.getPushSettings")
+		g.POST("/account.setPushSettings")
 
 		g.GET("/_/ping", handlers.PingCheck)
 	}

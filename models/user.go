@@ -6,6 +6,28 @@ import (
 	"time"
 )
 
+// ActivateTokens contain activation tokens
+type ActivateTokens struct {
+	ID        uint       `gorm:"primary_key" json:"-"`
+	Activated bool       `gorm:"not null;default:false" json:"-"`
+	Token     string     `json:"-"`
+	Email     string     `json:"-"`
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
+	DeletedAt *time.Time `sql:"index" json:"-"`
+}
+
+// PasswordRestoreTokens contain password restore tokens
+type PasswordRestoreTokens struct {
+	ID        uint       `gorm:"primary_key" json:"-"`
+	Activated bool       `gorm:"not null;default:false" json:"-"`
+	Token     string     `json:"-"`
+	Email     string     `json:"-"`
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
+	DeletedAt *time.Time `sql:"index" json:"-"`
+}
+
 // User model
 type User struct {
 	ID           uint      `gorm:"primary_key" json:"id"`
@@ -13,6 +35,7 @@ type User struct {
 	LastName     string    `gorm:"not null" json:"last_name"`
 	Nickname     string    `gorm:"unique;not null;index:nickname" json:"nickname"`
 	Email        string    `gorm:"unique;not null;index:email;type:varchar(100)" json:"email"`
+	Activated    bool      `gorm:"not null;default:false" json:"-"`
 	Role         string    `gorm:"not null;default:user" json:"role"`
 	Sex          int       `gorm:"not null;default:2" json:"sex"` // 1 – female; 2 – male.
 	BDate        time.Time `json:"b_date"`
