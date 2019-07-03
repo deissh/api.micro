@@ -33,12 +33,8 @@ MAKE_ENV += PACKAGE VERSION DOCKER_IMAGE DOCKER_IMAGE_DOMAIN
 SHELL_EXPORT := $(foreach v,$(MAKE_ENV),$(v)='$($(v))' )
 
 
-.PHONY: docs
-docs:
-	bash $(SCRIPTS_DIR)/0_create_docs.sh
-
 .PHONY: build
-build: install docs
+build: install
 	bash $(SCRIPTS_DIR)/1_build_services.sh
 
 .PHONY: push-docker
