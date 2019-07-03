@@ -128,23 +128,23 @@ services:
 # important services
 # ==================
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.1.1
-    restart: on-failure
-    environment:
-      - discovery.type=single-node
-      - cluster.name=docker-cluster
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    volumes:
-      - esdata01:/usr/share/elasticsearch/data
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
-        delay: 10s
-        max_attempts: 3
-      placement:
-        constraints: [node.role == worker]
+#  elasticsearch:
+#    image: docker.elastic.co/elasticsearch/elasticsearch:7.1.1
+#    restart: on-failure
+#    environment:
+#      - discovery.type=single-node
+#      - cluster.name=docker-cluster
+#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+#    volumes:
+#      - esdata01:/usr/share/elasticsearch/data
+#    deploy:
+#      replicas: 1
+#      restart_policy:
+#        condition: on-failure
+#        delay: 10s
+#        max_attempts: 3
+#      placement:
+#        constraints: [node.role == worker]
 
   postgres:
     image: postgres
@@ -172,6 +172,12 @@ services:
       - 80:80
     depends_on:
       - service-auth
+      - service-anime
+      - service-users
+      - service-notifications
+      - service-messages
+      - service-friends
+      - service-account
     deploy:
       replicas: 1
       update_config:
