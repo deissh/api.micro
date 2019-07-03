@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-auth
+  labels:
+    app: service-auth
+    component: service
+    version: "1.4.0"
+spec:
+  ports:
+    - name: http
+      port: 80
+  selector:
+    app: service-auth
+    component: service
+    version: "1.4.0"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-auth
+  labels:
+    app: service-auth
+    component: service
+    version: "1.4.0"
+spec:
+  replicas: 2
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: service-auth
+      component: service
+      version: "1.4.0"
+  template:
+    metadata:
+      labels:
+        app: service-auth
+        component: service
+        version: "1.4.0"
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+        - name: service-auth
+          image: registry.hub.docker.com/garystafford/go-srv-h:1.4.0
+          resources:
+          # requests:
+          #   memory: 100M
+          #   cpu: 100m
+          # limits:
+          #   memory: 250M
+          #   cpu: 250m
+          env:
+            - name: GIN_MODE
+              value: release
+            - name: HTTP_HOST
+              value: ":80"
+            - name: DB_HOST
+              value: "postgres"
+            - name: DB_NAME
+                value: "microapi"
+            - name: DB_USER
+                value: "postgres"
+            - name: DB_PSW
+                value: "postgres"
+            - name: SENDGRID_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: SENDGRID_TOKEN
+          ports:
+            - containerPort: 80
+          imagePullPolicy: IfNotPresent #Always
