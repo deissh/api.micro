@@ -6,7 +6,7 @@ volumes:
 
 services:
   service-auth:
-    image: deissh/api-micro-service-auth:${SERVICE_AUTH_TAG:-${SERVICES_TAG}}
+    image: deissh/api-micro-service-auth:${SERVICE_AUTH_TAG:-${SERVICES_TAG:-latest}}
     restart: on-failure
     depends_on:
       - postgres
@@ -23,7 +23,7 @@ services:
         constraints: [node.role == worker]
 
   service-anime:
-    image: deissh/api-micro-service-anime:${SERVICE_ANIME_TAG:-v1.0.0}
+    image: deissh/api-micro-service-anime:${SERVICE_ANIME_TAG:-${SERVICES_TAG:-latest}}
     restart: on-failure
     depends_on:
       - postgres
@@ -40,7 +40,7 @@ services:
         constraints: [node.role == worker]
 
   service-account:
-    image: deissh/api-micro-service-account:${SERVICE_ACCOUNT_TAG:-v1.0.0}
+    image: deissh/api-micro-service-account:${SERVICE_ACCOUNT_TAG:-${SERVICES_TAG:-latest}}
     restart: on-failure
     depends_on:
       - postgres
@@ -57,7 +57,7 @@ services:
         constraints: [node.role == worker]
 
   service-friends:
-    image: deissh/api-micro-service-friends:${SERVICE_FRIENDS_TAG:-v1.0.0}
+    image: deissh/api-micro-service-friends:${SERVICE_FRIENDS_TAG:-${SERVICES_TAG:-latest}}
     restart: on-failure
     depends_on:
       - postgres
@@ -74,7 +74,7 @@ services:
         constraints: [node.role == worker]
 
   service-messages:
-    image: deissh/api-micro-service-messages:${SERVICE_MESSAGES_TAG:-v1.0.0}
+    image: deissh/api-micro-service-messages:${SERVICE_MESSAGES_TAG:-${SERVICES_TAG:-latest}}
     restart: on-failure
     depends_on:
       - postgres
@@ -91,7 +91,7 @@ services:
         constraints: [node.role == worker]
 
   service-notifications:
-    image: deissh/api-micro-service-notifications:${SERVICE_NOTIFICATIONS_TAG:-v1.0.0}
+    image: deissh/api-micro-service-notifications:${SERVICE_NOTIFICATIONS_TAG:-${SERVICES_TAG:-latest}}
     restart: on-failure
     depends_on:
       - postgres
@@ -108,7 +108,24 @@ services:
         constraints: [node.role == worker]
 
   service-users:
-    image: deissh/api-micro-service-users:${SERVICE_USERS_TAG:-v1.0.0}
+    image: deissh/api-micro-service-users:${SERVICE_USERS_TAG:-${SERVICES_TAG:-latest}}
+    restart: on-failure
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role == worker]
+
+  service-news:
+    image: deissh/api-micro-service-news:${SERVICE_USERS_TAG:-${SERVICES_TAG:-latest}}
     restart: on-failure
     depends_on:
       - postgres
@@ -163,7 +180,7 @@ services:
         constraints: [node.role == manager]
 
   nginx:
-    image: deissh/api-nginx:${NGINX_TAG:-v1.0.0}
+    image: deissh/api-nginx:${NGINX_TAG:-${SERVICES_TAG:-latest}}
     restart: unless-stopped
     build:
       context: .
