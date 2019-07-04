@@ -6,7 +6,6 @@ go:
 install: true
 env:
   - GO111MODULE=on
-  - DB_PSW=""
 services:
   - postgresql
 before_script:
