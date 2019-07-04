@@ -6,6 +6,10 @@ go:
 install: true
 env:
   - GO111MODULE=on
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database microapi;' -U postgres
 script:
   - make install
   - go vet ./...
