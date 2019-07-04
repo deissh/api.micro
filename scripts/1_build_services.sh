@@ -18,7 +18,7 @@ do
   popd
 
   echo "start build docker image ..."
-  docker build -t "deissh/api-micro-$i:$tag" -f ./Dockerfile.scratch ./${i}
+  docker build -t "eu.gcr.io/anibe-2bcf3/$i:$tag" -f ./Dockerfile.scratch ./${i}
   printf '=%.0s' {1..25} && echo
   echo -e "building $i done"
   printf '=%.0s' {1..25} && echo
