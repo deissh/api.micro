@@ -13,7 +13,7 @@ spec:
   selector:
     app: service-auth
     component: service
-    version: "1.4.0"
+    version: ${SERVICE_TAG:-latest}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -22,7 +22,7 @@ metadata:
   labels:
     app: service-auth
     component: service
-    version: "1.4.0"
+    version: ${SERVICE_TAG:-latest}
 spec:
   replicas: 2
   strategy:
@@ -31,19 +31,19 @@ spec:
     matchLabels:
       app: service-auth
       component: service
-      version: "1.4.0"
+      version: ${SERVICE_TAG:-latest}
   template:
     metadata:
       labels:
         app: service-auth
         component: service
-        version: "1.4.0"
+        version: ${SERVICE_TAG:-latest}
       annotations:
         sidecar.istio.io/inject: "true"
     spec:
       containers:
         - name: service-auth
-          image: registry.hub.docker.com/garystafford/go-srv-h:1.4.0
+          image: eu.gcr.io/anibe-2bcf3/service-auth:${SERVICE_TAG:-latest}
           resources:
           # requests:
           #   memory: 100M
@@ -59,11 +59,11 @@ spec:
             - name: DB_HOST
               value: "postgres"
             - name: DB_NAME
-                value: "microapi"
+              value: "microapi"
             - name: DB_USER
-                value: "postgres"
+              value: "postgres"
             - name: DB_PSW
-                value: "postgres"
+              value: "postgres"
             - name: SENDGRID_TOKEN
               valueFrom:
                 secretKeyRef:
