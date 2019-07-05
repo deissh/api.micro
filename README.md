@@ -103,6 +103,29 @@ kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=pr
 ```
 
 #### Kiali
+
+You need create account
+
+```bash
+echo -n 'admin' | base64
+# YWRtaW4=
+echo -n '1f2d1e2e67df' | base64
+# MWYyZDFlMmU2N2Rm
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kiali
+  namespace: istio-system
+  labels:
+    app: kiali
+type: Opaque
+data:
+  username: YWRtaW4=
+  passphrase: MWYyZDFlMmU2N2Rm
+EOF
+```
+
 ```bash
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=kiali -o jsonpath='{.items[0].metadata.name}') 20001:20001
 ```
