@@ -6,7 +6,7 @@ volumes:
 
 services:
   service-auth:
-    image: deissh/api-micro-service-auth:${SERVICE_AUTH_TAG:-latest}
+    image: eu.gcr.io/anibe-2bcf3/service-auth:${SERVICE_AUTH_TAG:-latest}
     restart: on-failure
     depends_on:
       - postgres
@@ -23,7 +23,7 @@ services:
         constraints: [node.role == worker]
 
   service-anime:
-    image: deissh/api-micro-service-anime:${SERVICE_ANIME_TAG:-latest}
+    image: eu.gcr.io/anibe-2bcf3/service-anime:${SERVICE_ANIME_TAG:-latest}
     restart: on-failure
     depends_on:
       - postgres
@@ -40,7 +40,7 @@ services:
         constraints: [node.role == worker]
 
   service-account:
-    image: deissh/api-micro-service-account:${SERVICE_ACCOUNT_TAG:-latest}
+    image: eu.gcr.io/anibe-2bcf3/service-account:${SERVICE_ACCOUNT_TAG:-latest}
     restart: on-failure
     depends_on:
       - postgres
@@ -57,7 +57,7 @@ services:
         constraints: [node.role == worker]
 
   service-friends:
-    image: deissh/api-micro-service-friends:${SERVICE_FRIENDS_TAG:-latest}
+    image: eu.gcr.io/anibe-2bcf3/service-friends:${SERVICE_FRIENDS_TAG:-latest}
     restart: on-failure
     depends_on:
       - postgres
@@ -74,7 +74,7 @@ services:
         constraints: [node.role == worker]
 
   service-messages:
-    image: deissh/api-micro-service-messages:${SERVICE_MESSAGES_TAG:-latest}
+    image: eu.gcr.io/anibe-2bcf3/service-messages:${SERVICE_MESSAGES_TAG:-latest}
     restart: on-failure
     depends_on:
       - postgres
@@ -91,7 +91,7 @@ services:
         constraints: [node.role == worker]
 
   service-notifications:
-    image: deissh/api-micro-service-notifications:${SERVICE_NOTIFICATIONS_TAG:-latest}
+    image: eu.gcr.io/anibe-2bcf3/service-notifications:${SERVICE_NOTIFICATIONS_TAG:-latest}
     restart: on-failure
     depends_on:
       - postgres
@@ -108,7 +108,7 @@ services:
         constraints: [node.role == worker]
 
   service-users:
-    image: deissh/api-micro-service-users:${SERVICE_USERS_TAG:-latest}
+    image: eu.gcr.io/anibe-2bcf3/service-users:${SERVICE_USERS_TAG:-latest}
     restart: on-failure
     depends_on:
       - postgres
@@ -125,7 +125,7 @@ services:
         constraints: [node.role == worker]
 
   service-news:
-    image: deissh/api-micro-service-news:${SERVICE_USERS_TAG:-latest}
+    image: eu.gcr.io/anibe-2bcf3/service-news:${SERVICE_USERS_TAG:-latest}
     restart: on-failure
     depends_on:
       - postgres
