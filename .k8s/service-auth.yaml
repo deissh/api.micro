@@ -13,7 +13,7 @@ spec:
   selector:
     app: service-auth
     component: service
-    version: "1.4.0"
+    version: latest
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -22,7 +22,7 @@ metadata:
   labels:
     app: service-auth
     component: service
-    version: "1.4.0"
+    version: latest
 spec:
   replicas: 2
   strategy:
@@ -31,19 +31,19 @@ spec:
     matchLabels:
       app: service-auth
       component: service
-      version: "1.4.0"
+      version: latest
   template:
     metadata:
       labels:
         app: service-auth
         component: service
-        version: "1.4.0"
+        version: latest
       annotations:
         sidecar.istio.io/inject: "true"
     spec:
       containers:
         - name: service-auth
-          image: registry.hub.docker.com/garystafford/go-srv-h:1.4.0
+          image: eu.gcr.io/anibe-2bcf3/service-auth:latest
           resources:
           # requests:
           #   memory: 100M
@@ -57,18 +57,18 @@ spec:
             - name: HTTP_HOST
               value: ":80"
             - name: DB_HOST
-              value: "postgres"
+              value: "postgresql"
             - name: DB_NAME
-                value: "microapi"
+              value: "microapi"
             - name: DB_USER
-                value: "postgres"
+              value: "postgres"
             - name: DB_PSW
-                value: "postgres"
+              value: "postgres"
             - name: SENDGRID_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: secrets
-                  key: SENDGRID_TOKEN
+                  name: services-secrets
+                  key: sendgrid_token
           ports:
             - containerPort: 80
           imagePullPolicy: IfNotPresent #Always
