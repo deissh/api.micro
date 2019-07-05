@@ -13,7 +13,7 @@ spec:
   selector:
     app: service-auth
     component: service
-    version: ${SERVICE_TAG:-latest}
+    version: latest
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -22,7 +22,7 @@ metadata:
   labels:
     app: service-auth
     component: service
-    version: ${SERVICE_TAG:-latest}
+    version: latest
 spec:
   replicas: 2
   strategy:
@@ -31,19 +31,19 @@ spec:
     matchLabels:
       app: service-auth
       component: service
-      version: ${SERVICE_TAG:-latest}
+      version: latest
   template:
     metadata:
       labels:
         app: service-auth
         component: service
-        version: ${SERVICE_TAG:-latest}
+        version: latest
       annotations:
         sidecar.istio.io/inject: "true"
     spec:
       containers:
         - name: service-auth
-          image: eu.gcr.io/anibe-2bcf3/service-auth:${SERVICE_TAG:-latest}
+          image: eu.gcr.io/anibe-2bcf3/service-auth:latest
           resources:
           # requests:
           #   memory: 100M
@@ -67,8 +67,8 @@ spec:
             - name: SENDGRID_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: secrets
-                  key: SENDGRID_TOKEN
+                  name: services-secrets
+                  key: sendgrid_token
           ports:
             - containerPort: 80
           imagePullPolicy: IfNotPresent #Always

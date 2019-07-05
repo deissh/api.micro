@@ -79,6 +79,12 @@ export ISTIO_HOME=/some/you/istio/path
 bash ./part4_install_istio.sh
 ```
 
+And create volume
+
+```bash
+gcloud compute disks create --size 200GB storage-1
+```
+
 ### Port Forward to Tools
 
 #### Jaeger
