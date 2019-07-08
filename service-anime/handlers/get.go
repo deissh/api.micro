@@ -35,7 +35,7 @@ func (h Handler) GetAnime(c *gin.Context) {
 	if err := h.db.First(&anime, r.ID).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
-			Data:   "News does not exist",
+			Data:   "Anime does not exist",
 		})
 		return
 	}

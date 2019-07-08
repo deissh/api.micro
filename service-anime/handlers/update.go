@@ -44,7 +44,7 @@ func (h Handler) UpdateAnime(c *gin.Context) {
 	if err := h.db.First(&anime, c.DefaultQuery("anime_id", "")).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
-			Data:   "News does not exist",
+			Data:   "Anime does not exist",
 		})
 		return
 	}
