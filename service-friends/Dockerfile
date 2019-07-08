@@ -16,7 +16,7 @@ ENV GOOS=linux
 RUN apk add --no-cache git
 
 # Installing
-WORKDIR $GOPATH/src/github.com/deissh/api.micro
+WORKDIR $GOPATH/src/github.com/nekko-ru/api
 
 COPY go.mod go.mod
 COPY go.sum go.sum
@@ -27,7 +27,7 @@ RUN go mod download
 # Copy file(s)
 COPY . ./
 
-WORKDIR $GOPATH/src/github.com/deissh/api.micro/service-friends
+WORKDIR $GOPATH/src/github.com/nekko-ru/api/service-friends
 
 # Build the binary - remove debug info and compile only for linux target
 RUN go build  -ldflags '-w -s' -a -installsuffix cgo -o /go/bin/service .

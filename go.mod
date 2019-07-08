@@ -1,4 +1,4 @@
-module github.com/deissh/api.micro
+module github.com/nekko-ru/api
 
 go 1.12
 

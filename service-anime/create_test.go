@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/deissh/api.micro/models"
-	"github.com/deissh/api.micro/service-anime/handlers"
+	"github.com/nekko-ru/api/models"
+	"github.com/nekko-ru/api/service-anime/handlers"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"

@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/deissh/api.micro/helpers"
-	"github.com/deissh/api.micro/service-account/common"
-	service "github.com/deissh/api.micro/service-account/handlers"
 	"github.com/gin-gonic/gin"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/labstack/gommon/log"
+	"github.com/nekko-ru/api/helpers"
+	"github.com/nekko-ru/api/service-account/common"
+	service "github.com/nekko-ru/api/service-account/handlers"
 )
 
 func main() {

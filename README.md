@@ -1,8 +1,8 @@
 # GoLang based Microservices with Istio
 
-[![Build Status](https://travis-ci.org/deissh/api.micro.svg?branch=next)](https://travis-ci.org/deissh/api.micro)
-[![codecov](https://codecov.io/gh/deissh/api.micro/branch/next/graph/badge.svg)](https://codecov.io/gh/deissh/api.micro)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/067a92d715bf4e3a8eca6d517566e984)](https://www.codacy.com/app/Deissh/api.micro?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=deissh/api.micro&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/nekko-ru/api.svg?branch=next)](https://travis-ci.org/nekko-ru/api)
+[![codecov](https://codecov.io/gh/nekko-ru/api/branch/next/graph/badge.svg)](https://codecov.io/gh/nekko-ru/api)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/067a92d715bf4e3a8eca6d517566e984)](https://www.codacy.com/app/nekko-ru/api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=nekko-ru/api&amp;utm_campaign=Badge_Grade)
 
 ## Architecture
 

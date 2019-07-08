@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/deissh/api.micro/helpers"
-	"github.com/deissh/api.micro/service-anime/common"
-	service "github.com/deissh/api.micro/service-anime/handlers"
 	"github.com/gin-gonic/gin"
 	"github.com/labstack/gommon/log"
+	"github.com/nekko-ru/api/helpers"
+	"github.com/nekko-ru/api/service-anime/common"
+	service "github.com/nekko-ru/api/service-anime/handlers"
 
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )

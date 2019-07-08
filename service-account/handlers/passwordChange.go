@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"github.com/deissh/api.micro/models"
 	"github.com/gin-gonic/gin"
 	"github.com/labstack/gommon/log"
+	"github.com/nekko-ru/api/models"
 	"net/http"
 )
 
