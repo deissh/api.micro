@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "deissh",
+      "name": "deissh",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/21129524?v=4",
+      "profile": "https://vk.com/keelvel",
+      "contributions": [
+        "infra",
+        "test",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "api",
+  "projectOwner": "nekko-ru",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
