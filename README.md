@@ -1,4 +1,5 @@
 # GoLang based Microservices with Istio
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
 [![Build Status](https://travis-ci.org/nekko-ru/api.svg?branch=next)](https://travis-ci.org/nekko-ru/api)
 [![codecov](https://codecov.io/gh/nekko-ru/api/branch/next/graph/badge.svg)](https://codecov.io/gh/nekko-ru/api)
@@ -129,3 +130,18 @@ EOF
 ```bash
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=kiali -o jsonpath='{.items[0].metadata.name}') 20001:20001
 ```
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<table>
+  <tr>
+    <td align="center"><a href="https://vk.com/keelvel"><img src="https://avatars0.githubusercontent.com/u/21129524?v=4" width="100px;" alt="deissh"/><br /><sub><b>deissh</b></sub></a><br /><a href="#infra-deissh" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/nekko-ru/api/commits?author=deissh" title="Tests">⚠️</a> <a href="https://github.com/nekko-ru/api/commits?author=deissh" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
