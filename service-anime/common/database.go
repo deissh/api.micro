@@ -37,6 +37,7 @@ func Init() *gorm.DB {
 // Migrate all needed tables
 func Migrate() {
 	DB.AutoMigrate(&models.Anime{})
+	DB.AutoMigrate(&models.Translator{})
 }
 
 // Using this function to get a connection, you can create your connection pool here.

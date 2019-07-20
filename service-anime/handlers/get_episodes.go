@@ -8,8 +8,8 @@ import (
 
 // GetRequest request params
 type GetEpisodesRequest struct {
-	ID           string `form:"anime_id"`
-	TranslatorID uint   `form:"translator_id"`
+	AnimeID      uint `form:"anime_id"`
+	TranslatorID uint `form:"translator_id"`
 }
 
 // GetResponse response struct
@@ -31,8 +31,8 @@ func (h Handler) GetEpisodesAnime(c *gin.Context) {
 		return
 	}
 
-	var anime models.Anime
-	if err := h.db.First(&anime, r.ID).Error; err != nil {
+	var transl models.Translator
+	if err := h.db.Where(&models.Translator{ID: r.TranslatorID, AnimeID: r.AnimeID}).First(&transl).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
 			Data:   "Anime does not exist",
@@ -42,6 +42,6 @@ func (h Handler) GetEpisodesAnime(c *gin.Context) {
 
 	c.JSON(http.StatusOK, GetEpisodesResponse{
 		Version:  "1",
-		Episodes: anime.GetEpisodesByTranslator(r.TranslatorID),
+		Episodes: transl.Episodes,
 	})
 }

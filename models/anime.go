@@ -1,17 +1,21 @@
 package models
 
 import (
-	"errors"
 	"github.com/lib/pq"
 	"time"
 )
 
 // Translator contain id, name and episodes for this translator
 type Translator struct {
-	ID       uint           `json:"id"`
-	Name     string         `json:"name"`
-	Token    string         `json:"moonwalk_token"`
-	Episodes pq.StringArray `json:"-"`
+	ID       uint           `gorm:"primary_key" json:"id"`
+	AnimeID  uint           `gorm:"not null" json:"anime_id"`
+	Name     string         `gorm:"not null;index:name" json:"name"`
+	Token    string         `json:"-"`
+	Episodes pq.StringArray `gorm:"type:varchar(2048)[]" json:"episodes"`
+
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
+	DeletedAt *time.Time `sql:"index" json:"-"`
 }
 
 // Anime main struct contain all props
@@ -29,8 +33,6 @@ type Anime struct {
 	Year        string         `json:"year"`
 	Rating      float32        `gorm:"not null;default:5" json:"rating"`
 	Votes       int            `gorm:"not null;default:0" json:"votes"`
-
-	Translators []Translator `json:"translators"`
 
 	WorldArtID  string `json:"world_art_id"`
 	KinopoiskID string `json:"kinopoisk_id"`
@@ -80,27 +82,8 @@ func (a *Anime) ViewShort() AnimeShort {
 	}
 }
 
-// GetEpisodesByTranslator return episodes by translator id
-func (a *Anime) GetEpisodesByTranslator(id uint) []string {
-	for _, tr := range a.Translators {
-		if id == tr.ID {
-			return tr.Episodes
-		}
-	}
-	return []string{}
-}
-
 // AddVote add new vote to this anime
 func (a *Anime) AddVote(value float32) {
 	a.Votes++
 	a.Rating = (a.Rating + value) / 2
-}
-
-// AddTranslator add new translators
-func (a *Anime) AddTranslator(tr Translator) error {
-	if len(tr.Episodes) == 0 {
-		return errors.New("empty episodes")
-	}
-	a.Translators = append(a.Translators, tr)
-	return nil
 }

@@ -9,23 +9,22 @@ import (
 
 // AnimeParams contain necessary params
 type AnimeParams struct {
-	Title       string              `json:"title" binding:"required"`
-	TitleEn     string              `json:"title_en" binding:"required"`
-	TitleOr     string              `json:"title_or" binding:"required"`
-	Annotation  string              `json:"annotation" binding:"required"`
-	Description string              `json:"description" binding:"required"`
-	Posters     []string            `json:"posters" binding:"required"`
-	Type        string              `json:"type" binding:"required"`
-	Genres      []string            `json:"genres" binding:"required"`
-	Status      string              `json:"status" binding:"required"`
-	Year        string              `json:"year" binding:"required"`
-	Translators []models.Translator `json:"translators"`
-	WorldArtID  string              `json:"world_art_id"`
-	KinopoiskID string              `json:"kinopoisk_id"`
-	Countries   []string            `json:"countries"`
-	Actors      []string            `json:"actors"`
-	Directors   []string            `json:"directors"`
-	Studios     []string            `json:"studios"`
+	Title       string   `json:"title" binding:"required"`
+	TitleEn     string   `json:"title_en" binding:"required"`
+	TitleOr     string   `json:"title_or" binding:"required"`
+	Annotation  string   `json:"annotation" binding:"required"`
+	Description string   `json:"description" binding:"required"`
+	Posters     []string `json:"posters" binding:"required"`
+	Type        string   `json:"type" binding:"required"`
+	Genres      []string `json:"genres" binding:"required"`
+	Status      string   `json:"status" binding:"required"`
+	Year        string   `json:"year" binding:"required"`
+	WorldArtID  string   `json:"world_art_id"`
+	KinopoiskID string   `json:"kinopoisk_id"`
+	Countries   []string `json:"countries"`
+	Actors      []string `json:"actors"`
+	Directors   []string `json:"directors"`
+	Studios     []string `json:"studios"`
 }
 
 // CreateResponse return struct in response
@@ -83,7 +82,6 @@ func (h Handler) CreateAnime(c *gin.Context) {
 		Type:        r.Type,
 		KinopoiskID: r.KinopoiskID,
 		WorldArtID:  r.WorldArtID,
-		Translators: r.Translators,
 		Countries:   r.Countries,
 		Actors:      r.Actors,
 		Directors:   r.Directors,
