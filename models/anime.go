@@ -11,7 +11,7 @@ type Translator struct {
 	ID       uint           `json:"id"`
 	Name     string         `json:"name"`
 	Token    string         `json:"moonwalk_token"`
-	Episodes pq.StringArray `json:"episodes"`
+	Episodes pq.StringArray `json:"-"`
 }
 
 // Anime main struct contain all props
@@ -81,14 +81,13 @@ func (a *Anime) ViewShort() AnimeShort {
 }
 
 // GetEpisodesByTranslator return episodes by translator id
-func (a *Anime) GetEpisodesByTranslator(id uint) ([]string, error) {
+func (a *Anime) GetEpisodesByTranslator(id uint) []string {
 	for _, tr := range a.Translators {
 		if id == tr.ID {
-			return tr.Episodes, nil
+			return tr.Episodes
 		}
 	}
-
-	return nil, errors.New("not founded")
+	return []string{}
 }
 
 // AddVote add new vote to this anime

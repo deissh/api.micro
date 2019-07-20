@@ -36,6 +36,7 @@ func SetupRouter() *gin.Engine {
 		g.POST("/anime.update", handlers.UpdateAnime)
 		g.GET("/anime.remove", handlers.RemoveAnime)
 		g.GET("/anime.search", handlers.FindAnime)
+		g.GET("/anime.getEpisodes", handlers.GetEpisodesAnime)
 
 		g.GET("/_/ping", handlers.PingCheck)
 	}
