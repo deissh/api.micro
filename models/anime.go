@@ -8,10 +8,11 @@ import (
 
 // Translator contain id, name and episodes for this translator
 type Translator struct {
-	ID       uint           `json:"id"`
+	ID       uint           `gorm:"primary_key" json:"-"`
+	TID      uint           `json:"id"`
 	Name     string         `json:"name"`
 	Token    string         `json:"moonwalk_token"`
-	Episodes pq.StringArray `json:"-"`
+	Episodes pq.StringArray `gorm:"not null;type:varchar(2048)[]" json:"episodes"`
 }
 
 // Anime main struct contain all props

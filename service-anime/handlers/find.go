@@ -9,18 +9,18 @@ import (
 
 // FindRequest request params
 type FindRequest struct {
-	Query  string   `form:"q"`
-	Genres []string `form:"genres"`
-	Limit  int      `form:"limit"`
-	Page   int      `form:"page"`
-	Sort   string   `form:"sort"`
+	//Query  string   `form:"q"`
+	//Genres []string `form:"genres"`
+	Limit int    `form:"limit"`
+	Page  int    `form:"page"`
+	Sort  string `form:"sort"`
 }
 
 // FindResponse response struct
 type FindResponse struct {
 	// API version
-	Version string         `json:"v"`
-	Animes  []models.Anime `json:"animes"`
+	Version string              `json:"v"`
+	Animes  []models.AnimeShort `json:"animes"`
 }
 
 // FindAnime godoc
@@ -44,10 +44,7 @@ func (h Handler) FindAnime(c *gin.Context) {
 	}
 
 	var animes []models.Anime
-	err := h.db.Where(
-		"to_tsvector(title) || to_tsvector(title_en) || to_tsvector(title_or) @@ plainto_tsquery(?)",
-		r.Query,
-	).Limit(r.Limit).Offset(r.Limit * r.Page).Order(strings.Replace(r.Sort, "-", " desc", 1)).Find(&animes).Error
+	err := h.db.Limit(r.Limit).Offset(r.Limit * r.Page).Order(strings.Replace(r.Sort, "-", " desc", 1)).Find(&animes).Error
 	if err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
@@ -56,8 +53,13 @@ func (h Handler) FindAnime(c *gin.Context) {
 		return
 	}
 
+	var short_animes []models.AnimeShort
+	for _, a := range animes {
+		short_animes = append(short_animes, a.ViewShort())
+	}
+
 	c.JSON(http.StatusOK, FindResponse{
 		Version: "1",
-		Animes:  animes,
+		Animes:  short_animes,
 	})
 }
