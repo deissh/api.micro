@@ -41,7 +41,7 @@ func (h Handler) UpdateAnime(c *gin.Context) {
 	}
 
 	var anime models.Anime
-	if err := h.db.First(&anime, c.DefaultQuery("anime_id", "")).Error; err != nil {
+	if err := h.db.Preload("Translators").First(&anime, c.DefaultQuery("anime_id", "")).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
 			Data:   "Anime does not exist",
@@ -58,7 +58,7 @@ func (h Handler) UpdateAnime(c *gin.Context) {
 		return
 	}
 
-	h.db.Model(&anime).Update(r)
+	h.db.Model(&anime).Update(r).Save(&anime)
 
 	c.JSON(http.StatusOK, UpdateResponse{
 		Version: "1",

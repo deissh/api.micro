@@ -31,8 +31,8 @@ type AnimeParams struct {
 // CreateResponse return struct in response
 type CreateResponse struct {
 	// API version
-	Version string            `json:"v"`
-	Anime   models.AnimeShort `json:"anime"`
+	Version string       `json:"v"`
+	Anime   models.Anime `json:"anime"`
 }
 
 // CreateAnime godoc
@@ -94,6 +94,6 @@ func (h Handler) CreateAnime(c *gin.Context) {
 
 	c.JSON(http.StatusOK, CreateResponse{
 		Version: "1",
-		Anime:   anime.ViewShort(),
+		Anime:   anime,
 	})
 }

@@ -32,7 +32,7 @@ func (h Handler) GetAnime(c *gin.Context) {
 	}
 
 	var anime models.Anime
-	if err := h.db.First(&anime, r.ID).Error; err != nil {
+	if err := h.db.Preload("Translators").First(&anime, r.ID).Error; err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
 			Data:   "Anime does not exist",
