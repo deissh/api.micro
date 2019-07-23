@@ -51,7 +51,7 @@ func (h Handler) PasswordRestore(c *gin.Context) {
 		helpers.PasswordRestoreTemplate,
 		user.Email,
 		map[string]string{
-			"restore_url": "https://anibe.ru/account/restore?token=" + activateToken,
+			"restore_url": "https://nekko.ch/account/restore?token=" + activateToken,
 			"first_name":  user.FirstName,
 			"last_name":   user.LastName,
 		},

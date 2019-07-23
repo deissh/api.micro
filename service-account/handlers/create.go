@@ -85,7 +85,7 @@ func (h Handler) AccountCreate(c *gin.Context) {
 		helpers.CreateAccountTemplate,
 		us.Email,
 		map[string]string{
-			"activate_url": "https://anibe.ru/account/activate?token=" + activateToken,
+			"activate_url": "https://nekko.ch/account/activate?token=" + activateToken,
 			"first_name":   us.FirstName,
 			"last_name":    us.LastName,
 		},

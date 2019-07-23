@@ -33,7 +33,7 @@ func SendEmail(template string, email string, params map[string]string) error {
 		SetAuthToken(GetEnvWithPanic("SENDGRID_TOKEN")).
 		SetBody(sendGridReq{
 			From: map[string]string{
-				"email": "support@anibe.ru",
+				"email": "support@nekko.ch",
 			},
 			Personalizations: []struct {
 				To []struct {
