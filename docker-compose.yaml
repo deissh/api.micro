@@ -29,40 +29,8 @@ services:
     env_file:
       - .env
 
-  service-friends:
-    image: eu.gcr.io/anibe-2bcf3/service-friends:${SERVICE_FRIENDS_TAG:-latest}
-    restart: on-failure
-    depends_on:
-      - postgres
-    env_file:
-      - .env
-
-  service-messages:
-    image: eu.gcr.io/anibe-2bcf3/service-messages:${SERVICE_MESSAGES_TAG:-latest}
-    restart: on-failure
-    depends_on:
-      - postgres
-    env_file:
-      - .env
-
-  service-notifications:
-    image: eu.gcr.io/anibe-2bcf3/service-notifications:${SERVICE_NOTIFICATIONS_TAG:-latest}
-    restart: on-failure
-    depends_on:
-      - postgres
-    env_file:
-      - .env
-
   service-users:
     image: eu.gcr.io/anibe-2bcf3/service-users:${SERVICE_USERS_TAG:-latest}
-    restart: on-failure
-    depends_on:
-      - postgres
-    env_file:
-      - .env
-
-  service-news:
-    image: eu.gcr.io/anibe-2bcf3/service-news:${SERVICE_USERS_TAG:-latest}
     restart: on-failure
     depends_on:
       - postgres
@@ -111,7 +79,4 @@ services:
       - service-auth
       - service-anime
       - service-users
-      - service-notifications
-      - service-messages
-      - service-friends
       - service-account
