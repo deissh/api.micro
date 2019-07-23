@@ -11,5 +11,85 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - api.dev.anibe.ru
-        - api.anibe.ru
+        - api.dev.nekko.ch
+        - api.nekko.ch
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: service-auth-dev
+spec:
+  hosts:
+    - api.dev.nekko.ch
+  gateways:
+    - istio-gateway
+  http:
+    - match:
+        - uri:
+            regex: '^\/token\.(.+)$'
+      route:
+        - destination:
+            port:
+              number: 80
+            host: service-auth.dev.svc.cluster.local
+          weight: 100
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: service-account-dev
+spec:
+  hosts:
+    - api.dev.nekko.ch
+  gateways:
+    - istio-gateway
+  http:
+    - match:
+        - uri:
+            regex: '^\/account\.(.+)$'
+      route:
+        - destination:
+            port:
+              number: 80
+            host: service-account.dev.svc.cluster.local
+          weight: 100
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: service-anime-dev
+spec:
+  hosts:
+    - api.dev.nekko.ch
+  gateways:
+    - istio-gateway
+  http:
+    - match:
+        - uri:
+            regex: '^\/anime\.(.+)$'
+      route:
+        - destination:
+            port:
+              number: 80
+            host: service-anime.dev.svc.cluster.local
+          weight: 100
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: service-users-dev
+spec:
+  hosts:
+    - api.dev.nekko.ch
+  gateways:
+    - istio-gateway
+  http:
+    - match:
+        - uri:
+            regex: '^\/users\.(.+)$'
+      route:
+        - destination:
+            port:
+              number: 80
+            host: service-users.dev.svc.cluster.local
+          weight: 100
