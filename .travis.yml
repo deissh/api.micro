@@ -16,6 +16,10 @@ env:
 
 before_script:
   - psql -c 'create database microapi;' -U postgres
+  # If the SDK is not already cached, download it and unpack it
+  - if [ ! -d ${HOME}/google-cloud-sdk ]; then
+    curl https://sdk.cloud.google.com | bash;
+    fi
   - echo $GCLOUD_SERVICE_KEY | base64 --decode -i > ${HOME}/gcloud-service-key.json
   - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
   - yes | gcloud auth configure-docker
