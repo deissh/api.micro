@@ -9,7 +9,7 @@ import (
 
 // FindRequest request params
 type FindRequest struct {
-	//Query  string   `form:"q"`
+	Query string `form:"q"`
 	//Genres []string `form:"genres"`
 	Limit int    `form:"limit"`
 	Page  int    `form:"page"`
@@ -44,7 +44,16 @@ func (h Handler) FindAnime(c *gin.Context) {
 	}
 
 	var animes []models.Anime
-	err := h.db.Limit(r.Limit).Offset(r.Limit * r.Page).Order(strings.Replace(r.Sort, "-", " desc", 1)).Find(&animes).Error
+	var err error
+	if len(r.Query) > 0 {
+		err = h.db.Where(
+			"to_tsvector(title) || to_tsvector(title_en) || to_tsvector(title_or) @@ plainto_tsquery(?)",
+			r.Query,
+		).Limit(r.Limit).Offset(r.Limit * r.Page).Order(strings.Replace(r.Sort, "-", " desc", 1)).Find(&animes).Error
+	} else {
+		err = h.db.Limit(r.Limit).Offset(r.Limit * r.Page).Order(strings.Replace(r.Sort, "-", " desc", 1)).Find(&animes).Error
+	}
+
 	if err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
