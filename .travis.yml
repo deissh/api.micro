@@ -2,18 +2,29 @@ language: go
 
 go:
   - 1.11.x
-  - master
 install: true
-env:
-  - GO111MODULE=on
 services:
   - postgresql
+  - docker
+cache:
+  directories:
+    - "$HOME/google-cloud-sdk/"
+env:
+  global:
+    - GOOGLE_APPLICATION_CREDENTIALS=~/gcloud-service-key.json
+    - GO111MODULE=on
+
 before_script:
   - psql -c 'create database microapi;' -U postgres
+  - echo $GCLOUD_SERVICE_KEY | base64 --decode -i > ${HOME}/gcloud-service-key.json
+  - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+  - yes | gcloud auth configure-docker
+
 script:
   - make install
   - go vet ./...
   - go test -race -coverprofile=cover.out ./...
+  - make build
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
