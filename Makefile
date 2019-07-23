@@ -38,7 +38,7 @@ build: install
 	bash $(SCRIPTS_DIR)/1_build_services.sh
 
 .PHONY: push-docker
-push: build
+push:
 	bash $(SCRIPTS_DIR)/2_push_images.sh
 
 .PHONY: delete-images
