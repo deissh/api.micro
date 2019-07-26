@@ -2,7 +2,7 @@ package helpers
 
 import (
 	"errors"
-	"github.com/labstack/gommon/log"
+	log "github.com/sirupsen/logrus"
 	"gopkg.in/resty.v1"
 	"net/http"
 )

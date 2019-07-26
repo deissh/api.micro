@@ -30,6 +30,9 @@ type Anime struct {
 	Rating      float32        `gorm:"not null;default:5" json:"rating"`
 	Votes       int            `gorm:"not null;default:0" json:"votes"`
 
+	BlockedRu bool `gorm:"not null;default:false" json:"-"`
+	BlockedUa bool `gorm:"not null;default:false" json:"-"`
+
 	Translators []Translator `gorm:"foreignkey:ID" json:"translators"`
 
 	WorldArtID  string `json:"world_art_id"`

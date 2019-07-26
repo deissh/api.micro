@@ -1,7 +1,7 @@
 package helpers
 
 import (
-	"github.com/labstack/gommon/log"
+	log "github.com/sirupsen/logrus"
 	"os"
 )
 

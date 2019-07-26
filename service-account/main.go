@@ -3,14 +3,17 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-	"github.com/labstack/gommon/log"
 	"github.com/nekko-ru/api/helpers"
 	"github.com/nekko-ru/api/service-account/common"
 	service "github.com/nekko-ru/api/service-account/handlers"
+	log "github.com/sirupsen/logrus"
 )
 
 func main() {
-	r := gin.Default()
+	log.SetFormatter(&log.JSONFormatter{})
+
+	r := gin.New()
+	r.Use(helpers.Logger(), gin.Recovery())
 
 	conn := common.Init()
 	common.Migrate()

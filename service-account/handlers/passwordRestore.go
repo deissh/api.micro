@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/labstack/gommon/log"
 	"github.com/nekko-ru/api/helpers"
 	"github.com/nekko-ru/api/models"
+	log "github.com/sirupsen/logrus"
 	"net/http"
 )
 

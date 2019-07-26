@@ -2,9 +2,9 @@ package common
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/labstack/gommon/log"
 	"github.com/nekko-ru/api/helpers"
 	"github.com/nekko-ru/api/models"
+	log "github.com/sirupsen/logrus"
 )
 
 // Database class
