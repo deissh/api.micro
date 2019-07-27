@@ -9,7 +9,7 @@ import (
 // Translator contain id, name and episodes for this translator
 type Translator struct {
 	ID       uint           `gorm:"primary_key" json:"-"`
-	TID      uint           `json:"id"`
+	AID      uint           `json:"-"`
 	Name     string         `json:"name"`
 	Episodes pq.StringArray `gorm:"not null;type:varchar(2048)[]" json:"episodes"`
 }
@@ -33,7 +33,7 @@ type Anime struct {
 	BlockedRu bool `gorm:"not null;default:false" json:"-"`
 	BlockedUa bool `gorm:"not null;default:false" json:"-"`
 
-	Translators []Translator `gorm:"foreignkey:ID" json:"translators"`
+	Translators []Translator `gorm:"ForeignKey:AID"json:"translators"`
 
 	WorldArtID  string `json:"world_art_id"`
 	KinopoiskID string `json:"kinopoisk_id"`
@@ -86,7 +86,7 @@ func (a *Anime) ViewShort() AnimeShort {
 // GetEpisodesByTranslator return episodes by translator id
 func (a *Anime) GetEpisodesByTranslator(id uint) []string {
 	for _, tr := range a.Translators {
-		if id == tr.TID {
+		if id == tr.AID {
 			return tr.Episodes
 		}
 	}
