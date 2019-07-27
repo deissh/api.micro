@@ -10,7 +10,8 @@ import (
 type Translator struct {
 	ID       uint           `gorm:"primary_key" json:"-"`
 	AID      uint           `json:"-"`
-	Name     string         `json:"name"`
+	TID      uint           `json:"id" binding:"required"`
+	Name     string         `json:"name" binding:"required"`
 	Episodes pq.StringArray `gorm:"not null;type:varchar(2048)[]" json:"episodes"`
 }
 
@@ -86,7 +87,7 @@ func (a *Anime) ViewShort() AnimeShort {
 // GetEpisodesByTranslator return episodes by translator id
 func (a *Anime) GetEpisodesByTranslator(id uint) []string {
 	for _, tr := range a.Translators {
-		if id == tr.AID {
+		if id == tr.TID {
 			return tr.Episodes
 		}
 	}

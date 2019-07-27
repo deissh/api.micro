@@ -59,8 +59,6 @@ func (h Handler) UpdateAnime(c *gin.Context) {
 	}
 
 	h.db.Delete(&r.Translators)
-	anime.Translators = r.Translators
-
 	h.db.Model(&anime).Update(r).Save(&anime)
 
 	c.JSON(http.StatusOK, UpdateResponse{
