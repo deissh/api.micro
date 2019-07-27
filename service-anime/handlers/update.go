@@ -58,7 +58,7 @@ func (h Handler) UpdateAnime(c *gin.Context) {
 		return
 	}
 
-	h.db.Delete(&r.Translators)
+	h.db.Where("a_id = ?", anime.ID).Unscoped().Delete(&r.Translators)
 	h.db.Model(&anime).Update(r).Save(&anime)
 
 	c.JSON(http.StatusOK, UpdateResponse{
