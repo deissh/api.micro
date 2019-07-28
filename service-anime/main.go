@@ -2,16 +2,18 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/nekko-ru/api/helpers"
 	"github.com/nekko-ru/api/service-anime/common"
 	service "github.com/nekko-ru/api/service-anime/handlers"
-	log "github.com/sirupsen/logrus"
-
-	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/nekko-ru/api/service-anime/services"
+	"github.com/sirupsen/logrus"
 )
 
+var log = logrus.New()
+
 func main() {
-	log.SetFormatter(&log.JSONFormatter{})
+	log.SetFormatter(&logrus.JSONFormatter{})
 
 	r := SetupRouter()
 
@@ -24,13 +26,15 @@ func main() {
 
 // SetupRouter create Gin router and return one
 func SetupRouter() *gin.Engine {
-	r := gin.New()
-	r.Use(helpers.Logger(), gin.Recovery())
-
 	conn := common.Init()
 	common.Migrate()
 
-	handlers := service.CreateHandlers(conn)
+	r := gin.New()
+	r.Use(helpers.Logger(log), gin.Recovery())
+
+	srv := services.Services{Db: conn, Log: log}
+
+	handlers := service.Handler{srv}
 
 	g := r.Group("/")
 	{

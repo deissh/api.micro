@@ -2,26 +2,14 @@ package handlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/nekko-ru/api/models"
+	"github.com/nekko-ru/api/service-anime/types"
 	"net/http"
 )
-
-// GetRequest request params
-type GetRequest struct {
-	ID string `form:"anime_id"`
-}
-
-// GetResponse response struct
-type GetResponse struct {
-	// API version
-	Version string       `json:"v"`
-	Anime   models.Anime `json:"anime"`
-}
 
 // GetAnime godoc
 func (h Handler) GetAnime(c *gin.Context) {
 
-	var r GetRequest
+	var r types.GetRequest
 
 	if err := c.Bind(&r); err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
@@ -31,16 +19,16 @@ func (h Handler) GetAnime(c *gin.Context) {
 		return
 	}
 
-	var anime models.Anime
-	if err := h.db.Preload("Translators").First(&anime, r.ID).Error; err != nil {
-		c.JSON(http.StatusBadRequest, ResponseData{
+	anime, err := h.srv.Get(r.ID)
+	if err != nil {
+		c.JSON(http.StatusNotFound, ResponseData{
 			Status: http.StatusBadRequest,
-			Data:   "Anime does not exist",
+			Data:   "Not found",
 		})
 		return
 	}
 
-	c.JSON(http.StatusOK, GetResponse{
+	c.JSON(http.StatusOK, types.GetResponse{
 		Version: "1",
 		Anime:   anime,
 	})
