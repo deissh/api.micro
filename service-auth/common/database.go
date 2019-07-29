@@ -2,8 +2,8 @@ package common
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/nekko-ru/api/helpers"
-	"github.com/nekko-ru/api/models"
+	"github.com/nekko-ru/api/service-auth/helpers"
+	"github.com/nekko-ru/api/service-auth/models"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -30,19 +30,10 @@ func Init() *gorm.DB {
 	//db.LogMode(true)
 	DB = db
 
-	log.Info("Database connected")
-	return DB
-}
-
-// Migrate all needed tables
-func Migrate() {
-	// create tables if not exist
 	// todo: add auto migration
 	DB.AutoMigrate(&models.User{})
 	DB.AutoMigrate(&models.Token{})
-}
 
-// Using this function to get a connection, you can create your connection pool here.
-//func GetDB() *gorm.DB {
-//	return DB
-//}
+	log.Info("Database connected")
+	return DB
+}

@@ -3,17 +3,19 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-	"github.com/nekko-ru/api/helpers"
 	"github.com/nekko-ru/api/service-account/common"
 	service "github.com/nekko-ru/api/service-account/handlers"
-	log "github.com/sirupsen/logrus"
+	"github.com/nekko-ru/api/service-account/helpers"
+	"github.com/sirupsen/logrus"
 )
 
+var log = logrus.New()
+
 func main() {
-	log.SetFormatter(&log.JSONFormatter{})
+	log.SetFormatter(&logrus.JSONFormatter{})
 
 	r := gin.New()
-	r.Use(helpers.Logger(), gin.Recovery())
+	r.Use(helpers.Logger(log), gin.Recovery())
 
 	conn := common.Init()
 	common.Migrate()

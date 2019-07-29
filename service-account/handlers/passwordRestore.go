@@ -2,8 +2,8 @@ package handlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/nekko-ru/api/helpers"
-	"github.com/nekko-ru/api/models"
+	"github.com/nekko-ru/api/service-account/helpers"
+	"github.com/nekko-ru/api/service-account/models"
 	log "github.com/sirupsen/logrus"
 	"net/http"
 )

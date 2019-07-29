@@ -2,10 +2,10 @@ package handlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/imdario/mergo"
-	"github.com/nekko-ru/api/helpers"
-	"github.com/nekko-ru/api/models"
+	"github.com/nekko-ru/api/service-anime/helpers"
+	"github.com/nekko-ru/api/service-anime/models"
 	"net/http"
+	"strconv"
 )
 
 // UpdateResponse response struct
@@ -26,13 +26,12 @@ func (h Handler) UpdateAnime(c *gin.Context) {
 		return
 	}
 
-	_, err := helpers.TokenVerify(
+	if _, err := helpers.TokenVerify(
 		c.DefaultQuery("access_token", ""),
 		true,
 		[]string{"animemaker", "admin", "superadmin"},
 		[]string{"anime"},
-	)
-	if err != nil {
+	); err != nil {
 		c.JSON(http.StatusUnauthorized, ResponseData{
 			Status: http.StatusBadRequest,
 			Data:   "Unauthorized",
@@ -40,26 +39,15 @@ func (h Handler) UpdateAnime(c *gin.Context) {
 		return
 	}
 
-	var anime models.Anime
-	if err := h.db.Preload("Translators").First(&anime, c.DefaultQuery("anime_id", "")).Error; err != nil {
+	id, err := strconv.Atoi(c.DefaultQuery("anime_id", ""))
+	anime, err := h.Srv.Update(id, r)
+	if err != nil {
 		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
-			Data:   "Anime does not exist",
+			Data:   "Error in params",
 		})
 		return
 	}
-
-	// merge two struct
-	if err := mergo.Merge(&r, anime); err != nil {
-		c.JSON(http.StatusBadRequest, ResponseData{
-			Status: http.StatusBadRequest,
-			Data:   "Params error",
-		})
-		return
-	}
-
-	h.db.Where("a_id = ?", anime.ID).Unscoped().Delete(&r.Translators)
-	h.db.Model(&anime).Update(r).Save(&anime)
 
 	c.JSON(http.StatusOK, UpdateResponse{
 		Version: "1",

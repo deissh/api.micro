@@ -1,6 +1,6 @@
 package types
 
-import "github.com/nekko-ru/api/models"
+import "github.com/nekko-ru/api/service-anime/models"
 
 // GetRequest request params
 type GetRequest struct {

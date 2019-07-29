@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/nekko-ru/api/helpers"
+	"github.com/nekko-ru/api/service-anime/helpers"
 	"github.com/nekko-ru/api/service-anime/types"
 	"net/http"
 )
@@ -32,9 +32,9 @@ func (h Handler) CreateAnime(c *gin.Context) {
 		return
 	}
 
-	anime, err := h.srv.Create(r)
+	anime, err := h.Srv.Create(r)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, ResponseData{
+		c.JSON(http.StatusBadRequest, ResponseData{
 			Status: http.StatusBadRequest,
 			Data:   err.Error(),
 		})

@@ -3,9 +3,9 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-	"github.com/nekko-ru/api/helpers"
 	"github.com/nekko-ru/api/service-anime/common"
-	service "github.com/nekko-ru/api/service-anime/handlers"
+	"github.com/nekko-ru/api/service-anime/handlers"
+	"github.com/nekko-ru/api/service-anime/helpers"
 	"github.com/nekko-ru/api/service-anime/services"
 	"github.com/sirupsen/logrus"
 )
@@ -34,19 +34,17 @@ func SetupRouter() *gin.Engine {
 
 	srv := services.Services{Db: conn, Log: log}
 
-	handlers := service.Handler{srv}
+	h := handlers.Handler{srv}
 
 	g := r.Group("/")
 	{
-		g.POST("/anime.create", handlers.CreateAnime)
-		g.GET("/anime.get", handlers.GetAnime)
-		g.POST("/anime.update", handlers.UpdateAnime)
-		g.GET("/anime.remove", handlers.RemoveAnime)
-		g.GET("/anime.search", handlers.FindAnime)
-		g.GET("/anime.getEpisodes", handlers.GetEpisodesAnime)
+		g.POST("/anime.create", h.CreateAnime)
+		g.GET("/anime.get", h.GetAnime)
+		g.POST("/anime.update", h.UpdateAnime)
+		g.GET("/anime.search", h.FindAnime)
 		g.POST("/anime.vote")
 
-		g.GET("/_/ping", handlers.PingCheck)
+		g.GET("/_/ping", h.PingCheck)
 	}
 
 	return r

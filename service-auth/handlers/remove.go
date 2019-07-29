@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/nekko-ru/api/models"
+	"github.com/nekko-ru/api/service-auth/models"
 	"net/http"
 )
 

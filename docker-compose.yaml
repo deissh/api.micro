@@ -29,14 +29,6 @@ services:
     env_file:
       - .env
 
-  service-users:
-    image: eu.gcr.io/anibe-2bcf3/service-users:${SERVICE_USERS_TAG:-latest}
-    restart: on-failure
-    depends_on:
-      - postgres
-    env_file:
-      - .env
-
 # ==================
 # important services
 # ==================
@@ -78,5 +70,4 @@ services:
     depends_on:
       - service-auth
       - service-anime
-      - service-users
       - service-account

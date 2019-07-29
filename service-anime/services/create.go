@@ -1,11 +1,11 @@
 package services
 
 import (
-	"github.com/nekko-ru/api/models"
+	"github.com/nekko-ru/api/service-anime/models"
 	"github.com/nekko-ru/api/service-anime/types"
 )
 
-func (service Services) Create(r types.CreateRequest) (models.Anime, error) {
+func (s Services) Create(r types.CreateRequest) (models.Anime, error) {
 	anime := models.Anime{
 		Title:       r.Title,
 		TitleEn:     r.TitleEn,
@@ -28,8 +28,8 @@ func (service Services) Create(r types.CreateRequest) (models.Anime, error) {
 		Votes:       r.Votes,
 	}
 
-	if err := service.Db.Create(&anime).Error; err != nil {
-		service.Log.Debug(err)
+	if err := s.Db.Create(&anime).Error; err != nil {
+		s.Log.Debug(err)
 		return models.Anime{}, err
 	}
 	return anime, nil

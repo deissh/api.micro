@@ -2,9 +2,8 @@ package common
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/nekko-ru/api/helpers"
-	"github.com/nekko-ru/api/models"
-	log "github.com/sirupsen/logrus"
+	"github.com/nekko-ru/api/service-anime/models"
+	"github.com/nekko-ru/api/service-auth/helpers"
 )
 
 // Database class
@@ -24,13 +23,12 @@ func Init() *gorm.DB {
 
 	db, err := gorm.Open("postgres", "sslmode=disable host="+host+" user="+user+" dbname="+dbName+" password="+psw)
 	if err != nil {
-		log.Panic(err)
+		panic(err)
 	}
 	db.DB().SetMaxIdleConns(10)
 	//db.LogMode(true)
 	DB = db
 
-	log.Info("Database connected")
 	return DB
 }
 

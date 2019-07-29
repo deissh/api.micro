@@ -12,5 +12,5 @@ type ResponseData struct {
 
 // Handler contain all handlers and current db connection
 type Handler struct {
-	srv services.Services
+	Srv services.Services
 }

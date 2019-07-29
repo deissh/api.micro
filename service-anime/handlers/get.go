@@ -19,10 +19,10 @@ func (h Handler) GetAnime(c *gin.Context) {
 		return
 	}
 
-	anime, err := h.srv.Get(r.ID)
+	anime, err := h.Srv.Get(r.ID)
 	if err != nil {
 		c.JSON(http.StatusNotFound, ResponseData{
-			Status: http.StatusBadRequest,
+			Status: http.StatusNotFound,
 			Data:   "Not found",
 		})
 		return
